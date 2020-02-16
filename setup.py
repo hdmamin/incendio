@@ -1,7 +1,7 @@
-from pkg_resources import parse_version
 from configparser import ConfigParser
 import setuptools
-assert parse_version(setuptools.__version__)>=parse_version('36.2')
+# Replaced packaging.parse w/ simpler parsing since it was breaking install.
+assert int(setuptools.__version__.split('.')[0])>36
 
 # note: all settings are in settings.ini; edit there, not here
 config = ConfigParser(delimiters=['='])
