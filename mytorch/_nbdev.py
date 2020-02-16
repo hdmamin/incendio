@@ -30,16 +30,17 @@ index = {"DEVICE": "00_core.ipynb",
          "JRelu": "04_layers.ipynb",
          "Mish": "04_layers.ipynb",
          "mish": "04_layers.ipynb",
-         "conv_block": "04_layers.ipynb",
+         "ConvBlock": "04_layers.ipynb",
          "ResBlock": "04_layers.ipynb",
-         "back_translate": "05_augmentations.ipynb"}
+         "Vocabulary": "05_nlp.ipynb",
+         "back_translate": "05_nlp.ipynb"}
 
 modules = ["core.py",
            "utils.py",
            "callbacks.py",
            "metrics.py",
            "layers.py",
-           "augmentations.py"]
+           "nlp.py"]
 
 git_url = "https://github.com/hdmamin/mytorch/tree/master/"
 
