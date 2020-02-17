@@ -112,7 +112,7 @@ class ConvBlock(nn.Module):
         self.block = nn.Sequential(*layers)
 
     def forward(self, x):
-        self.block(x)
+        return self.block(x)
 
 
 # Cell
