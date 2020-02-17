@@ -1,10 +1,12 @@
 {
-  "Notebook": {
-    "Export to modules": "/export",
-    "Convert to html": "/export2html",
-    "Show doc": "/showdoc",
-    "Test functions": "/test",
-    "Core functions": "/core",
-    "Command line functions": "/cli"
+  "mytorch": {
+    "Overview": "/",
+    "MyTorch": "/core",
+    "Utils": "/utils",
+    "Callbacks": "/callbacks",
+    "Metrics": "/metrics",
+    "Layers": "/layers",
+    "NLP": "/nlp",
+    "Title": "/trainer_based_train"
   }
 }

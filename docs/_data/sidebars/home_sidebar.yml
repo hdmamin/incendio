@@ -7,24 +7,30 @@ entries:
 - folders:
   - folderitems:
     - output: web,pdf
-      title: Export to modules
-      url: /export.html
+      title: Overview
+      url: /
     - output: web,pdf
-      title: Convert to html
-      url: /export2html.html
+      title: MyTorch
+      url: /core
     - output: web,pdf
-      title: Show doc
-      url: /showdoc.html
+      title: Utils
+      url: /utils
     - output: web,pdf
-      title: Test functions
-      url: /test.html
+      title: Callbacks
+      url: /callbacks
     - output: web,pdf
-      title: Core functions
-      url: /core.html
+      title: Metrics
+      url: /metrics
     - output: web,pdf
-      title: Command line functions
-      url: /cli.html
+      title: Layers
+      url: /layers
+    - output: web,pdf
+      title: NLP
+      url: /nlp
+    - output: web,pdf
+      title: Title
+      url: /trainer_based_train
     output: web
-    title: Notebook
+    title: mytorch
   output: web
   title: Sidebar
