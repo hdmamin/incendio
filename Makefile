@@ -1,10 +1,10 @@
 SRC = $(wildcard notebooks/*.ipynb)
 
-all: mytorch docs
+all: incendio docs
 
-mytorch: $(SRC)
+incendio: $(SRC)
 	nbdev_build_lib
-	touch mytorch
+	touch incendio
 
 docs: $(SRC)
 	nbdev_build_docs

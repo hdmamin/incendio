@@ -42,6 +42,6 @@ modules = ["core.py",
            "layers.py",
            "nlp.py"]
 
-git_url = "https://github.com/hdmamin/mytorch/tree/master/"
+git_url = "https://github.com/hdmamin/incendio/tree/master/"
 
 def custom_doc_links(name): return None

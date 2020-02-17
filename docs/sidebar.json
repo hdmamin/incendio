@@ -1,7 +1,7 @@
 {
-  "mytorch": {
+  "incendio": {
     "Overview": "/",
-    "MyTorch": "/core",
+    "Incendio": "/core",
     "Utils": "/utils",
     "Callbacks": "/callbacks",
     "Metrics": "/metrics",

@@ -10,7 +10,7 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: MyTorch
+      title: Incendio
       url: /core
     - output: web,pdf
       title: Utils
@@ -31,6 +31,6 @@ entries:
       title: Title
       url: /trainer_based_train
     output: web
-    title: mytorch
+    title: incendio
   output: web
   title: Sidebar

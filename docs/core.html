@@ -1,6 +1,6 @@
 ---
 
-title: MyTorch
+title: Incendio
 keywords: fastai
 sidebar: home_sidebar
 
@@ -108,7 +108,7 @@ summary: "The basics for building and training models are contained in this modu
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Trainer" class="doc_header"><code>class</code> <code>Trainer</code><a href="https://github.com/hdmamin/mytorch/tree/master/mytorch/core.py#L23" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Trainer</code>(<strong><code>net</code></strong>, <strong><code>ds_train</code></strong>, <strong><code>ds_val</code></strong>, <strong><code>dl_train</code></strong>, <strong><code>dl_val</code></strong>, <strong><code>criterion</code></strong>, <strong><code>mode</code></strong>:<code>('binary', 'multiclass', 'regression')</code>, <strong><code>out_dir</code></strong>, <strong><code>bucket</code></strong>=<em><code>None</code></em>, <strong><code>optim_type</code></strong>=<em><code>'Adam'</code></em>, <strong><code>eps</code></strong>=<em><code>0.001</code></em>, <strong><code>last_act</code></strong>=<em><code>None</code></em>, <strong><code>threshold</code></strong>=<em><code>0.5</code></em>, <strong><code>metrics</code></strong>=<em><code>None</code></em>, <strong><code>callbacks</code></strong>=<em><code>None</code></em>, <strong><code>device</code></strong>=<em><code>device(type='cpu')</code></em>) :: <code>LoggerMixin</code></p>
+<h2 id="Trainer" class="doc_header"><code>class</code> <code>Trainer</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/core.py#L23" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Trainer</code>(<strong><code>net</code></strong>, <strong><code>ds_train</code></strong>, <strong><code>ds_val</code></strong>, <strong><code>dl_train</code></strong>, <strong><code>dl_val</code></strong>, <strong><code>criterion</code></strong>, <strong><code>mode</code></strong>:<code>('binary', 'multiclass', 'regression')</code>, <strong><code>out_dir</code></strong>, <strong><code>bucket</code></strong>=<em><code>None</code></em>, <strong><code>optim_type</code></strong>=<em><code>'Adam'</code></em>, <strong><code>eps</code></strong>=<em><code>0.001</code></em>, <strong><code>last_act</code></strong>=<em><code>None</code></em>, <strong><code>threshold</code></strong>=<em><code>0.5</code></em>, <strong><code>metrics</code></strong>=<em><code>None</code></em>, <strong><code>callbacks</code></strong>=<em><code>None</code></em>, <strong><code>device</code></strong>=<em><code>device(type='cpu')</code></em>) :: <code>LoggerMixin</code></p>
 </blockquote>
 <p>Mixin class that configures and returns a logger.</p>
 <h2 id="Examples">Examples<a class="anchor-link" href="#Examples">&#182;</a></h2><p>class Foo(LoggerMixin):</p>
@@ -149,7 +149,7 @@ def walk(self, location):
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="BaseModel" class="doc_header"><code>class</code> <code>BaseModel</code><a href="https://github.com/hdmamin/mytorch/tree/master/mytorch/core.py#L443" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>BaseModel</code>() :: <code>Module</code></p>
+<h2 id="BaseModel" class="doc_header"><code>class</code> <code>BaseModel</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/core.py#L443" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>BaseModel</code>() :: <code>Module</code></p>
 </blockquote>
 <p>Base class for all neural network modules.</p>
 <p>Your models should also subclass this class.</p>
@@ -394,7 +394,7 @@ Unfrozen [True, True, True, True, True, True]
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="variable_lr_optimizer" class="doc_header"><code>variable_lr_optimizer</code><a href="https://github.com/hdmamin/mytorch/tree/master/mytorch/core.py#L520" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>variable_lr_optimizer</code>(<strong><code>model</code></strong>, <strong><code>lr</code></strong>=<em><code>0.003</code></em>, <strong><code>lr_mult</code></strong>=<em><code>1.0</code></em>, <strong><code>optimizer</code></strong>=<em><code>'Adam'</code></em>, <strong><code>eps</code></strong>=<em><code>0.001</code></em>, <strong>**<code>kwargs</code></strong>)</p>
+<h4 id="variable_lr_optimizer" class="doc_header"><code>variable_lr_optimizer</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/core.py#L520" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>variable_lr_optimizer</code>(<strong><code>model</code></strong>, <strong><code>lr</code></strong>=<em><code>0.003</code></em>, <strong><code>lr_mult</code></strong>=<em><code>1.0</code></em>, <strong><code>optimizer</code></strong>=<em><code>'Adam'</code></em>, <strong><code>eps</code></strong>=<em><code>0.001</code></em>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 <p>Get an optimizer that uses different learning rates for different layer
 groups. Additional keyword arguments can be used to alter momentum and/or
@@ -437,7 +437,7 @@ eps: float
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="update_optimizer" class="doc_header"><code>update_optimizer</code><a href="https://github.com/hdmamin/mytorch/tree/master/mytorch/core.py#L557" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>update_optimizer</code>(<strong><code>optim</code></strong>, <strong><code>lrs</code></strong>, <strong><code>lr_mult</code></strong>=<em><code>1.0</code></em>)</p>
+<h4 id="update_optimizer" class="doc_header"><code>update_optimizer</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/core.py#L557" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>update_optimizer</code>(<strong><code>optim</code></strong>, <strong><code>lrs</code></strong>, <strong><code>lr_mult</code></strong>=<em><code>1.0</code></em>)</p>
 </blockquote>
 <p>Pass in 1 or more learning rates, 1 for each layer group, and update the
 optimizer accordingly. The optimizer is updated in place so nothing is
