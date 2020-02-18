@@ -14,6 +14,7 @@ import torch
 import torch.nn as nn
 from torch.optim import Adam
 from tqdm.auto import tqdm
+import warnings
 
 from htools import load, save, LoggerMixin, valuecheck, hasarg
 from .callbacks import BasicConfig, StatsHandler, MetricPrinter
@@ -27,9 +28,8 @@ class Trainer(LoggerMixin):
     @valuecheck
     def __init__(self, net, ds_train, ds_val, dl_train, dl_val,
                  criterion, mode:('binary', 'multiclass', 'regression'),
-                 out_dir, bucket=None, optim_type=Adam, eps=1e-3,
-                 last_act=None, threshold=0.5, metrics=None, callbacks=None,
-                 device=DEVICE):
+                 out_dir, optim_type=Adam, eps=1e-3, last_act=None,
+                 threshold=0.5, metrics=None, callbacks=None, device=DEVICE):
         """An object to handle model training. This makes it easy for us to
         save model weights, optimizer state, datasets and dataloaders all
         at once.
@@ -61,10 +61,6 @@ class Trainer(LoggerMixin):
             The path to an output directory where logs, model weights, and
             more will be stored. If it doesn't already exist, it will be
             created.
-        bucket: str
-            S3 bucket to store data. This can be used with the S3Upload
-            callback to automatically upload all files to S3 when training
-            completes.
         optim_type: torch.optim callable
             Callable optimizer. The default is Adam. Notice that this is the
             class, not the object.
@@ -118,6 +114,14 @@ class Trainer(LoggerMixin):
         "" (multilabel case)               (bs, k)  (bs, k)     float
         cross_entropy                      (bs,)    (bs, k)     long
         """
+        if last_act is None and mode != 'regression':
+            warnings.warn(
+                'Last activation is None for a classification problem. This '
+                'means your network must include a sigmoid or softmax at the '
+                'end if you wish to compute any metrics using soft '
+                'predictions.'
+            )
+
         self.net = net
         self.ds_train, self.ds_val = ds_train, ds_val
         self.dl_train, self.dl_val = dl_train, dl_val
@@ -434,7 +438,7 @@ class Trainer(LoggerMixin):
 
     def __repr__(self):
         r = (f'Trainer(criterion={repr(self.criterion.__name__)}, '
-             f'out_dir={repr(self.out_dir)}, bucket={repr(self.bucket)})'
+             f'out_dir={repr(self.out_dir)})'
              f'\n\nDatasets: {len(self.ds_train)} train rows, '
              f'{len(self.ds_val)} val rows'
              f'\n\nOptimizer: {repr(self.optim)}'

@@ -309,7 +309,8 @@ class MetricHistory(TorchCallback):
 class S3Uploader(TorchCallback):
     """Upload model and logs to S3 when training finishes."""
 
-    def __init__(self, prefix, priority=95):
+    def __init__(self, bucket, prefix, priority=95):
+        self.bucket = bucket
         self.prefix = prefix
         self.priority = priority
 
