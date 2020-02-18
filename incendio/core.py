@@ -140,7 +140,6 @@ class Trainer(LoggerMixin):
 
         # Storage options.
         self.out_dir = out_dir
-        self.bucket = bucket
         os.makedirs(out_dir, exist_ok=True)
 
         # Dict makes it easier to adjust callbacks after creating model.
