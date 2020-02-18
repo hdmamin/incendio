@@ -9,7 +9,7 @@ import torch
 
 
 # Cell
-DEVICE = torch.device('gpu' if torch.cuda.is_available() else 'cpu')
+DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 
 # Cell
