@@ -15,7 +15,7 @@ import warnings
 
 from accio.s3tool import S3tool
 from htools import auto_repr, valuecheck
-from .core import DEVICE
+from .utils import DEVICE
 
 
 # Cell

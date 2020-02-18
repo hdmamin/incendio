@@ -2,12 +2,12 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"DEVICE": "00_core.ipynb",
-         "Trainer": "00_core.ipynb",
+index = {"Trainer": "00_core.ipynb",
          "BaseModel": "00_core.ipynb",
          "variable_lr_optimizer": "00_core.ipynb",
          "update_optimizer": "00_core.ipynb",
          "adam": "00_core.ipynb",
+         "DEVICE": "01_utils.ipynb",
          "hasarg": "01_utils.ipynb",
          "quick_stats": "01_utils.ipynb",
          "TorchCallback": "02_callbacks.ipynb",
