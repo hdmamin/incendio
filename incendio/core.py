@@ -19,6 +19,7 @@ import warnings
 from htools import load, save, LoggerMixin, valuecheck, hasarg
 from .callbacks import BasicConfig, StatsHandler, MetricPrinter
 from .metrics import batch_size
+from .optimizers import variable_lr_optimizer, update_optimizer
 from .utils import quick_stats, DEVICE
 
 

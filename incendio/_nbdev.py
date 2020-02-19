@@ -2,9 +2,9 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"variable_lr_optimizer": "00_core.ipynb",
-         "update_optimizer": "00_core.ipynb",
-         "adam": "00_core.ipynb",
+index = {"variable_lr_optimizer": "06_optimizers.ipynb",
+         "update_optimizer": "06_optimizers.ipynb",
+         "adam": "06_optimizers.ipynb",
          "Trainer": "00_core.ipynb",
          "BaseModel": "00_core.ipynb",
          "DEVICE": "01_utils.ipynb",
@@ -40,7 +40,8 @@ modules = ["core.py",
            "callbacks.py",
            "metrics.py",
            "layers.py",
-           "nlp.py"]
+           "nlp.py",
+           "optimizers.py"]
 
 doc_url = "https://hdmamin.github.io/incendio/"
 

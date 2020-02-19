@@ -7,16 +7,19 @@ __all__ = ['TorchCallback', 'BasicConfig', 'StatsHandler', 'MetricPrinter', 'Ear
 
 # Cell
 import boto3
+from collections.abc import Iterable
 import matplotlib.pyplot as plt
 import numpy as np
 from operator import lt, gt, add, sub
 import os
 import pandas as pd
+from tabulate import tabulate
 import warnings
 
 from accio.s3tool import S3tool
 from htools import auto_repr, valuecheck
 from .utils import DEVICE
+from .optimizers import variable_lr_optimizer, update_optimizer
 
 
 # Cell
@@ -319,7 +322,7 @@ class S3Uploader(TorchCallback):
                  if f.is_file() and not f.name.startswith('.')]
         s3 = S3tool()
         try:
-            s3.upload_files(paths, trainer.bucket, self.prefix)
+            s3.upload_files(paths, self.bucket, self.prefix)
         except Exception as e:
             trainer.logger.error(e)
 
