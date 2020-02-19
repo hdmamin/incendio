@@ -378,7 +378,8 @@ class Trainer(LoggerMixin):
                 self.optim.step()
 
                 # Separate because callbacks are only applied during training.
-                self._update_stats(stats, loss, yb, y_score.detach())
+                self._update_stats(stats, loss,
+                                   yb.detach().cpu(), y_score.detach().cpu())
                 if self.decide_stop('on_batch_end', i, sum_i, stats): break
 
             # If on_batch_end callback halts training, else block is skipped.
@@ -407,7 +408,8 @@ class Trainer(LoggerMixin):
                 *xb, yb = map(lambda x: x.to(self.device), batch)
                 y_score = self.net(*xb)
                 loss = self.criterion(y_score, yb)
-                self._update_stats(val_stats, loss, yb, y_score)
+                self._update_stats(val_stats, loss,
+                                   yb.detach().cpu(), y_score.detach().cpu())
         return val_stats
 
     def _update_stats(self, stats, loss, yb, y_score):
