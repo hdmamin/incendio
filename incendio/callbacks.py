@@ -122,18 +122,18 @@ class MetricPrinter(TorchCallback):
 class EarlyStopper(TorchCallback):
 
     @valuecheck
-    def __init__(self, goal:('max', 'min'), metric='loss', min_improvement=0.0,
+    def __init__(self, metric, goal:('max', 'min'), min_improvement=0.0,
                  patience=3, priority=15):
         """
         Parameters
         ----------
+        metric: str
+            Quantity to monitor. This will always be computed on the
+            validation set.
         goal: str
             Indicates what we want to do to the metric in question.
             Either 'min' or 'max'. E.g. metric 'loss' should have goal 'min'
             while metric 'precision' should have goal 'max'.
-        metric: str
-            Quantity to monitor. This will always be computed on the
-            validation set.
         min_improvement: float
             Amount of change needed to qualify as improvement. For example,
             min_improvement of 0.0 means any improvement is sufficient. With
