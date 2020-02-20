@@ -59,6 +59,7 @@ class BasicConfig(TorchCallback):
         trainer.optim = variable_lr_optimizer(
             trainer.net, lrs, lr_mult, trainer.optim_type, trainer.eps
         )
+        print(trainer.optim)
         if kwargs.get('clean') is True: trainer.cleanup(confirmed=True)
 
     def on_epoch_begin(self, trainer, *args, **kwargs):
