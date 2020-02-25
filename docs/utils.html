@@ -1,6 +1,7 @@
 ---
 
 title: Utils
+
 keywords: fastai
 sidebar: home_sidebar
 
@@ -17,7 +18,8 @@ summary: "Basic utilities with few dependencies."
 -->
 
 <div class="container" id="notebook-container">
-    
+    {% raw %}
+        
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
@@ -39,6 +41,45 @@ summary: "Basic utilities with few dependencies."
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>At training time, we will typically want to put the model and the current mini batch on the GPU. When developing on a CPU, a GPU isn't available, so we define a variable that will automatically find the right device. This goes in utils rather than core to avoid circular imports with the callbacks module.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">DEVICE</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>device(type=&#39;cpu&#39;)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
@@ -51,26 +92,36 @@ summary: "Basic utilities with few dependencies."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="hasarg" class="doc_header"><code>hasarg</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L9" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>hasarg</code>(<strong><code>func</code></strong>, <strong><code>arg</code></strong>)</p>
+<h4 id="hasarg" class="doc_header"><code>hasarg</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L16" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>hasarg</code>(<strong><code>func</code></strong>, <strong><code>arg</code></strong>)</p>
 </blockquote>
-<p>Checks if a function has a given argument.
+
+<pre><code>Checks if a function has a given argument.
 Works with args and kwargs as well if you exclude the
-stars. See example below.</p>
-<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters">&#182;</a></h2><p>func: function
+stars. See example below.
+
+Parameters
+----------
+func: function
 arg: str
-    Name of argument to look for.</p>
-<h2 id="Returns">Returns<a class="anchor-link" href="#Returns">&#182;</a></h2><p>bool</p>
-<h2 id="Example">Example<a class="anchor-link" href="#Example">&#182;</a></h2><p>def foo(a, b=6, *args):
-    return</p>
-<blockquote><blockquote><blockquote><p>hasarg(foo, 'b')
-True</p>
-<p>hasarg(foo, 'args')
-True</p>
-<p>hasarg(foo, 'c')
-False</p>
-</blockquote>
-</blockquote>
-</blockquote>
+    Name of argument to look for.
+
+Returns
+-------
+bool
+
+Example
+-------
+def foo(a, b=6, *args):
+    return
+
+&gt;&gt;&gt; hasarg(foo, 'b')
+True
+
+&gt;&gt;&gt; hasarg(foo, 'args')
+True
+
+&gt;&gt;&gt; hasarg(foo, 'c')
+False</code></pre>
 
 </div>
 
@@ -92,13 +143,20 @@ False</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="quick_stats" class="doc_header"><code>quick_stats</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L41" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>quick_stats</code>(<strong><code>x</code></strong>, <strong><code>digits</code></strong>=<em><code>3</code></em>)</p>
+<h4 id="quick_stats" class="doc_header"><code>quick_stats</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L49" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>quick_stats</code>(<strong><code>x</code></strong>, <strong><code>digits</code></strong>=<em><code>3</code></em>)</p>
 </blockquote>
-<p>Quick wrapper to get mean and standard deviation of a tensor.</p>
-<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters">&#182;</a></h2><p>x: torch.Tensor
+
+<pre><code>Quick wrapper to get mean and standard deviation of a tensor.
+
+Parameters
+----------
+x: torch.Tensor
 digits: int
-    Number of digits to round mean and standard deviation to.</p>
-<h2 id="Returns">Returns<a class="anchor-link" href="#Returns">&#182;</a></h2><p>tuple[float]</p>
+    Number of digits to round mean and standard deviation to.
+
+Returns
+-------
+tuple[float]</code></pre>
 
 </div>
 
@@ -108,6 +166,7 @@ digits: int
 </div>
 
 </div>
+    {% endraw %}
 </div>
  
 

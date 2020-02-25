@@ -1,12 +1,13 @@
 {
   "incendio": {
     "Overview": "/",
-    "Incendio": "/core",
+    "Core": "/core",
     "Utils": "/utils",
     "Callbacks": "/callbacks",
     "Metrics": "/metrics",
     "Layers": "/layers",
     "NLP": "/nlp",
+    "Optimizers": "/optimizers",
     "Title": "/trainer_based_train"
   }
 }

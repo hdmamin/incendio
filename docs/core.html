@@ -1,6 +1,7 @@
 ---
 
-title: Incendio
+title: Core
+
 keywords: fastai
 sidebar: home_sidebar
 
@@ -17,7 +18,8 @@ summary: "The basics for building and training models are contained in this modu
 -->
 
 <div class="container" id="notebook-container">
-    
+    {% raw %}
+        
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
@@ -32,6 +34,21 @@ summary: "The basics for building and training models are contained in this modu
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The autoreload extension is already loaded. To reload it, use:
+  %reload_ext autoreload
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -59,80 +76,7 @@ summary: "The basics for building and training models are contained in this modu
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>At training time, we will typically want to put the model and the current mini batch on the GPU. When developing on a CPU, a GPU isn't available, so we define a variable that will automatically find the right device.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">DEVICE</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>device(type=&#39;cpu&#39;)</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h2 id="Trainer" class="doc_header"><code>class</code> <code>Trainer</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/core.py#L23" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Trainer</code>(<strong><code>net</code></strong>, <strong><code>ds_train</code></strong>, <strong><code>ds_val</code></strong>, <strong><code>dl_train</code></strong>, <strong><code>dl_val</code></strong>, <strong><code>criterion</code></strong>, <strong><code>mode</code></strong>:<code>('binary', 'multiclass', 'regression')</code>, <strong><code>out_dir</code></strong>, <strong><code>bucket</code></strong>=<em><code>None</code></em>, <strong><code>optim_type</code></strong>=<em><code>'Adam'</code></em>, <strong><code>eps</code></strong>=<em><code>0.001</code></em>, <strong><code>last_act</code></strong>=<em><code>None</code></em>, <strong><code>threshold</code></strong>=<em><code>0.5</code></em>, <strong><code>metrics</code></strong>=<em><code>None</code></em>, <strong><code>callbacks</code></strong>=<em><code>None</code></em>, <strong><code>device</code></strong>=<em><code>device(type='cpu')</code></em>) :: <code>LoggerMixin</code></p>
-</blockquote>
-<p>Mixin class that configures and returns a logger.</p>
-<h2 id="Examples">Examples<a class="anchor-link" href="#Examples">&#182;</a></h2><p>class Foo(LoggerMixin):</p>
-
-<pre><code>def __init__(self, a, log_file):
-    self.a = a
-    self.log_file = log_file
-    self.logger = self.get_logger(log_file)
-
-def walk(self, location):
-    self.logger.info(f'walk received argument {location}')
-    return f'walking to {location}'</code></pre>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="/core.html#BaseModel"><code>BaseModel</code></a> allows models to freeze/unfreeze layers and provides several methods for weight diagnostics. It should not be instantiated directly, but used as a parent class for a model. Like all PyTorch models, its children will still need to call <code>super().__init__()</code> and implement a <code>forward()</code> method.</p>
+<h2 id="Model">Model<a class="anchor-link" href="#Model">&#182;</a></h2><p><a href="/incendio/core#BaseModel"><code>BaseModel</code></a> allows models to freeze/unfreeze layers and provides several methods for weight diagnostics. It should not be instantiated directly, but used as a parent class for a model. Like all PyTorch models, its children will still need to call <code>super().__init__()</code> and implement a <code>forward()</code> method.</p>
 
 </div>
 </div>
@@ -149,29 +93,31 @@ def walk(self, location):
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="BaseModel" class="doc_header"><code>class</code> <code>BaseModel</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/core.py#L443" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>BaseModel</code>() :: <code>Module</code></p>
+<h2 id="BaseModel" class="doc_header"><code>class</code> <code>BaseModel</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/core.py#L27" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>BaseModel</code>() :: <code>Module</code></p>
 </blockquote>
-<p>Base class for all neural network modules.</p>
-<p>Your models should also subclass this class.</p>
-<p>Modules can also contain other Modules, allowing to nest them in
-a tree structure. You can assign the submodules as regular attributes::</p>
 
-<pre><code>import torch.nn as nn
-import torch.nn.functional as F
+<pre><code>Base class for all neural network modules.
 
-class Model(nn.Module):
-    def __init__(self):
-        super(Model, self).__init__()
-        self.conv1 = nn.Conv2d(1, 20, 5)
-        self.conv2 = nn.Conv2d(20, 20, 5)
+Your models should also subclass this class.
 
-    def forward(self, x):
-        x = F.relu(self.conv1(x))
-        return F.relu(self.conv2(x))
+Modules can also contain other Modules, allowing to nest them in
+a tree structure. You can assign the submodules as regular attributes::
 
-</code></pre>
-<p>Submodules assigned in this way will be registered, and will have their
-parameters converted too when you call :meth:<code>to</code>, etc.</p>
+    import torch.nn as nn
+    import torch.nn.functional as F
+
+    class Model(nn.Module):
+        def __init__(self):
+            super(Model, self).__init__()
+            self.conv1 = nn.Conv2d(1, 20, 5)
+            self.conv2 = nn.Conv2d(20, 20, 5)
+
+        def forward(self, x):
+            x = F.relu(self.conv1(x))
+            return F.relu(self.conv2(x))
+
+Submodules assigned in this way will be registered, and will have their
+parameters converted too when you call :meth:`to`, etc.</code></pre>
 
 </div>
 
@@ -305,7 +251,7 @@ Unfrozen [True, True, True, True]
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">gnet</span> <span class="o">=</span> <span class="n">GroupedModel</span><span class="p">(</span><span class="n">DIM</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">gnet</span> <span class="o">=</span> <span class="n">GroupedModel</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">gnet</span><span class="o">.</span><span class="n">freeze</span><span class="p">()</span>
 <span class="n">n_unfrozen</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
 <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">nu</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">n_unfrozen</span><span class="p">):</span>
@@ -375,50 +321,40 @@ Unfrozen [True, True, True, True, True, True]
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Optimizers">Optimizers<a class="anchor-link" href="#Optimizers">&#182;</a></h2><p>Optimizers like Adam or RMSProp can contain multiple "parameter groups", each with a different learning rate. (Other hyperparameters can vary as well, but we ignore that for now.) The functions below allow us to get a new optimizer or update an existing one. It allows us to easily use differential learning rate, but that is not required: it can also use the same LR for each parameter group.</p>
-
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">optim</span> <span class="o">=</span> <span class="n">variable_lr_optimizer</span><span class="p">(</span><span class="n">snet</span><span class="p">,</span> <span class="mf">2e-3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optim</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">assert_raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">ar</span><span class="p">:</span>
+    <span class="n">optim</span> <span class="o">=</span> <span class="n">variable_lr_optimizer</span><span class="p">(</span><span class="n">snet</span><span class="p">,</span> <span class="p">[</span><span class="mf">3e-3</span><span class="p">,</span> <span class="mf">1e-1</span><span class="p">])</span>
+    <span class="n">optim</span>
+</pre></div>
+
+    </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered">
+</div>
 
 <div class="output_wrapper">
 <div class="output">
 
 <div class="output_area">
 
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="variable_lr_optimizer" class="doc_header"><code>variable_lr_optimizer</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/core.py#L520" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>variable_lr_optimizer</code>(<strong><code>model</code></strong>, <strong><code>lr</code></strong>=<em><code>0.003</code></em>, <strong><code>lr_mult</code></strong>=<em><code>1.0</code></em>, <strong><code>optimizer</code></strong>=<em><code>'Adam'</code></em>, <strong><code>eps</code></strong>=<em><code>0.001</code></em>, <strong>**<code>kwargs</code></strong>)</p>
-</blockquote>
-<p>Get an optimizer that uses different learning rates for different layer
-groups. Additional keyword arguments can be used to alter momentum and/or
-weight decay, for example, but for the sake of simplicity these values
-will be the same across layer groups.</p>
-<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters">&#182;</a></h2><p>model: nn.Module
-    A model object. If you intend to use differential learning rates,
-    the model must have an attribute <code>groups</code> containing a ModuleList of
-    layer groups in the form of Sequential objects. The number of layer
-    groups must match the number of learning rates passed in.
-lr: float, Iterable[float]
-    A number of list of numbers containing the learning rates to use for
-    each layer group. There should generally be one LR for each layer group
-    in the model. If fewer LR's are provided, lr_mult will be used to
-    compute additional LRs. See <a href="/core.html#update_optimizer"><code>update_optimizer</code></a> for details.
-optimizer: torch optimizer
-    The Torch optimizer to be created (Adam by default).
-eps: float
-    Hyperparameter used by optimizer. The default of 1e-8 can lead to
-    exploding gradients, so we typically override this.</p>
-<h2 id="Examples">Examples<a class="anchor-link" href="#Examples">&#182;</a></h2><p>optim = variable_lr_optimizer(model, lrs=[3e-3, 3e-2, 1e-1])</p>
-
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Adam (
+Parameter Group 0
+    amsgrad: False
+    betas: (0.9, 0.999)
+    eps: 0.001
+    lr: 0.002
+    weight_decay: 0
+)
+As expected, got ValueError(Received more learning rates than layer groups.).
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -426,45 +362,92 @@ eps: float
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">update_optimizer</span><span class="p">(</span><span class="n">optim</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">optim</span><span class="o">.</span><span class="n">param_groups</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="k">assert</span> <span class="n">optim</span><span class="o">.</span><span class="n">param_groups</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;lr&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mf">1e-3</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">lrs</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e-3</span><span class="p">,</span> <span class="mf">3e-3</span><span class="p">]</span>
+<span class="n">optim</span> <span class="o">=</span> <span class="n">variable_lr_optimizer</span><span class="p">(</span><span class="n">gnet</span><span class="p">,</span> <span class="n">lrs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">optim</span><span class="p">)</span>
+<span class="k">assert</span> <span class="p">[</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;lr&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">optim</span><span class="o">.</span><span class="n">param_groups</span><span class="p">]</span> <span class="o">==</span> <span class="n">lrs</span>
+
+<span class="n">update_optimizer</span><span class="p">(</span><span class="n">optim</span><span class="p">,</span> <span class="mf">2e-3</span><span class="p">,</span> <span class="n">lr_mult</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;lr&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">optim</span><span class="o">.</span><span class="n">param_groups</span><span class="p">])</span>
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">optim</span><span class="o">.</span><span class="n">param_groups</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;lr&#39;</span><span class="p">],</span> <span class="n">optim</span><span class="o">.</span><span class="n">param_groups</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;lr&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 <div class="output_wrapper">
 <div class="output">
 
 <div class="output_area">
 
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Adam (
+Parameter Group 0
+    amsgrad: False
+    betas: (0.9, 0.999)
+    eps: 0.001
+    lr: 0.001
+    weight_decay: 0
 
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="update_optimizer" class="doc_header"><code>update_optimizer</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/core.py#L557" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>update_optimizer</code>(<strong><code>optim</code></strong>, <strong><code>lrs</code></strong>, <strong><code>lr_mult</code></strong>=<em><code>1.0</code></em>)</p>
-</blockquote>
-<p>Pass in 1 or more learning rates, 1 for each layer group, and update the
-optimizer accordingly. The optimizer is updated in place so nothing is
-returned.</p>
-<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters">&#182;</a></h2><p>optim: torch.optim
-    Optimizer object.
-lrs: float, Iterable[float]
-    One or more learning rates. If using multiple values, usually the
-    earlier values will be smaller and later values will be larger. This
-    can be achieved by passing in a list of LRs that is the same length as
-    the number of layer groups in the optimizer, or by passing in a single
-    LR and a value for lr_mult.
-lr_mult: float
-    If you pass in fewer LRs than layer groups, <code>lr_mult</code> will be used to
-    compute additional learning rates from the one that was passed in.</p>
-<h2 id="Returns">Returns<a class="anchor-link" href="#Returns">&#182;</a></h2><p>None</p>
-<h2 id="Examples">Examples<a class="anchor-link" href="#Examples">&#182;</a></h2><p>If optim has 3 layer groups, this will result in LRs of [3e-5, 3e-4, 3e-3]
-in that order:
-update_optimizer(optim, lrs=3e-3, lr_mult=0.1)</p>
-<p>Again, optim has 3 layer groups. We leave the default lr_mult of 1.0 so
-each LR will be 3e-3.
-update_optimizer(optim, lrs=3e-3)</p>
-<p>Again, optim has 3 layer groups. 3 LRs are passed in so lr_mult is unused.
-update_optimizer(optim, lrs=[1e-3, 1e-3, 3e-3])</p>
-
+Parameter Group 1
+    amsgrad: False
+    betas: (0.9, 0.999)
+    eps: 0.001
+    lr: 0.003
+    weight_decay: 0
+)
+[0.0006666666666666666, 0.002]
+</pre>
+</div>
 </div>
 
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">optim</span> <span class="o">=</span> <span class="n">variable_lr_optimizer</span><span class="p">(</span><span class="n">gnet</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="n">lr_mult</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;lr&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">optim</span><span class="o">.</span><span class="n">param_groups</span><span class="p">])</span>
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">optim</span><span class="o">.</span><span class="n">param_groups</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;lr&#39;</span><span class="p">],</span> <span class="n">optim</span><span class="o">.</span><span class="n">param_groups</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;lr&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[0.0005, 0.001]
+</pre>
+</div>
 </div>
 
 </div>
@@ -494,7 +477,15 @@ update_optimizer(optim, lrs=[1e-3, 1e-3, 3e-3])</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>As expected, got ValueError(Received more learning rates than layer groups.).
+<pre>Adam (
+Parameter Group 0
+    amsgrad: False
+    betas: (0.9, 0.999)
+    eps: 0.001
+    lr: 0.002
+    weight_decay: 0
+)
+As expected, got ValueError(Received more learning rates than layer groups.).
 </pre>
 </div>
 </div>
@@ -599,6 +590,89 @@ Parameter Group 1
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Trainer">Trainer<a class="anchor-link" href="#Trainer">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="handle_interrupt" class="doc_header"><code>handle_interrupt</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/core.py#L109" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>handle_interrupt</code>(<strong><code>meth</code></strong>)</p>
+</blockquote>
+
+<pre><code>Decorator for Trainer.train() method that allows the user to
+interrupt training with Ctrl+c while still running the
+`on_train_end` method for each of its callbacks. Without this,
+cutting training short would lose that functionality, so we
+couldn't do things like uploading to S3.
+
+Arguments
+---------
+meth: callable
+    The method to decorate.
+
+Returns
+-------
+callable: The wrapped method.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="Trainer" class="doc_header"><code>class</code> <code>Trainer</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/core.py#L140" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Trainer</code>(<strong><code>net</code></strong>, <strong><code>ds_train</code></strong>, <strong><code>ds_val</code></strong>, <strong><code>dl_train</code></strong>, <strong><code>dl_val</code></strong>, <strong><code>criterion</code></strong>, <strong><code>mode</code></strong>:<code>('binary', 'multiclass', 'regression')</code>, <strong><code>out_dir</code></strong>, <strong><code>optim</code></strong>=<em><code>None</code></em>, <strong><code>optim_type</code></strong>=<em><code>'Adam'</code></em>, <strong><code>eps</code></strong>=<em><code>0.001</code></em>, <strong><code>last_act</code></strong>=<em><code>None</code></em>, <strong><code>threshold</code></strong>=<em><code>0.5</code></em>, <strong><code>metrics</code></strong>=<em><code>None</code></em>, <strong><code>callbacks</code></strong>=<em><code>None</code></em>, <strong><code>device</code></strong>=<em><code>device(type='cpu')</code></em>) :: <code>LoggerMixin</code></p>
+</blockquote>
+
+<pre><code>Mixin class that configures and returns a logger.
+
+Examples
+--------
+class Foo(LoggerMixin):
+
+    def __init__(self, a, log_file):
+        self.a = a
+        self.log_file = log_file
+        self.logger = self.get_logger(log_file)
+
+    def walk(self, location):
+        self.logger.info(f'walk received argument {location}')
+        return f'walking to {location}'</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
 </div>
  
 

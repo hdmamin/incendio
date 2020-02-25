@@ -1,6 +1,7 @@
 ---
 
 title: Metrics
+
 keywords: fastai
 sidebar: home_sidebar
 
@@ -17,7 +18,8 @@ summary: "Metrics should follow the scikit-learn pattern of accepting two argume
 -->
 
 <div class="container" id="notebook-container">
-    
+    {% raw %}
+        
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
@@ -48,10 +50,11 @@ summary: "Metrics should follow the scikit-learn pattern of accepting two argume
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="percent_positive" class="doc_header"><code>percent_positive</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/metrics.py#L6" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>percent_positive</code>(<strong><code>y_true</code></strong>, <strong><code>y_pred</code></strong>)</p>
+<h4 id="percent_positive" class="doc_header"><code>percent_positive</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/metrics.py#L7" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>percent_positive</code>(<strong><code>y_true</code></strong>, <strong><code>y_pred</code></strong>)</p>
 </blockquote>
-<p>Compute the percent of predictions that are positive. This
-can help us identify when a model is predicting all ones or zeros.</p>
+
+<pre><code>Compute the percent of predictions that are positive. This
+can help us identify when a model is predicting all ones or zeros.</code></pre>
 
 </div>
 
@@ -73,9 +76,10 @@ can help us identify when a model is predicting all ones or zeros.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="mean_soft_prediction" class="doc_header"><code>mean_soft_prediction</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/metrics.py#L13" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mean_soft_prediction</code>(<strong><code>y_true</code></strong>, <strong><code>y_score</code></strong>)</p>
+<h4 id="mean_soft_prediction" class="doc_header"><code>mean_soft_prediction</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/metrics.py#L15" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mean_soft_prediction</code>(<strong><code>y_true</code></strong>, <strong><code>y_score</code></strong>)</p>
 </blockquote>
-<p>Compute the mean predicted probability.</p>
+
+<pre><code>Compute the mean predicted probability.</code></pre>
 
 </div>
 
@@ -97,9 +101,12 @@ can help us identify when a model is predicting all ones or zeros.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="batch_size" class="doc_header"><code>batch_size</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/metrics.py#L18" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>batch_size</code>(<strong><code>y_true</code></strong>, <strong><code>y_pred</code></strong>)</p>
+<h4 id="std_soft_prediction" class="doc_header"><code>std_soft_prediction</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/metrics.py#L21" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>std_soft_prediction</code>(<strong><code>y_true</code></strong>, <strong><code>y_score</code></strong>)</p>
 </blockquote>
-<p>Count the number of items in the current batch.</p>
+
+<pre><code>Compute the standard deviation of the predicted
+probabilities. This helps us identify if the model is
+always predicting roughly the same probability.</code></pre>
 
 </div>
 
@@ -109,6 +116,32 @@ can help us identify when a model is predicting all ones or zeros.</p>
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="batch_size" class="doc_header"><code>batch_size</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/metrics.py#L30" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>batch_size</code>(<strong><code>y_true</code></strong>, <strong><code>y_pred</code></strong>)</p>
+</blockquote>
+
+<pre><code>Count the number of items in the current batch.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
 </div>
  
 

@@ -1,6 +1,7 @@
 ---
 
 title: Title
+
 keywords: fastai
 sidebar: home_sidebar
 
@@ -17,7 +18,8 @@ summary: "summary"
 -->
 
 <div class="container" id="notebook-container">
-    
+    {% raw %}
+        
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
@@ -2796,7 +2798,6 @@ Parameter Group 1
              <span class="n">MetricHistory</span><span class="p">(),</span>
              <span class="n">ModelUnfreezer</span><span class="p">({</span><span class="mi">3</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span> <span class="s1">&#39;groups&#39;</span><span class="p">),</span>
              <span class="n">ModelCheckpoint</span><span class="p">(),</span>
-             <span class="n">MetricHistory</span><span class="p">(),</span>
              <span class="n">CosineLRScheduler</span><span class="p">()</span>
              <span class="n">S3Uploader</span><span class="p">(</span><span class="s1">&#39;mytorch_test&#39;</span><span class="p">)</span>
             <span class="p">]</span>
@@ -3716,6 +3717,7 @@ SimpleMulticlassModel(
 </div>
 
 </div>
+    {% endraw %}
 </div>
  
 

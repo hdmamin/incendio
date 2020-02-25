@@ -328,6 +328,7 @@ class Trainer(LoggerMixin):
 
         # Create optimizer to load state dict. LR will be updated later.
         if not self.optim:
+            self.net.to(self.device)
             self.optim = variable_lr_optimizer(self.net,
                                                optimizer=self.optim_type)
         try:

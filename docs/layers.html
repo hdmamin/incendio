@@ -1,6 +1,7 @@
 ---
 
 title: Layers
+
 keywords: fastai
 sidebar: home_sidebar
 
@@ -17,7 +18,8 @@ summary: "Custom activations, layers, and layer blocks are contained in this mod
 -->
 
 <div class="container" id="notebook-container">
-    
+    {% raw %}
+        
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
@@ -71,9 +73,10 @@ summary: "Custom activations, layers, and layer blocks are contained in this mod
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="GRelu" class="doc_header"><code>class</code> <code>GRelu</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L11" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>GRelu</code>(<strong><code>leak</code></strong>=<em><code>0.0</code></em>, <strong><code>max</code></strong>=<em><code>inf</code></em>, <strong><code>sub</code></strong>=<em><code>0.0</code></em>) :: <code>Module</code></p>
+<h2 id="GRelu" class="doc_header"><code>class</code> <code>GRelu</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L13" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>GRelu</code>(<strong><code>leak</code></strong>=<em><code>0.0</code></em>, <strong><code>max</code></strong>=<em><code>inf</code></em>, <strong><code>sub</code></strong>=<em><code>0.0</code></em>) :: <code>Module</code></p>
 </blockquote>
-<p>Generic ReLU.</p>
+
+<pre><code>Generic ReLU.</code></pre>
 
 </div>
 
@@ -98,11 +101,13 @@ summary: "Custom activations, layers, and layer blocks are contained in this mod
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Mish" class="doc_header"><code>class</code> <code>Mish</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L36" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Mish</code>() :: <code>Module</code></p>
+<h2 id="Mish" class="doc_header"><code>class</code> <code>Mish</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L40" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Mish</code>() :: <code>Module</code></p>
 </blockquote>
-<p>OOP form of mish activation.</p>
-<p>Mish: A Self Regularized Non-Monotonic Neural Activation Function
-<a href="https://arxiv.org/pdf/1908.08681v1.pdf">https://arxiv.org/pdf/1908.08681v1.pdf</a></p>
+
+<pre><code>OOP form of mish activation.
+
+Mish: A Self Regularized Non-Monotonic Neural Activation Function
+https://arxiv.org/pdf/1908.08681v1.pdf</code></pre>
 
 </div>
 
@@ -124,14 +129,21 @@ summary: "Custom activations, layers, and layer blocks are contained in this mod
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="mish" class="doc_header"><code>mish</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L50" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mish</code>(<strong><code>x</code></strong>)</p>
+<h4 id="mish" class="doc_header"><code>mish</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L55" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mish</code>(<strong><code>x</code></strong>)</p>
 </blockquote>
-<p>Functional form of mish activation.</p>
-<p>Mish: A Self Regularized Non-Monotonic Neural Activation Function
-<a href="https://arxiv.org/pdf/1908.08681v1.pdf">https://arxiv.org/pdf/1908.08681v1.pdf</a></p>
-<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters">&#182;</a></h2><p>x: torch.Tensor[float]
-    Input tensor.</p>
-<h2 id="Returns">Returns<a class="anchor-link" href="#Returns">&#182;</a></h2><p>torch.Tensor[float]: Tensor of same shape as input x.</p>
+
+<pre><code>Functional form of mish activation.
+
+Mish: A Self Regularized Non-Monotonic Neural Activation Function
+https://arxiv.org/pdf/1908.08681v1.pdf
+
+Parameters
+----------
+x: torch.Tensor[float]
+    Input tensor.
+Returns
+-------
+torch.Tensor[float]: Tensor of same shape as input x.</code></pre>
 
 </div>
 
@@ -244,9 +256,10 @@ summary: "Custom activations, layers, and layer blocks are contained in this mod
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="ConvBlock" class="doc_header"><code>class</code> <code>ConvBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L67" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ConvBlock</code>(<strong><code>c_in</code></strong>, <strong><code>c_out</code></strong>, <strong><code>kernel_size</code></strong>=<em><code>3</code></em>, <strong><code>norm</code></strong>=<em><code>True</code></em>, <strong><code>activation</code></strong>=<em><code>GReLU(leak=0.1, max=6.0, sub=0.4)</code></em>, <strong>**<code>kwargs</code></strong>) :: <code>Module</code></p>
+<h2 id="ConvBlock" class="doc_header"><code>class</code> <code>ConvBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L73" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ConvBlock</code>(<strong><code>c_in</code></strong>, <strong><code>c_out</code></strong>, <strong><code>kernel_size</code></strong>=<em><code>3</code></em>, <strong><code>norm</code></strong>=<em><code>True</code></em>, <strong><code>activation</code></strong>=<em><code>GReLU(leak=0.1, max=6.0, sub=0.4)</code></em>, <strong>**<code>kwargs</code></strong>) :: <code>Module</code></p>
 </blockquote>
-<p>Create a convolutional block optionally followed by a batch norm layer.</p>
+
+<pre><code>Create a convolutional block optionally followed by a batch norm layer.</code></pre>
 
 </div>
 
@@ -261,7 +274,8 @@ summary: "Custom activations, layers, and layer blocks are contained in this mod
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ConvBlock</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">conv</span> <span class="o">=</span> <span class="n">ConvBlock</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">conv</span>
 </pre></div>
 
     </div>
@@ -291,6 +305,36 @@ summary: "Custom activations, layers, and layer blocks are contained in this mod
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">conv</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>torch.Size([2, 5, 2, 2])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
@@ -302,29 +346,31 @@ summary: "Custom activations, layers, and layer blocks are contained in this mod
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="ResBlock" class="doc_header"><code>class</code> <code>ResBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L112" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ResBlock</code>(<strong><code>c_in</code></strong>, <strong><code>activation</code></strong>=<em><code>GReLU(leak=0.1, max=6.0, sub=0.4)</code></em>, <strong><code>f</code></strong>=<em><code>3</code></em>, <strong><code>stride</code></strong>=<em><code>1</code></em>, <strong><code>pad</code></strong>=<em><code>1</code></em>, <strong><code>skip_size</code></strong>=<em><code>2</code></em>, <strong><code>norm</code></strong>=<em><code>True</code></em>) :: <code>Module</code></p>
+<h2 id="ResBlock" class="doc_header"><code>class</code> <code>ResBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L119" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ResBlock</code>(<strong><code>c_in</code></strong>, <strong><code>activation</code></strong>=<em><code>GReLU(leak=0.1, max=6.0, sub=0.4)</code></em>, <strong><code>f</code></strong>=<em><code>3</code></em>, <strong><code>stride</code></strong>=<em><code>1</code></em>, <strong><code>pad</code></strong>=<em><code>1</code></em>, <strong><code>skip_size</code></strong>=<em><code>2</code></em>, <strong><code>norm</code></strong>=<em><code>True</code></em>) :: <code>Module</code></p>
 </blockquote>
-<p>Base class for all neural network modules.</p>
-<p>Your models should also subclass this class.</p>
-<p>Modules can also contain other Modules, allowing to nest them in
-a tree structure. You can assign the submodules as regular attributes::</p>
 
-<pre><code>import torch.nn as nn
-import torch.nn.functional as F
+<pre><code>Base class for all neural network modules.
 
-class Model(nn.Module):
-    def __init__(self):
-        super(Model, self).__init__()
-        self.conv1 = nn.Conv2d(1, 20, 5)
-        self.conv2 = nn.Conv2d(20, 20, 5)
+Your models should also subclass this class.
 
-    def forward(self, x):
-        x = F.relu(self.conv1(x))
-        return F.relu(self.conv2(x))
+Modules can also contain other Modules, allowing to nest them in
+a tree structure. You can assign the submodules as regular attributes::
 
-</code></pre>
-<p>Submodules assigned in this way will be registered, and will have their
-parameters converted too when you call :meth:<code>to</code>, etc.</p>
+    import torch.nn as nn
+    import torch.nn.functional as F
+
+    class Model(nn.Module):
+        def __init__(self):
+            super(Model, self).__init__()
+            self.conv1 = nn.Conv2d(1, 20, 5)
+            self.conv2 = nn.Conv2d(20, 20, 5)
+
+        def forward(self, x):
+            x = F.relu(self.conv1(x))
+            return F.relu(self.conv2(x))
+
+Submodules assigned in this way will be registered, and will have their
+parameters converted too when you call :meth:`to`, etc.</code></pre>
 
 </div>
 
@@ -422,6 +468,7 @@ parameters converted too when you call :meth:<code>to</code>, etc.</p>
 </div>
 
 </div>
+    {% endraw %}
 </div>
  
 

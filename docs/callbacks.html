@@ -1,6 +1,7 @@
 ---
 
 title: Callbacks
+
 keywords: fastai
 sidebar: home_sidebar
 
@@ -17,7 +18,8 @@ summary: "API details."
 -->
 
 <div class="container" id="notebook-container">
-    
+    {% raw %}
+        
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
@@ -51,7 +53,7 @@ summary: "API details."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="TorchCallback" class="doc_header"><code>class</code> <code>TorchCallback</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L21" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>TorchCallback</code>()</p>
+<h2 id="TorchCallback" class="doc_header"><code>class</code> <code>TorchCallback</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L27" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>TorchCallback</code>()</p>
 </blockquote>
 
 </div>
@@ -74,10 +76,11 @@ summary: "API details."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="BasicConfig" class="doc_header"><code>class</code> <code>BasicConfig</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L42" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>BasicConfig</code>(<strong><code>priority</code></strong>=<em><code>0</code></em>) :: <a href="/callbacks.html#TorchCallback"><code>TorchCallback</code></a></p>
+<h2 id="BasicConfig" class="doc_header"><code>class</code> <code>BasicConfig</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L49" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>BasicConfig</code>(<strong><code>priority</code></strong>=<em><code>0</code></em>) :: <a href="/incendio/callbacks#TorchCallback"><code>TorchCallback</code></a></p>
 </blockquote>
-<p>Handles basic model tasks like putting the model on the GPU
-and switching between train and eval modes.</p>
+
+<pre><code>Handles basic model tasks like putting the model on the GPU
+and switching between train and eval modes.</code></pre>
 
 </div>
 
@@ -99,10 +102,11 @@ and switching between train and eval modes.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="StatsHandler" class="doc_header"><code>class</code> <code>StatsHandler</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L65" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>StatsHandler</code>(<strong><code>priority</code></strong>=<em><code>5</code></em>) :: <a href="/callbacks.html#TorchCallback"><code>TorchCallback</code></a></p>
+<h2 id="StatsHandler" class="doc_header"><code>class</code> <code>StatsHandler</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L77" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>StatsHandler</code>(<strong><code>priority</code></strong>=<em><code>5</code></em>) :: <a href="/incendio/callbacks#TorchCallback"><code>TorchCallback</code></a></p>
 </blockquote>
-<p>This updates metrics at the end of each epoch to account for
-potentially varying batch sizes.</p>
+
+<pre><code>This updates metrics at the end of each epoch to account for
+potentially varying batch sizes.</code></pre>
 
 </div>
 
@@ -124,11 +128,12 @@ potentially varying batch sizes.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="MetricPrinter" class="doc_header"><code>class</code> <code>MetricPrinter</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L88" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>MetricPrinter</code>(<strong><code>priority</code></strong>=<em><code>10</code></em>) :: <a href="/callbacks.html#TorchCallback"><code>TorchCallback</code></a></p>
+<h2 id="MetricPrinter" class="doc_header"><code>class</code> <code>MetricPrinter</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L101" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>MetricPrinter</code>(<strong><code>priority</code></strong>=<em><code>10</code></em>) :: <a href="/incendio/callbacks#TorchCallback"><code>TorchCallback</code></a></p>
 </blockquote>
-<p>Prints metrics at the end of each epoch. This is one of the
+
+<pre><code>Prints metrics at the end of each epoch. This is one of the
 default callbacks provided in BaseModel - it does not need to
-be passed in explicitly.</p>
+be passed in explicitly.</code></pre>
 
 </div>
 
@@ -150,7 +155,7 @@ be passed in explicitly.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="EarlyStopper" class="doc_header"><code>class</code> <code>EarlyStopper</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L112" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>EarlyStopper</code>(<strong><code>goal</code></strong>:<code>('max', 'min')</code>, <strong><code>metric</code></strong>=<em><code>'loss'</code></em>, <strong><code>min_improvement</code></strong>=<em><code>0.0</code></em>, <strong><code>patience</code></strong>=<em><code>3</code></em>, <strong><code>priority</code></strong>=<em><code>15</code></em>) :: <a href="/callbacks.html#TorchCallback"><code>TorchCallback</code></a></p>
+<h2 id="EarlyStopper" class="doc_header"><code>class</code> <code>EarlyStopper</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L126" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>EarlyStopper</code>(<strong><code>metric</code></strong>, <strong><code>goal</code></strong>:<code>('max', 'min')</code>, <strong><code>min_improvement</code></strong>=<em><code>0.0</code></em>, <strong><code>patience</code></strong>=<em><code>3</code></em>, <strong><code>priority</code></strong>=<em><code>15</code></em>) :: <a href="/incendio/callbacks#TorchCallback"><code>TorchCallback</code></a></p>
 </blockquote>
 
 </div>
@@ -173,7 +178,7 @@ be passed in explicitly.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="PerformanceThreshold" class="doc_header"><code>class</code> <code>PerformanceThreshold</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L179" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>PerformanceThreshold</code>(<strong><code>metric</code></strong>, <strong><code>goal</code></strong>:<code>('min', 'max')</code>, <strong><code>threshold</code></strong>, <strong><code>skip_epochs</code></strong>=<em><code>0</code></em>, <strong><code>split</code></strong>:<code>('train', 'val')</code>=<em><code>'val'</code></em>, <strong><code>priority</code></strong>=<em><code>15</code></em>) :: <a href="/callbacks.html#TorchCallback"><code>TorchCallback</code></a></p>
+<h2 id="PerformanceThreshold" class="doc_header"><code>class</code> <code>PerformanceThreshold</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L194" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>PerformanceThreshold</code>(<strong><code>metric</code></strong>, <strong><code>goal</code></strong>:<code>('min', 'max')</code>, <strong><code>threshold</code></strong>, <strong><code>skip_epochs</code></strong>=<em><code>0</code></em>, <strong><code>split</code></strong>:<code>('train', 'val')</code>=<em><code>'val'</code></em>, <strong><code>priority</code></strong>=<em><code>15</code></em>) :: <a href="/incendio/callbacks#TorchCallback"><code>TorchCallback</code></a></p>
 </blockquote>
 
 </div>
@@ -196,7 +201,7 @@ be passed in explicitly.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="ModelCheckpoint" class="doc_header"><code>class</code> <code>ModelCheckpoint</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L212" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ModelCheckpoint</code>(<strong><code>metric</code></strong>=<em><code>'loss'</code></em>, <strong><code>goal</code></strong>:<code>('max', 'min')</code>=<em><code>'min'</code></em>, <strong><code>priority</code></strong>=<em><code>25</code></em>) :: <a href="/callbacks.html#TorchCallback"><code>TorchCallback</code></a></p>
+<h2 id="ModelCheckpoint" class="doc_header"><code>class</code> <code>ModelCheckpoint</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L228" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ModelCheckpoint</code>(<strong><code>metric</code></strong>=<em><code>'loss'</code></em>, <strong><code>goal</code></strong>:<code>('max', 'min')</code>=<em><code>'min'</code></em>, <strong><code>priority</code></strong>=<em><code>25</code></em>) :: <a href="/incendio/callbacks#TorchCallback"><code>TorchCallback</code></a></p>
 </blockquote>
 
 </div>
@@ -219,9 +224,10 @@ be passed in explicitly.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="MetricHistory" class="doc_header"><code>class</code> <code>MetricHistory</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L251" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>MetricHistory</code>(<strong><code>fname</code></strong>=<em><code>'history.csv'</code></em>, <strong><code>plot_fname</code></strong>=<em><code>'history.png'</code></em>, <strong><code>priority</code></strong>=<em><code>90</code></em>) :: <a href="/callbacks.html#TorchCallback"><code>TorchCallback</code></a></p>
+<h2 id="MetricHistory" class="doc_header"><code>class</code> <code>MetricHistory</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L268" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>MetricHistory</code>(<strong><code>fname</code></strong>=<em><code>'history.csv'</code></em>, <strong><code>plot_fname</code></strong>=<em><code>'history.png'</code></em>, <strong><code>priority</code></strong>=<em><code>90</code></em>) :: <a href="/incendio/callbacks#TorchCallback"><code>TorchCallback</code></a></p>
 </blockquote>
-<p>Separate from StatsHandler in case we don't want to log outputs.</p>
+
+<pre><code>Separate from StatsHandler in case we don't want to log outputs.</code></pre>
 
 </div>
 
@@ -243,9 +249,10 @@ be passed in explicitly.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="S3Uploader" class="doc_header"><code>class</code> <code>S3Uploader</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L298" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>S3Uploader</code>(<strong><code>prefix</code></strong>, <strong><code>priority</code></strong>=<em><code>95</code></em>) :: <a href="/callbacks.html#TorchCallback"><code>TorchCallback</code></a></p>
+<h2 id="S3Uploader" class="doc_header"><code>class</code> <code>S3Uploader</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L316" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>S3Uploader</code>(<strong><code>bucket</code></strong>, <strong><code>prefix</code></strong>, <strong><code>priority</code></strong>=<em><code>95</code></em>) :: <a href="/incendio/callbacks#TorchCallback"><code>TorchCallback</code></a></p>
 </blockquote>
-<p>Upload model and logs to S3 when training finishes.</p>
+
+<pre><code>Upload model and logs to S3 when training finishes.</code></pre>
 
 </div>
 
@@ -267,54 +274,7 @@ be passed in explicitly.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="EC2Closer" class="doc_header"><code>class</code> <code>EC2Closer</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L315" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>EC2Closer</code>(<strong><code>timeout</code></strong>=<em><code>5</code></em>, <strong><code>priority</code></strong>=<em><code>100</code></em>) :: <a href="/callbacks.html#TorchCallback"><code>TorchCallback</code></a></p>
-</blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h2 id="ModelUnfreezer" class="doc_header"><code>class</code> <code>ModelUnfreezer</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L334" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ModelUnfreezer</code>(<strong><code>i2n</code></strong>, <strong><code>unfreeze_type</code></strong>:<code>('groups', 'layers')</code>=<em><code>'groups'</code></em>, <strong><code>mode</code></strong>:<code>('batch', 'epoch')</code>=<em><code>'epoch'</code></em>, <strong><code>priority</code></strong>=<em><code>25</code></em>) :: <a href="/callbacks.html#TorchCallback"><code>TorchCallback</code></a></p>
-</blockquote>
-<p>Gradually unfreeze a model during training.</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h2 id="SchedulerMixin" class="doc_header"><code>class</code> <code>SchedulerMixin</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L391" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>SchedulerMixin</code>() :: <a href="/callbacks.html#TorchCallback"><code>TorchCallback</code></a></p>
+<h2 id="EC2Closer" class="doc_header"><code>class</code> <code>EC2Closer</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L335" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>EC2Closer</code>(<strong><code>timeout</code></strong>=<em><code>5</code></em>, <strong><code>priority</code></strong>=<em><code>100</code></em>) :: <a href="/incendio/callbacks#TorchCallback"><code>TorchCallback</code></a></p>
 </blockquote>
 
 </div>
@@ -337,9 +297,10 @@ be passed in explicitly.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="CosineLRScheduler" class="doc_header"><code>class</code> <code>CosineLRScheduler</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L427" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CosineLRScheduler</code>(<strong><code>warm</code></strong>=<em><code>0.3</code></em>, <strong><code>restarts</code></strong>=<em><code>False</code></em>, <strong><code>cycle_len</code></strong>=<em><code>5</code></em>, <strong><code>cycle_decay</code></strong>=<em><code>0.0</code></em>, <strong><code>min_lr</code></strong>=<em><code>None</code></em>, <strong><code>verbose</code></strong>=<em><code>False</code></em>, <strong><code>priority</code></strong>=<em><code>10</code></em>) :: <a href="/callbacks.html#SchedulerMixin"><code>SchedulerMixin</code></a></p>
+<h2 id="ModelUnfreezer" class="doc_header"><code>class</code> <code>ModelUnfreezer</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L355" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ModelUnfreezer</code>(<strong><code>i2n</code></strong>, <strong><code>unfreeze_type</code></strong>:<code>('groups', 'layers')</code>=<em><code>'groups'</code></em>, <strong><code>mode</code></strong>:<code>('batch', 'epoch')</code>=<em><code>'epoch'</code></em>, <strong><code>priority</code></strong>=<em><code>25</code></em>) :: <a href="/incendio/callbacks#TorchCallback"><code>TorchCallback</code></a></p>
 </blockquote>
-<p>Learning rate scheduler that makes updates each batch.</p>
+
+<pre><code>Gradually unfreeze a model during training.</code></pre>
 
 </div>
 
@@ -349,6 +310,55 @@ be passed in explicitly.</p>
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="SchedulerMixin" class="doc_header"><code>class</code> <code>SchedulerMixin</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L413" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>SchedulerMixin</code>() :: <a href="/incendio/callbacks#TorchCallback"><code>TorchCallback</code></a></p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="CosineLRScheduler" class="doc_header"><code>class</code> <code>CosineLRScheduler</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/callbacks.py#L450" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CosineLRScheduler</code>(<strong><code>warm</code></strong>=<em><code>0.3</code></em>, <strong><code>restarts</code></strong>=<em><code>False</code></em>, <strong><code>cycle_len</code></strong>=<em><code>5</code></em>, <strong><code>cycle_decay</code></strong>=<em><code>0.0</code></em>, <strong><code>min_lr</code></strong>=<em><code>None</code></em>, <strong><code>verbose</code></strong>=<em><code>False</code></em>, <strong><code>priority</code></strong>=<em><code>10</code></em>) :: <a href="/incendio/callbacks#SchedulerMixin"><code>SchedulerMixin</code></a></p>
+</blockquote>
+
+<pre><code>Learning rate scheduler that makes updates each batch.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
 </div>
  
 
