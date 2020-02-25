@@ -221,8 +221,9 @@ def handle_interrupt(meth):
         except KeyboardInterrupt as error:
             instance.logger.info(f'Stop training due to {error}')
             instance._stop_training = True
-            # Variables defined in wrapped method scope. Returns None.
-            _ = instance.decide_stop('on_train_end', e, stats, val_stats)
+            # Dummy values used for epoch and stats to indicate that
+            # training was interrupted. `fit()` method returns None.
+            _ = instance.decide_stop('on_train_end', -1, {}, {})
     return wrapper
 
 
