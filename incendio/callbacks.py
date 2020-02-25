@@ -56,10 +56,13 @@ class BasicConfig(TorchCallback):
 
     def on_train_begin(self, trainer, epochs, lrs, lr_mult, **kwargs):
         trainer.net.to(DEVICE)
-        trainer.optim = variable_lr_optimizer(
-            trainer.net, lrs, lr_mult, trainer.optim_type, trainer.eps
-        )
-        print(trainer.optim)
+        if not trainer.optim:
+            trainer.optim = variable_lr_optimizer(
+                trainer.net, lrs, lr_mult, trainer.optim_type, trainer.eps
+            )
+        else:
+            update_optimizer(trainer.optim, lrs, lr_mult=lr_mult)
+        trainer.logger.info(trainer.optim)
         if kwargs.get('clean') is True: trainer.cleanup(confirmed=True)
 
     def on_epoch_begin(self, trainer, *args, **kwargs):

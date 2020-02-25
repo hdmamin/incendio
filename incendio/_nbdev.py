@@ -2,9 +2,7 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"variable_lr_optimizer": "06_optimizers.ipynb",
-         "update_optimizer": "06_optimizers.ipynb",
-         "BaseModel": "00_core.ipynb",
+index = {"BaseModel": "00_core.ipynb",
          "adam": "06_optimizers.ipynb",
          "handle_interrupt": "00_core.ipynb",
          "Trainer": "00_core.ipynb",
@@ -35,7 +33,9 @@ index = {"variable_lr_optimizer": "06_optimizers.ipynb",
          "ConvBlock": "04_layers.ipynb",
          "ResBlock": "04_layers.ipynb",
          "Vocabulary": "05_nlp.ipynb",
-         "back_translate": "05_nlp.ipynb"}
+         "back_translate": "05_nlp.ipynb",
+         "variable_lr_optimizer": "06_optimizers.ipynb",
+         "update_optimizer": "06_optimizers.ipynb"}
 
 modules = ["core.py",
            "utils.py",
