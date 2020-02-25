@@ -218,8 +218,8 @@ def handle_interrupt(meth):
         instance = args[0]
         try:
             meth(*args, **kwargs)
-        except KeyboardInterrupt as error:
-            instance.logger.info(f'Stop training due to {error}')
+        except KeyboardInterrupt:
+            instance.logger.info(f'Stop training due to KeyboardInterrupt.')
             instance._stop_training = True
             # Dummy values used for epoch and stats to indicate that
             # training was interrupted. `fit()` method returns None.
