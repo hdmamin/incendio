@@ -266,7 +266,7 @@ class ModelCheckpoint(TorchCallback):
                 f'{self.best_metric:.4f} to {new_val:.4f}.'
             )
             trainer.save(f'trainer.pkl')
-            save({k, round(v, 5) for k, v in val_stats.items()},
+            save({k: round(v, 5) for k, v in val_stats.items()},
                  self.metric_path)
             self.best_metric = new_val
 
