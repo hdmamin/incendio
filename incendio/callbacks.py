@@ -17,7 +17,7 @@ from tabulate import tabulate
 import warnings
 
 from accio.s3tool import S3tool
-from htools import auto_repr, valuecheck
+from htools import auto_repr, valuecheck, save
 from .utils import DEVICE
 from .optimizers import variable_lr_optimizer, update_optimizer
 
@@ -244,10 +244,12 @@ class ModelCheckpoint(TorchCallback):
 
         self.priority = priority
         self.metric = metric
-        self.model_dir = None
+        self.metric_path = None
 
     def on_train_begin(self, trainer, *args, **kwargs):
         self.best_metric = self.init_metric
+        self.metric_path = os.path.join(trainer.out_dir,
+                                        'best_val_metrics.json')
 
     def on_epoch_end(self, trainer, epoch, stats, val_stats):
         new_val = val_stats.get(self.metric)
@@ -264,6 +266,8 @@ class ModelCheckpoint(TorchCallback):
                 f'{self.best_metric:.4f} to {new_val:.4f}.'
             )
             trainer.save(f'trainer.pkl')
+            save({k, round(v, 5) for k, v in val_stats.items()},
+                 self.metric_path)
             self.best_metric = new_val
 
 
