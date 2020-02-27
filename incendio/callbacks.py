@@ -105,6 +105,9 @@ class MetricPrinter(TorchCallback):
     """
 
     def __init__(self, priority=10):
+        """Priority must be higher than StatsHandler, otherwise
+        metrics will be printed before they're aggregated.
+        """
         self.priority = priority
 
     def on_train_begin(self, trainer, *args, **kwargs):
@@ -284,14 +287,15 @@ class MetricHistory(TorchCallback):
         self.train_hist.append(stats.copy())
         self.val_hist.append(val_stats.copy())
 
-    def on_train_end(self, trainer, *args, **kwargs):
+    def on_train_end(self, trainer, epoch, stats, val_stats):
         self.df = pd.concat([
             pd.DataFrame(self.train_hist),
             pd.DataFrame(self.val_hist)\
               .rename(lambda x: f'val_{x}', axis='columns')
         ], axis=1)
-        self.df.to_csv(os.path.join(trainer.out_dir, self.fname),
-                       index=False)
+        self.df.round(5).to_csv(
+            os.path.join(trainer.out_dir, self.fname), index=False
+        )
         self.plot(os.path.join(trainer.out_dir, self.plot_fname))
 
     def plot(self, path=None):
