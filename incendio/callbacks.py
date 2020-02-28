@@ -13,6 +13,7 @@ import numpy as np
 from operator import lt, gt, add, sub
 import os
 import pandas as pd
+import requests
 from tabulate import tabulate
 import warnings
 
