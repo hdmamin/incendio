@@ -292,7 +292,7 @@ class Trainer(LoggerMixin):
             data['optim'] = self.optim.state_dict()
         except AttributeError:
             self.logger.warning('No optimizer. Only saving model state dict.')
-        save(data, os.path.join(self.out_dir, fname))
+        torch.save(data, os.path.join(self.out_dir, fname))
 
     def load(self, fname=None, old_path=None):
         """This lets a trainer load previously saved model and optimizer
@@ -323,7 +323,8 @@ class Trainer(LoggerMixin):
         trainer = trainer.load('v1')
         """
         path = old_path or os.path.join(self.out_dir, fname)
-        data = load(path)
+        self.logger.info(f'Loading weights from {path}.')
+        data = torch.load(path, map_location=self.device)
         self.net.load_state_dict(data['model'])
 
         # Create optimizer to load state dict. LR will be updated later.
