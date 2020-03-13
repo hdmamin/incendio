@@ -459,4 +459,4 @@ def compress_embeddings(emb, new_dim, d=None):
     """
     emb = postprocess_embeddings(emb, d)
     emb = PCA(new_dim).fit_transform(emb)
-    return postprocess_embeddings(emb)
+    return postprocess_embeddings(emb, d)
