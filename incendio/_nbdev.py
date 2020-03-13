@@ -37,6 +37,8 @@ index = {"BaseModel": "00_core.ipynb",
          "Dropin": "04_layers.ipynb",
          "Vocabulary": "05_nlp.ipynb",
          "back_translate": "05_nlp.ipynb",
+         "postprocess_embeddings": "05_nlp.ipynb",
+         "compress_embeddings": "05_nlp.ipynb",
          "variable_lr_optimizer": "06_optimizers.ipynb",
          "update_optimizer": "06_optimizers.ipynb"}
 
