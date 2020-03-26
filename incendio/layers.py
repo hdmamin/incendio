@@ -193,14 +193,11 @@ class ReflectionPaddedConv2d(nn.Module):
 
 # Cell
 class Dropin(nn.Module):
-    """Think about if this would need to work differently in training vs.
-    eval mode, like multiplicative dropout.
-
-    Work in progress, not sure if xavier normal is a good choice - just an
-    example.
-
-    Also look into if floating point addition might be faster/slower on gpu
-    than multiplication.
+    """Additive dropout. This injects small amounts of noise into a model
+    in the form of randomly generated floats from a zero-centered
+    gaussian distribution (variance can be adjusted). This does nothing
+    in eval mode. Unlike Dropout, this does not scale weights during
+    training since it does not bias them in any direction.
     """
 
     def __init__(self, scale=.5):
@@ -219,6 +216,9 @@ class Dropin(nn.Module):
         self.scale = scale
 
     def forward(self, x):
+        if not self.training:
+            return x
+
         # Storing noise allows us to run diagnostics.
         self.noise = torch.randn_like(x) * np.sqrt(self.scale / x.shape[-1])
         return x + self.noise

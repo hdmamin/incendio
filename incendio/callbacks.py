@@ -2,7 +2,7 @@
 
 __all__ = ['TorchCallback', 'BasicConfig', 'StatsHandler', 'MetricPrinter', 'BatchMetricPrinter', 'EarlyStopper',
            'PerformanceThreshold', 'ModelCheckpoint', 'MetricHistory', 'S3Uploader', 'EC2Closer', 'ModelUnfreezer',
-           'SchedulerMixin', 'CosineLRScheduler']
+           'SchedulerMixin', 'CosineLRScheduler', 'SawtoothScheduler']
 
 
 # Cell
@@ -156,7 +156,6 @@ class BatchMetricPrinter(TorchCallback):
 
 
 # Cell
-# export
 class EarlyStopper(TorchCallback):
 
     @valuecheck
@@ -460,7 +459,6 @@ class SchedulerMixin(TorchCallback):
         try:
             lr = self.lrs[n]
         except IndexError as e:
-            lr = self.lrs[-1]
             return
 
         update_optimizer(trainer.optim, lr, lr_mult=self.lr_mult)
@@ -610,3 +608,70 @@ class CosineLRScheduler(SchedulerMixin):
         lrs = [self._cosine_anneal(cycle_batches, self.max_lr, self.min_lr)
                / (1 + self.cycle_decay * i) for i in range(cycles)]
         return np.concatenate(lrs)
+
+
+# Cell
+class SawtoothScheduler(SchedulerMixin):
+    """Learning rate scheduler inspired by the sawtooth pattern often
+    used to manage TCP flow
+    (ex: https://witestlab.poly.edu/blog/tcp-congestion-control-basics/).
+    This uses a strategy called "additive increase, multiplicative decrease".
+    Basically, while the training loss is generally decreasing, we
+    gradually increase the learning rate. When things show signs of getting
+    worse, we dramatically decrease the LR and begin climbing again.
+    The result looks something like a cyclical policy with restarts,
+    except that in this case the cycle lengths are dependent on training
+    rather than pre-defined.
+    """
+
+    def __init__(self, add=1e-4, scale=0.6, patience=5, priority=10):
+        self.add = add
+        self.scale = scale
+        self.patience = patience
+        self.priority = priority
+
+        # These are reset in `on_train_begin`, but types remain the same.
+        self.lrs = []
+        self.since_improve = 0
+        self.recent_best = float('inf')
+        self.lr_mult = 1.0
+
+    def on_train_begin(self, trainer, epochs, lrs, lr_mult, **kwargs):
+        """Wrapper to schedule learning rates depending on chosen method.
+
+        Parameters
+        ----------
+        restarts: bool
+            If True, use schedule with restarts. If False, use regular
+            cosine annealing that spans whole duration of training.
+
+        Returns
+        -------
+        np.array: LR for each iteration (i.e. output[i] is the LR to use
+            at iteration i).
+        """
+        self.lrs.clear()
+        self.since_improve = 0
+        self.recent_best = float('inf')
+        self.lr_mult = lr_mult
+
+    def on_batch_begin(self, trainer, i, sum_i, stats):
+        """Update LR at the start of every batch."""
+        try:
+            loss = stats.get('loss')[-1]
+        except:
+            return
+
+        lr = max(p['lr'] for p in trainer.optim.param_groups)
+        if loss <= self.recent_best:
+            self.recent_best = loss
+            self.since_improve = 0
+            lr += self.add
+        elif loss > self.recent_best and self.since_improve < self.patience:
+            self.since_improve += 1
+            lr += self.add / (self.since_improve+1)
+        else:
+            self.since_improve += 1
+            lr *= self.scale
+        update_optimizer(trainer.optim, lr, lr_mult=self.lr_mult)
+        self.lrs.append(lr)
