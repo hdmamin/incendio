@@ -5,10 +5,12 @@ __all__ = ['Vocabulary', 'back_translate', 'postprocess_embeddings', 'compress_e
 
 # Cell
 from collections import Counter
+import mmh3
 import multiprocessing
 from sklearn.decomposition import PCA
 import spacy
 from textblob import TextBlob
+import torch
 
 from htools import save, load
 

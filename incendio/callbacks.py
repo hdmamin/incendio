@@ -2,7 +2,7 @@
 
 __all__ = ['TorchCallback', 'BasicConfig', 'StatsHandler', 'MetricPrinter', 'BatchMetricPrinter', 'EarlyStopper',
            'PerformanceThreshold', 'ModelCheckpoint', 'MetricHistory', 'S3Uploader', 'EC2Closer', 'ModelUnfreezer',
-           'SchedulerMixin', 'CosineLRScheduler', 'SawtoothScheduler']
+           'SchedulerMixin', 'CosineLRScheduler', 'AdaptiveSawtoothScheduler']
 
 
 # Cell
@@ -611,20 +611,31 @@ class CosineLRScheduler(SchedulerMixin):
 
 
 # Cell
-class SawtoothScheduler(SchedulerMixin):
+class AdaptiveSawtoothScheduler(SchedulerMixin):
     """Learning rate scheduler inspired by the sawtooth pattern often
     used to manage TCP flow
     (ex: https://witestlab.poly.edu/blog/tcp-congestion-control-basics/).
     This uses a strategy called "additive increase, multiplicative decrease".
     Basically, while the training loss is generally decreasing, we
     gradually increase the learning rate. When things show signs of getting
-    worse, we dramatically decrease the LR and begin climbing again.
+    worse, we dramatically decrease the LR and begin slowly climbing again.
     The result looks something like a cyclical policy with restarts,
     except that in this case the cycle lengths are dependent on training
-    rather than pre-defined.
+    rather than pre-defined. SGD w/ restarts typically also uses a sharp
+    increase and a gradual decrease, while this is closer to the opposite.
+
+    Unlike the standard AIMD algorithm, we decay the amount added if the
+    batch loss increases, even if we're still within the patience window.
     """
 
     def __init__(self, add=1e-4, scale=0.6, patience=5, priority=10):
+        """Note: further experimentation is required to determine
+        sensible defaults for these hyperparameters.
+
+        Parameters
+        ----------
+
+        """
         self.add = add
         self.scale = scale
         self.patience = patience

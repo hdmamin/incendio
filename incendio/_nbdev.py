@@ -23,7 +23,7 @@ index = {"BaseModel": "00_core.ipynb",
          "ModelUnfreezer": "02_callbacks.ipynb",
          "SchedulerMixin": "02_callbacks.ipynb",
          "CosineLRScheduler": "02_callbacks.ipynb",
-         "SawtoothScheduler": "02_callbacks.ipynb",
+         "AdaptiveSawtoothScheduler": "02_callbacks.ipynb",
          "percent_positive": "03_metrics.ipynb",
          "mean_soft_prediction": "03_metrics.ipynb",
          "std_soft_prediction": "03_metrics.ipynb",
@@ -36,12 +36,16 @@ index = {"BaseModel": "00_core.ipynb",
          "ResBlock": "04_layers.ipynb",
          "ReflectionPaddedConv2d": "04_layers.ipynb",
          "Dropin": "04_layers.ipynb",
+         "PaddedEmbedding": "04_layers.ipynb",
+         "BloomEmbedding": "04_layers.ipynb",
          "Vocabulary": "05_nlp.ipynb",
          "back_translate": "05_nlp.ipynb",
          "postprocess_embeddings": "05_nlp.ipynb",
          "compress_embeddings": "05_nlp.ipynb",
          "variable_lr_optimizer": "06_optimizers.ipynb",
-         "update_optimizer": "06_optimizers.ipynb"}
+         "update_optimizer": "06_optimizers.ipynb",
+         "probabilistic_hash_item": "07_data.ipynb",
+         "probabilistic_hash_tensor": "07_data.ipynb"}
 
 modules = ["core.py",
            "utils.py",
@@ -49,7 +53,8 @@ modules = ["core.py",
            "metrics.py",
            "layers.py",
            "nlp.py",
-           "optimizers.py"]
+           "optimizers.py",
+           "data.py"]
 
 doc_url = "https://hdmamin.github.io/incendio/"
 
