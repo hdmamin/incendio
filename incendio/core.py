@@ -107,7 +107,7 @@ adam = partial(torch.optim.Adam, eps=1e-3)
 
 # Cell
 def handle_interrupt(meth):
-    """Decorator for Trainer.train() method that allows the user to
+    """Decorator for Trainer.fit() method that allows the user to
     interrupt training with Ctrl+c while still running the
     `on_train_end` method for each of its callbacks. Without this,
     cutting training short would lose that functionality, so we

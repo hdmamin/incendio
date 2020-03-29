@@ -4,11 +4,15 @@ __all__ = ['probabilistic_hash_item', 'probabilistic_hash_tensor']
 
 
 # Cell
+from collections import deque
 import mmh3
+import numpy as np
+import pandas as pd
 import torch
 from torch.utils.data import Dataset
+import warnings
 
-from htools import save, load
+from htools import auto_repr, save, load
 
 
 # Cell

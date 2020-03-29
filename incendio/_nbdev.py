@@ -45,7 +45,9 @@ index = {"BaseModel": "00_core.ipynb",
          "variable_lr_optimizer": "06_optimizers.ipynb",
          "update_optimizer": "06_optimizers.ipynb",
          "probabilistic_hash_item": "07_data.ipynb",
-         "probabilistic_hash_tensor": "07_data.ipynb"}
+         "probabilistic_hash_tensor": "07_data.ipynb",
+         "soft_label_cross_entropy_with_logits": "08_losses.ipynb",
+         "soft_label_cross_entropy": "08_losses.ipynb"}
 
 modules = ["core.py",
            "utils.py",
@@ -54,7 +56,8 @@ modules = ["core.py",
            "layers.py",
            "nlp.py",
            "optimizers.py",
-           "data.py"]
+           "data.py",
+           "losses.py"]
 
 doc_url = "https://hdmamin.github.io/incendio/"
 
