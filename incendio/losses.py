@@ -11,7 +11,8 @@ from htools import add_docstring
 
 
 # Cell
-def soft_label_cross_entropy_with_logits(y_pred, y_true, reduction='mean'):
+def soft_label_cross_entropy_with_logits(y_pred, y_true, alpha=0.0,
+                                         reduction='mean'):
     """Compute cross entropy with soft labels. PyTorch's built in
     multiclass cross entropy functions require us to pass in integer
     indices, which doesn't allow for soft labels which are shaped like
@@ -27,6 +28,12 @@ def soft_label_cross_entropy_with_logits(y_pred, y_true, reduction='mean'):
     y_true: torch.FloatTensor
         Soft labels, where values are between 0 and 1.
         Shape (bs, num_classes).
+    alpha: float
+        Label smoothing hyperparameter: a positive value which will be used to
+        assign nonzero probabilities to the classes that are currently zeros.
+        A larger alpha corresponds to a higher degree of smoothing (useful when
+        accounting for noisier labels, trying to provide a stronger
+        regularizing effect, or encouraging less confident predictions).
     reduction: str
         One of ('mean', 'sum', 'none'). This determines how to reduce
         the output of the function, similar to most PyTorch
@@ -38,21 +45,23 @@ def soft_label_cross_entropy_with_logits(y_pred, y_true, reduction='mean'):
         (bs, ). If 'mean' or 'sum', this will be be a tensor with a
         single value (no shape).
     """
-    res = (-y_true * F.log_softmax(y_pred)).sum(-1)
+    res = (-smooth_soft_labels(y_true, alpha)
+           * F.log_softmax(y_pred, dim=-1)).sum(-1)
     if reduction == 'none': return res
     return getattr(res, reduction)(0)
 
 
 # Cell
 @add_docstring(soft_label_cross_entropy_with_logits)
-def soft_label_cross_entropy(y_pred, y_true, reduction='mean'):
+def soft_label_cross_entropy(y_pred, y_true, alpha=0.0, reduction='mean'):
     """Same as `soft_label_cross_entropy_with_logits` but operates on
     softmax output instead of logits. The version with logits is
     recommended for numerical stability. Below is the docstring for the logits
     version. The only difference in this version is that y_pred will not be
     logits.
     """
-    res = -y_true * torch.log(y_pred)
-    res = torch.where(torch.isnan(res), torch.zeros_like(res), res).sum(-1)
+    res = -smooth_soft_labels(y_true, alpha) * torch.log(y_pred)
+    res = torch.where(torch.isnan(res) | torch.isinf(res),
+                      torch.zeros_like(res), res).sum(-1)
     if reduction == 'none': return res
     return getattr(res, reduction)(0)
