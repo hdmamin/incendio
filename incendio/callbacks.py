@@ -105,11 +105,27 @@ class MetricPrinter(TorchCallback):
     be passed in explicitly.
     """
 
-    def __init__(self, priority=10):
+    def __init__(self, pbar_metric='loss', batch_freq=1, priority=10):
         """Priority must be higher than StatsHandler, otherwise
         metrics will be printed before they're aggregated.
+
+        Parameters
+        ----------
+        pbar_metric: str
+            Metric to update in the tqdm progress bar. This will be
+            the value computed on the most recent mini batch in the
+            training set.
+        batch_freq: int
+            How often to update the tqdm progress bar with mini batch
+            stats. The default of 1 means we'll update it every mini
+            batch, which can be too fast to read if mini batches
+            are processed quickly (e.g. if batch size is small and the
+            forward pass is fast).
+        priority: int
         """
+        self.pbar_metric = pbar_metric
         self.priority = priority
+        self.batch_freq = batch_freq
 
     def on_train_begin(self, trainer, *args, **kwargs):
         trainer.logger = trainer.get_logger(
@@ -125,12 +141,19 @@ class MetricPrinter(TorchCallback):
             f'\n{"="*5}\n\nEpoch {epoch}\n\n{table}\n\n{"="*5}'
         )
 
+    def on_batch_end(self, trainer, i, sum_i, stats):
+        if sum_i % self.batch_freq != 0:
+            return
+        kwargs = {self.pbar_metric:
+                  format(stats[self.pbar_metric][-1], '.4f')}
+        trainer.pbar.set_postfix(**kwargs)
+
 
 # Cell
 class BatchMetricPrinter(TorchCallback):
     """Prints mini batch metrics to help us see if a model is
     learning early in training (helpful for debugging). We
-    remove the callbck after the specified number of prints
+    remove the callback after the specified number of prints
     so that it isn't called unnecessarily throughout the whole
     training process.
     """

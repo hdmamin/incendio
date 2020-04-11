@@ -370,6 +370,31 @@ class Trainer(LoggerMixin):
         """
         self.metrics.extend(metrics)
 
+    def set_callback_attr(self, cb_name, attr, val):
+        """Convenience method to change an attribute of an existing
+        callback.
+
+        Parameters
+        ----------
+        cb_name: str
+            Name of callback to update.
+        attr: str
+            Name of attribute to update.
+        val: any
+            Value of attribute to set.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        # This reduces the frequency with with we update the batch stats
+        # in the progress bar.
+        trainer.set_callback_attr('MetricPrinter', 'batch_freq', 10)
+        """
+        setattr(self.callbacks[cb_name], attr, val)
+
     @handle_interrupt
     def fit(self, epochs, lrs=3e-3, lr_mult=1.0, **kwargs):
         """Train the model.
@@ -397,7 +422,8 @@ class Trainer(LoggerMixin):
         _ = self.decide_stop('on_train_begin', epochs, lrs, lr_mult, **kwargs)
         for e in range(epochs):
             _ = self.decide_stop('on_epoch_begin', e, stats, None)
-            for i, batch in enumerate(tqdm(self.dl_train)):
+            self.pbar = tqdm(self.dl_train)
+            for i, batch in enumerate(self.pbar):
                 sum_i += 1
                 *xb, yb = map(lambda x: x.to(self.device), batch)
                 self.optim.zero_grad()
@@ -410,8 +436,7 @@ class Trainer(LoggerMixin):
                 self.optim.step()
 
                 # Separate because callbacks are only applied during training.
-                self._update_stats(stats, loss,
-                                   yb.detach().cpu(), y_score.detach().cpu())
+                self._update_stats(stats, loss, yb, y_score)
                 if self.decide_stop('on_batch_end', i, sum_i, stats): break
 
             # If on_batch_end callback halts training, else block is skipped.
@@ -463,6 +488,7 @@ class Trainer(LoggerMixin):
         -------
         None
         """
+        yb, y_score = yb.detach().cpu(), y_score.detach().cpu()
         # Final activation often excluded from network architecture.
         try:
             y_score = self.last_act(y_score)
