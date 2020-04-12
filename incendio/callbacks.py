@@ -140,6 +140,7 @@ class MetricPrinter(TorchCallback):
         trainer.logger.info(
             f'\n{"="*5}\n\nEpoch {epoch}\n\n{table}\n\n{"="*5}'
         )
+        trainer.pbar.close()
 
     def on_batch_end(self, trainer, i, sum_i, stats):
         if sum_i % self.batch_freq != 0:

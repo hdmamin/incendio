@@ -461,12 +461,11 @@ class Trainer(LoggerMixin):
         val_stats = defaultdict(list)
         self.net.eval()
         with torch.no_grad():
-            for batch in dl_val:
+            for batch in tqdm(dl_val):
                 *xb, yb = map(lambda x: x.to(self.device), batch)
                 y_score = self.net(*xb)
                 loss = self.criterion(y_score, yb)
-                self._update_stats(val_stats, loss,
-                                   yb.detach().cpu(), y_score.detach().cpu())
+                self._update_stats(val_stats, loss, yb, y_score)
         return val_stats
 
     def _update_stats(self, stats, loss, yb, y_score):
