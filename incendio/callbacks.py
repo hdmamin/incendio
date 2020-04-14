@@ -52,8 +52,8 @@ class BasicConfig(TorchCallback):
     and switching between train and eval modes.
     """
 
-    def __init__(self, priority=0):
-        self.priority = priority
+    def __init__(self, order=0):
+        self.order = order
 
     def on_train_begin(self, trainer, epochs, lrs, lr_mult, **kwargs):
         trainer.net.to(DEVICE)
@@ -80,8 +80,8 @@ class StatsHandler(TorchCallback):
     potentially varying batch sizes.
     """
 
-    def __init__(self, priority=5):
-        self.priority = priority
+    def __init__(self, order=5):
+        self.order = order
 
     def on_epoch_begin(self, trainer, epoch, stats, val_stats):
         """Resets stats at the start of each epoch."""
@@ -105,8 +105,8 @@ class MetricPrinter(TorchCallback):
     be passed in explicitly.
     """
 
-    def __init__(self, pbar_metric='loss', batch_freq=1, priority=10):
-        """Priority must be higher than StatsHandler, otherwise
+    def __init__(self, pbar_metric='loss', batch_freq=1, order=10):
+        """Order must be higher than StatsHandler, otherwise
         metrics will be printed before they're aggregated.
 
         Parameters
@@ -121,10 +121,10 @@ class MetricPrinter(TorchCallback):
             batch, which can be too fast to read if mini batches
             are processed quickly (e.g. if batch size is small and the
             forward pass is fast).
-        priority: int
+        order: int
         """
         self.pbar_metric = pbar_metric
-        self.priority = priority
+        self.order = order
         self.batch_freq = batch_freq
 
     def on_train_begin(self, trainer, *args, **kwargs):
@@ -133,7 +133,12 @@ class MetricPrinter(TorchCallback):
             fmt='\n%(asctime)s\n %(message)s'
         )
 
+    def on_epoch_begin(self, trainer, epoch, stats, val_stats):
+        """Create progress bar."""
+        trainer.pbar = tqdm(trainer.dl_train)
+
     def on_epoch_end(self, trainer, epoch, stats, val_stats):
+        """Print stats and close progress bar."""
         data = [[k, v, val_stats[k]] for k, v in stats.items()]
         table = tabulate(data, headers=['Metric', 'Train', 'Validation'],
                          tablefmt='github', floatfmt='.4f')
@@ -143,6 +148,7 @@ class MetricPrinter(TorchCallback):
         trainer.pbar.close()
 
     def on_batch_end(self, trainer, i, sum_i, stats):
+        """Update progress bar with batch stats."""
         if sum_i % self.batch_freq != 0:
             return
         kwargs = {self.pbar_metric:
@@ -159,11 +165,11 @@ class BatchMetricPrinter(TorchCallback):
     training process.
     """
 
-    def __init__(self, batch_freq, n_prints=float('inf'), priority=10):
-        """Priority must be higher than StatsHandler, otherwise
+    def __init__(self, batch_freq, n_prints=float('inf'), order=10):
+        """Order must be higher than StatsHandler, otherwise
         metrics will be printed before they're aggregated.
         """
-        self.priority = priority
+        self.order = order
         self.batch_freq = batch_freq
         self.n_prints = n_prints
         self.curr_prints = 0
@@ -184,7 +190,7 @@ class EarlyStopper(TorchCallback):
 
     @valuecheck
     def __init__(self, metric, goal:('max', 'min'), min_improvement=0.0,
-                 patience=3, priority=15):
+                 patience=3, order=15):
         """
         Parameters
         ----------
@@ -214,7 +220,7 @@ class EarlyStopper(TorchCallback):
             self.op = gt
             self.op_best = add
 
-        self.priority = priority
+        self.order = order
         self.metric = metric
         self.min_improvement = min_improvement
         self.patience = patience
@@ -252,8 +258,8 @@ class PerformanceThreshold(TorchCallback):
 
     @valuecheck
     def __init__(self, metric, goal:('min', 'max'), threshold, skip_epochs=0,
-                 split:('train', 'val')='val', priority=15):
-        self.priority = priority
+                 split:('train', 'val')='val', order=15):
+        self.order = order
         self.metric = metric
         self.threshold = threshold
         self.skip_epochs = skip_epochs
@@ -285,7 +291,7 @@ class PerformanceThreshold(TorchCallback):
 class ModelCheckpoint(TorchCallback):
 
     @valuecheck
-    def __init__(self, metric='loss', goal:('max', 'min')='min', priority=25):
+    def __init__(self, metric='loss', goal:('max', 'min')='min', order=25):
         # Will use op like: self.op(new_val, current_best)
         if goal == 'min':
             self.init_metric = self.best_metric = float('inf')
@@ -296,7 +302,7 @@ class ModelCheckpoint(TorchCallback):
             self.op = gt
             self.op_best = add
 
-        self.priority = priority
+        self.order = order
         self.metric = metric
         self.metric_path = None
 
@@ -330,12 +336,12 @@ class MetricHistory(TorchCallback):
     """Separate from StatsHandler in case we don't want to log outputs."""
 
     def __init__(self, fname='history.csv', plot_fname='history.png',
-                 priority=90):
+                 order=90):
         self.train_hist = []
         self.val_hist = []
         self.fname = fname
         self.plot_fname = plot_fname
-        self.priority = priority
+        self.order = order
 
     def on_train_begin(self, trainer, *args, **kwargs):
         self.train_hist.clear()
@@ -378,10 +384,10 @@ class MetricHistory(TorchCallback):
 class S3Uploader(TorchCallback):
     """Upload model and logs to S3 when training finishes."""
 
-    def __init__(self, bucket, prefix, priority=95):
+    def __init__(self, bucket, prefix, order=95):
         self.bucket = bucket
         self.prefix = prefix
-        self.priority = priority
+        self.order = order
 
     def on_train_end(self, trainer, *args, **kwargs):
         paths = [f.path for f in os.scandir(trainer.out_dir)
@@ -396,9 +402,9 @@ class S3Uploader(TorchCallback):
 # Cell
 class EC2Closer(TorchCallback):
 
-    def __init__(self, timeout=5, priority=100):
+    def __init__(self, timeout=5, order=100):
         self.timeout = timeout
-        self.priority = priority
+        self.order = order
 
     def on_train_end(self, trainer, *args, **kwargs):
         try:
@@ -420,7 +426,7 @@ class ModelUnfreezer(TorchCallback):
 
     @valuecheck
     def __init__(self, i2n, unfreeze_type:('groups', 'layers')='groups',
-                 mode:('batch', 'epoch')='epoch', priority=25):
+                 mode:('batch', 'epoch')='epoch', order=25):
         """
         Parameters
         ----------
@@ -435,7 +441,7 @@ class ModelUnfreezer(TorchCallback):
         mode: str
             Specifies whether the indices in `i2n` refer to batches or
             epochs.
-        priority: int
+        order: int
             Determine place in the callback queue. Smaller numbers are
             executed earlier.
 
@@ -451,7 +457,7 @@ class ModelUnfreezer(TorchCallback):
             mode='epoch'
         )
         """
-        self.priority = priority
+        self.order = order
         self.i2kwargs = {i: {f'n_{unfreeze_type}': n}
                          for i, n in i2n.items()}
         self.mode = mode
@@ -513,7 +519,7 @@ class CosineLRScheduler(SchedulerMixin):
     """
 
     def __init__(self, warm=0.3, restarts=False, cycle_len=5, cycle_decay=0.0,
-                 min_lr=None, verbose=False, priority=10):
+                 min_lr=None, verbose=False, order=10):
         """
         Parameters
         ----------
@@ -551,7 +557,7 @@ class CosineLRScheduler(SchedulerMixin):
         self.restarts = restarts
         self.verbose = verbose
         self.min_lr = min_lr
-        self.priority = priority
+        self.order = order
 
         # Set in `on_train_begin()`.
         self.lrs = None             # Iterable[float]
@@ -652,7 +658,7 @@ class AdaptiveSawtoothScheduler(SchedulerMixin):
     batch loss increases, even if we're still within the patience window.
     """
 
-    def __init__(self, add=1e-4, scale=0.6, patience=5, priority=10):
+    def __init__(self, add=1e-4, scale=0.6, patience=5, order=10):
         """Note: further experimentation is required to determine
         sensible defaults for these hyperparameters.
 
@@ -663,7 +669,7 @@ class AdaptiveSawtoothScheduler(SchedulerMixin):
         self.add = add
         self.scale = scale
         self.patience = patience
-        self.priority = priority
+        self.order = order
 
         # These are reset in `on_train_begin`, but types remain the same.
         self.lrs = []

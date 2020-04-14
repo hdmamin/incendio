@@ -422,7 +422,6 @@ class Trainer(LoggerMixin):
         _ = self.decide_stop('on_train_begin', epochs, lrs, lr_mult, **kwargs)
         for e in range(epochs):
             _ = self.decide_stop('on_epoch_begin', e, stats, None)
-            self.pbar = tqdm(self.dl_train)
             for i, batch in enumerate(self.pbar):
                 sum_i += 1
                 *xb, yb = map(lambda x: x.to(self.device), batch)
