@@ -20,7 +20,7 @@ from htools import load, save, LoggerMixin, valuecheck, hasarg
 from .callbacks import BasicConfig, StatsHandler, MetricPrinter
 from .metrics import batch_size
 from .optimizers import variable_lr_optimizer, update_optimizer
-from .utils import quick_stats, DEVICE
+from .utils import quick_stats, DEVICE, identity
 
 
 # Cell
@@ -252,7 +252,7 @@ class Trainer(LoggerMixin):
         self.criterion = criterion
         self.mode = mode
         self.device = DEVICE
-        self.last_act = last_act
+        self.last_act = last_act or identity
         self.thresh = threshold
         self._stop_training = False
         # For now, only print logs. During training, a file will be created.
@@ -467,6 +467,30 @@ class Trainer(LoggerMixin):
                 self._update_stats(val_stats, loss, yb, y_score)
         return val_stats
 
+    def predict(self, *xb, logits=True):
+        """Make predictions on a batch of data. This automatically does things
+        like putting the data and model on the same device, putting the model
+        in eval mode, and ensuring that gradients are not computed (reduces
+        time and memory usage).
+
+        Parameters
+        ----------
+        xb: torch.tensors
+            Inputs to the model. This will often just be one x tensor, but
+            sometimes other inputs are required as well (e.g. attention masks).
+
+        Returns
+        -------
+        torch.tensor: Model predictions.
+        """
+        xb = map(lambda x: xb.to(self.device), xb)
+        self.net.to(self.device)
+        self.net.eval()
+        with torch.no_grad():
+            res = self.net(*xb)
+        if not logits: res = self.last_act(res)
+        return res
+
     def _update_stats(self, stats, loss, yb, y_score):
         """Update stats in place.
 
@@ -488,10 +512,7 @@ class Trainer(LoggerMixin):
         """
         yb, y_score = yb.detach().cpu(), y_score.detach().cpu()
         # Final activation often excluded from network architecture.
-        try:
-            y_score = self.last_act(y_score)
-        except TypeError:
-            pass
+        y_score = self.last_act(y_score)
 
         # Convert soft predictions to hard predictions.
         if self.mode == 'binary':
