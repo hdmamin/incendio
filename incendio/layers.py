@@ -8,7 +8,7 @@ __all__ = ['GRelu', 'JRelu', 'Mish', 'mish', 'ConvBlock', 'ResBlock', 'Reflectio
 # Cell
 from fastai.layers import trunc_normal_
 import numpy as np
-from operator import add
+from operator import add, truediv, sub
 import torch
 import torch.nn as nn
 import torch.nn.functional as F

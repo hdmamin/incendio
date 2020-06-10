@@ -12,6 +12,8 @@ index = {"BaseModel": "00_core.ipynb",
          "concat": "01_utils.ipynb",
          "weighted_avg": "01_utils.ipynb",
          "identity": "01_utils.ipynb",
+         "tensor_dict_diffs": "01_utils.ipynb",
+         "find_tensors": "01_utils.ipynb",
          "TorchCallback": "02_callbacks.ipynb",
          "BasicConfig": "02_callbacks.ipynb",
          "StatsHandler": "02_callbacks.ipynb",
@@ -59,7 +61,13 @@ index = {"BaseModel": "00_core.ipynb",
          "probabilistic_hash_tensor": "07_data.ipynb",
          "smooth_soft_labels": "08_losses.ipynb",
          "soft_label_cross_entropy_with_logits": "08_losses.ipynb",
-         "soft_label_cross_entropy": "08_losses.ipynb"}
+         "soft_label_cross_entropy": "08_losses.ipynb",
+         "most_common_errors": "09_fast_utils.ipynb",
+         "n_groups": "09_fast_utils.ipynb",
+         "complete_sentence": "09_fast_utils.ipynb",
+         "LRPicker": "09_fast_utils.ipynb",
+         "ULMFineTuner": "09_fast_utils.ipynb",
+         "FastLabelEncoder": "09_fast_utils.ipynb"}
 
 modules = ["core.py",
            "utils.py",
@@ -69,7 +77,8 @@ modules = ["core.py",
            "nlp.py",
            "optimizers.py",
            "data.py",
-           "losses.py"]
+           "losses.py",
+           "fast_utils.py"]
 
 doc_url = "https://hdmamin.github.io/incendio/"
 

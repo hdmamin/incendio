@@ -15,6 +15,7 @@ import os
 import pandas as pd
 import requests
 from tabulate import tabulate
+from tqdm.auto import tqdm
 import warnings
 
 from accio.s3tool import S3tool

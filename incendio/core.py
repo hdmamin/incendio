@@ -340,7 +340,7 @@ class Trainer(LoggerMixin):
 
     def add_callbacks(self, *callbacks):
         """Attach additional callbacks to Trainer. Note that callback order
-        will be determined by their `priority` attribute, not insertion
+        will be determined by their `order` attribute, not insertion
         order.
 
         Parameters
@@ -354,7 +354,7 @@ class Trainer(LoggerMixin):
         """
         self.callbacks.update({type(cb).__name__: cb for cb in callbacks})
         self.callbacks = dict(sorted(self.callbacks.items(),
-                                     key=lambda x: x[1].priority))
+                                     key=lambda x: x[1].order))
 
     def add_metrics(self, *metrics):
         """Add additional metrics to track. See the `metrics` parameter in
