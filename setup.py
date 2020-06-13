@@ -25,22 +25,23 @@ lic = licenses[cfg['license']]
 min_python = cfg['min_python']
 
 setuptools.setup(
-    name = cfg['lib_name'],
-    license = lic[0],
-    classifiers = [
+    name=cfg['lib_name'],
+    license=lic[0],
+    classifiers=[
         'Development Status :: ' + statuses[int(cfg['status'])],
         'Intended Audience :: ' + cfg['audience'].title(),
         'License :: ' + lic[1],
         'Natural Language :: ' + cfg['language'].title(),
     ] + ['Programming Language :: Python :: '+o for o in py_versions[py_versions.index(min_python):]],
-    url = 'https://github.com/{}/{}'.format(cfg['user'],cfg['lib_name']),
-    packages = setuptools.find_packages(),
-    include_package_data = True,
-    install_requires = requirements,
-    python_requires  = '>=' + cfg['min_python'],
-    long_description = open('README.md').read(),
-    long_description_content_type = 'text/markdown',
-    zip_safe = False,
-    entry_points = { 'console_scripts': cfg.get('console_scripts','').split() },
+    url='https://github.com/{}/{}'.format(cfg['user'],cfg['lib_name']),
+    packages=setuptools.find_packages(),
+    include_package_data=True,
+    install_requires=requirements,
+    extras_require={'gg': ['accio']},
+    python_requires ='>=' + cfg['min_python'],
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
+    zip_safe=False,
+    entry_points={ 'console_scripts': cfg.get('console_scripts','').split() },
     **setup_cfg)
 

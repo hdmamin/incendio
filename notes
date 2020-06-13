@@ -1,0 +1,18 @@
+Thoughts on axial encodings vs bloom embeddings
+
+# Cat pros
+
+-smaller emb matrices
+
+# Cat cons
+
+-different items will share large blocks of emb vectors. Maybe this works if we have some pre-defined knowledge of what words should be indexed close together. Sorting by frequency does this somewhat, but maybe would work better to first cluster by w2vec, sort so similar words are close together. Maybe this is why this is good for positional encodings: adjacent time steps share some (but not all) of embs
+
+# Add pros
+
+-words won't necessarily end up sharing embs w/ other words even if most of their rows are the same - the 1 unshared row could learn to be very different
+
+# Add cons
+
+-larger emb matrices  
+-each row serves multiple purposes - maybe "pulled in multiple directions" by diff words
