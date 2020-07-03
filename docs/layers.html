@@ -6,6 +6,7 @@ keywords: fastai
 sidebar: home_sidebar
 
 summary: "Custom activations, layers, and layer blocks are contained in this module."
+description: "Custom activations, layers, and layer blocks are contained in this module."
 ---
 <!--
 
@@ -18,11 +19,16 @@ summary: "Custom activations, layers, and layer blocks are contained in this mod
 -->
 
 <div class="container" id="notebook-container">
-    {% raw %}
         
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -37,17 +43,48 @@ summary: "Custom activations, layers, and layer blocks are contained in this mod
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The autoreload extension is already loaded. To reload it, use:
+  %reload_ext autoreload
+</pre>
 </div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Used in notebook but not needed in package.</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Used for testing only.</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span><span class="p">,</span> <span class="n">Counter</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">chain</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="k">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DataLoader</span>
+
+<span class="kn">from</span> <span class="nn">htools</span> <span class="k">import</span> <span class="n">assert_raises</span><span class="p">,</span> <span class="n">InvalidArgumentError</span>
+<span class="kn">from</span> <span class="nn">incendio.data</span> <span class="k">import</span> <span class="n">probabilistic_hash_item</span>
+<span class="kn">import</span> <span class="nn">pandas_htools</span>
 </pre></div>
 
     </div>
@@ -55,15 +92,23 @@ summary: "Custom activations, layers, and layer blocks are contained in this mod
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Activations">Activations<a class="anchor-link" href="#Activations">&#182;</a></h2>
+<h2 id="Activations">Activations<a class="anchor-link" href="#Activations"> </a></h2>
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -73,7 +118,7 @@ summary: "Custom activations, layers, and layer blocks are contained in this mod
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="GRelu" class="doc_header"><code>class</code> <code>GRelu</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L13" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>GRelu</code>(<strong><code>leak</code></strong>=<em><code>0.0</code></em>, <strong><code>max</code></strong>=<em><code>inf</code></em>, <strong><code>sub</code></strong>=<em><code>0.0</code></em>) :: <code>Module</code></p>
+<h2 id="GRelu" class="doc_header"><code>class</code> <code>GRelu</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L22" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>GRelu</code>(<strong><code>leak</code></strong>=<em><code>0.0</code></em>, <strong><code>max</code></strong>=<em><code>inf</code></em>, <strong><code>sub</code></strong>=<em><code>0.0</code></em>) :: <code>Module</code></p>
 </blockquote>
 
 <pre><code>Generic ReLU.</code></pre>
@@ -86,12 +131,24 @@ summary: "Custom activations, layers, and layer blocks are contained in this mod
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -101,7 +158,7 @@ summary: "Custom activations, layers, and layer blocks are contained in this mod
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Mish" class="doc_header"><code>class</code> <code>Mish</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L40" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Mish</code>() :: <code>Module</code></p>
+<h2 id="Mish" class="doc_header"><code>class</code> <code>Mish</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L49" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Mish</code>() :: <code>Module</code></p>
 </blockquote>
 
 <pre><code>OOP form of mish activation.
@@ -117,9 +174,17 @@ https://arxiv.org/pdf/1908.08681v1.pdf</code></pre>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -129,7 +194,7 @@ https://arxiv.org/pdf/1908.08681v1.pdf</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="mish" class="doc_header"><code>mish</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L55" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mish</code>(<strong><code>x</code></strong>)</p>
+<h4 id="mish" class="doc_header"><code>mish</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L64" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mish</code>(<strong><code>x</code></strong>)</p>
 </blockquote>
 
 <pre><code>Functional form of mish activation.
@@ -153,6 +218,10 @@ torch.Tensor[float]: Tensor of same shape as input x.</code></pre>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -193,6 +262,10 @@ torch.Tensor[float]: Tensor of same shape as input x.</code></pre>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -207,6 +280,10 @@ torch.Tensor[float]: Tensor of same shape as input x.</code></pre>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -238,15 +315,23 @@ torch.Tensor[float]: Tensor of same shape as input x.</code></pre>
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Layer-Blocks">Layer Blocks<a class="anchor-link" href="#Layer-Blocks">&#182;</a></h2>
+<h2 id="Layer-Blocks">Layer Blocks<a class="anchor-link" href="#Layer-Blocks"> </a></h2>
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -256,7 +341,7 @@ torch.Tensor[float]: Tensor of same shape as input x.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="ConvBlock" class="doc_header"><code>class</code> <code>ConvBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L73" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ConvBlock</code>(<strong><code>c_in</code></strong>, <strong><code>c_out</code></strong>, <strong><code>kernel_size</code></strong>=<em><code>3</code></em>, <strong><code>norm</code></strong>=<em><code>True</code></em>, <strong><code>activation</code></strong>=<em><code>GReLU(leak=0.1, max=6.0, sub=0.4)</code></em>, <strong>**<code>kwargs</code></strong>) :: <code>Module</code></p>
+<h2 id="ConvBlock" class="doc_header"><code>class</code> <code>ConvBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L82" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ConvBlock</code>(<strong><code>c_in</code></strong>, <strong><code>c_out</code></strong>, <strong><code>kernel_size</code></strong>=<em><code>3</code></em>, <strong><code>norm</code></strong>=<em><code>True</code></em>, <strong><code>activation</code></strong>=<em><code>GReLU(leak=0.1, max=6.0, sub=0.4)</code></em>, <strong>**<code>kwargs</code></strong>) :: <code>Module</code></p>
 </blockquote>
 
 <pre><code>Create a convolutional block optionally followed by a batch norm layer.</code></pre>
@@ -269,6 +354,10 @@ torch.Tensor[float]: Tensor of same shape as input x.</code></pre>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -304,6 +393,10 @@ torch.Tensor[float]: Tensor of same shape as input x.</code></pre>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -334,9 +427,17 @@ torch.Tensor[float]: Tensor of same shape as input x.</code></pre>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -346,7 +447,7 @@ torch.Tensor[float]: Tensor of same shape as input x.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="ResBlock" class="doc_header"><code>class</code> <code>ResBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L119" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ResBlock</code>(<strong><code>c_in</code></strong>, <strong><code>activation</code></strong>=<em><code>GReLU(leak=0.1, max=6.0, sub=0.4)</code></em>, <strong><code>f</code></strong>=<em><code>3</code></em>, <strong><code>stride</code></strong>=<em><code>1</code></em>, <strong><code>pad</code></strong>=<em><code>1</code></em>, <strong><code>skip_size</code></strong>=<em><code>2</code></em>, <strong><code>norm</code></strong>=<em><code>True</code></em>) :: <code>Module</code></p>
+<h2 id="ResBlock" class="doc_header"><code>class</code> <code>ResBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L128" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ResBlock</code>(<strong><code>c_in</code></strong>, <strong><code>activation</code></strong>=<em><code>GReLU(leak=0.1, max=6.0, sub=0.4)</code></em>, <strong><code>f</code></strong>=<em><code>3</code></em>, <strong><code>stride</code></strong>=<em><code>1</code></em>, <strong><code>pad</code></strong>=<em><code>1</code></em>, <strong><code>skip_size</code></strong>=<em><code>2</code></em>, <strong><code>norm</code></strong>=<em><code>True</code></em>) :: <code>Module</code></p>
 </blockquote>
 
 <pre><code>Base class for all neural network modules.
@@ -380,6 +481,10 @@ parameters converted too when you call :meth:`to`, etc.</code></pre>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -425,6 +530,10 @@ parameters converted too when you call :meth:`to`, etc.</code></pre>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -469,6 +578,2270 @@ parameters converted too when you call :meth:`to`, etc.</code></pre>
 
 </div>
     {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="ReflectionPaddedConv2d" class="doc_header"><code>ReflectionPaddedConv2d</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L179" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>ReflectionPaddedConv2d</code>(<strong><code>in_channels</code></strong>, <strong><code>out_channels</code></strong>, <strong><code>padding</code></strong>=<em><code>1</code></em>, <strong><code>kernel_size</code></strong>=<em><code>3</code></em>, <strong>**<code>kwargs</code></strong>)</p>
+</blockquote>
+
+<pre><code>Conv2d only allows padding_mode of `zeros` or `circular`. This
+    layer is a quick way for us to use reflection padding.
+
+
+Applies a 2D convolution over an input signal composed of several input
+    planes.
+
+    In the simplest case, the output value of the layer with input size
+    :math:`(N, C_{\text{in}}, H, W)` and output :math:`(N, C_{\text{out}}, H_{\text{out}}, W_{\text{out}})`
+    can be precisely described as:
+
+    .. math::
+        \text{out}(N_i, C_{\text{out}_j}) = \text{bias}(C_{\text{out}_j}) +
+        \sum_{k = 0}^{C_{\text{in}} - 1} \text{weight}(C_{\text{out}_j}, k) \star \text{input}(N_i, k)
+
+
+    where :math:`\star` is the valid 2D `cross-correlation`_ operator,
+    :math:`N` is a batch size, :math:`C` denotes a number of channels,
+    :math:`H` is a height of input planes in pixels, and :math:`W` is
+    width in pixels.
+
+    * :attr:`stride` controls the stride for the cross-correlation, a single
+      number or a tuple.
+
+    * :attr:`padding` controls the amount of implicit zero-paddings on both
+      sides for :attr:`padding` number of points for each dimension.
+
+    * :attr:`dilation` controls the spacing between the kernel points; also
+      known as the à trous algorithm. It is harder to describe, but this `link`_
+      has a nice visualization of what :attr:`dilation` does.
+
+    * :attr:`groups` controls the connections between inputs and outputs.
+      :attr:`in_channels` and :attr:`out_channels` must both be divisible by
+      :attr:`groups`. For example,
+
+        * At groups=1, all inputs are convolved to all outputs.
+        * At groups=2, the operation becomes equivalent to having two conv
+          layers side by side, each seeing half the input channels,
+          and producing half the output channels, and both subsequently
+          concatenated.
+        * At groups= :attr:`in_channels`, each input channel is convolved with
+          its own set of filters, of size:
+          :math:`\left\lfloor\frac{out\_channels}{in\_channels}\right\rfloor`.
+
+    The parameters :attr:`kernel_size`, :attr:`stride`, :attr:`padding`, :attr:`dilation` can either be:
+
+        - a single ``int`` -- in which case the same value is used for the height and width dimension
+        - a ``tuple`` of two ints -- in which case, the first `int` is used for the height dimension,
+          and the second `int` for the width dimension
+
+    .. note::
+
+         Depending of the size of your kernel, several (of the last)
+         columns of the input might be lost, because it is a valid `cross-correlation`_,
+         and not a full `cross-correlation`_.
+         It is up to the user to add proper padding.
+
+    .. note::
+
+        When `groups == in_channels` and `out_channels == K * in_channels`,
+        where `K` is a positive integer, this operation is also termed in
+        literature as depthwise convolution.
+
+        In other words, for an input of size :math:`(N, C_{in}, H_{in}, W_{in})`,
+        a depthwise convolution with a depthwise multiplier `K`, can be constructed by arguments
+        :math:`(in\_channels=C_{in}, out\_channels=C_{in} \times K, ..., groups=C_{in})`.
+
+    .. include:: cudnn_deterministic.rst
+
+    Args:
+        in_channels (int): Number of channels in the input image
+        out_channels (int): Number of channels produced by the convolution
+        kernel_size (int or tuple): Size of the convolving kernel
+        stride (int or tuple, optional): Stride of the convolution. Default: 1
+        padding (int or tuple, optional): Zero-padding added to both sides of the input. Default: 0
+        padding_mode (string, optional). Accepted values `zeros` and `circular` Default: `zeros`
+        dilation (int or tuple, optional): Spacing between kernel elements. Default: 1
+        groups (int, optional): Number of blocked connections from input channels to output channels. Default: 1
+        bias (bool, optional): If ``True``, adds a learnable bias to the output. Default: ``True``
+
+    Shape:
+        - Input: :math:`(N, C_{in}, H_{in}, W_{in})`
+        - Output: :math:`(N, C_{out}, H_{out}, W_{out})` where
+
+          .. math::
+              H_{out} = \left\lfloor\frac{H_{in}  + 2 \times \text{padding}[0] - \text{dilation}[0]
+                        \times (\text{kernel\_size}[0] - 1) - 1}{\text{stride}[0]} + 1\right\rfloor
+
+          .. math::
+              W_{out} = \left\lfloor\frac{W_{in}  + 2 \times \text{padding}[1] - \text{dilation}[1]
+                        \times (\text{kernel\_size}[1] - 1) - 1}{\text{stride}[1]} + 1\right\rfloor
+
+    Attributes:
+        weight (Tensor): the learnable weights of the module of shape
+                         :math:`(\text{out\_channels}, \frac{\text{in\_channels}}{\text{groups}},`
+                         :math:`\text{kernel\_size[0]}, \text{kernel\_size[1]})`.
+                         The values of these weights are sampled from
+                         :math:`\mathcal{U}(-\sqrt{k}, \sqrt{k})` where
+                         :math:`k = \frac{1}{C_\text{in} * \prod_{i=0}^{1}\text{kernel\_size}[i]}`
+        bias (Tensor):   the learnable bias of the module of shape (out_channels). If :attr:`bias` is ``True``,
+                         then the values of these weights are
+                         sampled from :math:`\mathcal{U}(-\sqrt{k}, \sqrt{k})` where
+                         :math:`k = \frac{1}{C_\text{in} * \prod_{i=0}^{1}\text{kernel\_size}[i]}`
+
+    Examples::
+
+        &gt;&gt;&gt; # With square kernels and equal stride
+        &gt;&gt;&gt; m = nn.Conv2d(16, 33, 3, stride=2)
+        &gt;&gt;&gt; # non-square kernels and unequal stride and with padding
+        &gt;&gt;&gt; m = nn.Conv2d(16, 33, (3, 5), stride=(2, 1), padding=(4, 2))
+        &gt;&gt;&gt; # non-square kernels and unequal stride and with padding and dilation
+        &gt;&gt;&gt; m = nn.Conv2d(16, 33, (3, 5), stride=(2, 1), padding=(4, 2), dilation=(3, 1))
+        &gt;&gt;&gt; input = torch.randn(20, 16, 50, 100)
+        &gt;&gt;&gt; output = m(input)
+
+    .. _cross-correlation:
+        https://en.wikipedia.org/wiki/Cross-correlation
+
+    .. _link:
+        https://github.com/vdumoulin/conv_arithmetic/blob/master/README.md</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">show_img</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rconv</span> <span class="o">=</span> <span class="n">ReflectionPaddedConv2d</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">rconv</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>ReflectionPaddedConv2d(
+  (reflect): ReflectionPad2d((2, 2, 2, 2))
+  (conv): Conv2d(3, 3, kernel_size=(1, 1), stride=(1, 1))
+)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+<span class="n">show_img</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x2</span> <span class="o">=</span> <span class="n">rconv</span><span class="o">.</span><span class="n">reflect</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">show_img</span><span class="p">(</span><span class="n">x2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Tests</span>
+<span class="k">assert</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="o">.</span><span class="vm">__doc__</span> <span class="ow">in</span> <span class="n">ReflectionPaddedConv2d</span><span class="o">.</span><span class="vm">__doc__</span>
+
+<span class="k">with</span> <span class="n">assert_raises</span><span class="p">(</span><span class="n">InvalidArgumentError</span><span class="p">):</span>
+    <span class="n">ReflectionPaddedConv2d</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding_mode</span><span class="o">=</span><span class="s1">&#39;zeros&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>As expected, got InvalidArgumentError(Remove `padding_mode` from arguments.).
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="Dropin" class="doc_header"><code>class</code> <code>Dropin</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L201" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Dropin</code>(<strong><code>scale</code></strong>=<em><code>0.5</code></em>) :: <code>Module</code></p>
+</blockquote>
+
+<pre><code>Additive dropout. This injects small amounts of noise into a model
+in the form of randomly generated floats from a zero-centered
+gaussian distribution (variance can be adjusted). This does nothing
+in eval mode. Unlike Dropout, this does not scale weights during
+training since it does not bias them in any direction.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Net</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drop</span> <span class="o">=</span> <span class="n">Dropin</span><span class="p">()</span>
+        
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">net</span> <span class="o">=</span> <span class="n">Net</span><span class="p">()</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">flatten</span><span class="p">())[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="o">.</span><span class="mi">9</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">net</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="k">assert</span> <span class="n">torch</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">net</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="k">assert</span> <span class="ow">not</span> <span class="n">net</span><span class="o">.</span><span class="n">drop</span><span class="o">.</span><span class="n">training</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">simulate_activation_stats</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">trials</span><span class="o">=</span><span class="mi">10_000</span><span class="p">):</span>
+    <span class="n">act_stats</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">noise_stats</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    
+    <span class="n">drop</span> <span class="o">=</span> <span class="n">Dropin</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">trials</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">drop</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">noise</span> <span class="o">=</span> <span class="n">drop</span><span class="o">.</span><span class="n">noise</span>
+        <span class="n">noise_stats</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">noise</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+        <span class="n">noise_stats</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">noise</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
+        <span class="n">noise_stats</span><span class="p">[</span><span class="s1">&#39;act_corr&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">noise</span><span class="o">.</span><span class="n">flatten</span><span class="p">())[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span>
+        
+        <span class="n">act_stats</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+        <span class="n">act_stats</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
+        <span class="n">act_stats</span><span class="p">[</span><span class="s1">&#39;x_corr&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">flatten</span><span class="p">())[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span>
+        <span class="n">act</span><span class="o">=</span><span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">act_stats</span><span class="o">.</span><span class="n">items</span><span class="p">()},</span> 
+        <span class="n">noise</span><span class="o">=</span><span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">noise_stats</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">scale</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">75</span><span class="p">,</span> <span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="o">.</span><span class="mi">25</span><span class="p">,</span> <span class="o">.</span><span class="mi">1</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+    <span class="n">simulate_activation_stats</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="mi">1_000</span><span class="p">)</span><span class="o">.</span><span class="n">pprint</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+ 10
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>act</th>
+      <th>noise</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>mean</th>
+      <td>0.0132</td>
+      <td>0.0094</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>1.8189</td>
+      <td>1.5192</td>
+    </tr>
+    <tr>
+      <th>x_corr</th>
+      <td>0.5324</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>act_corr</th>
+      <td>NaN</td>
+      <td>0.8304</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+ 1
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>act</th>
+      <th>noise</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>mean</th>
+      <td>-0.0141</td>
+      <td>0.0034</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>1.0921</td>
+      <td>0.4870</td>
+    </tr>
+    <tr>
+      <th>x_corr</th>
+      <td>0.8855</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>act_corr</th>
+      <td>NaN</td>
+      <td>0.4282</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+ 0.75
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>act</th>
+      <th>noise</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>mean</th>
+      <td>-0.0015</td>
+      <td>0.0022</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>1.0633</td>
+      <td>0.4240</td>
+    </tr>
+    <tr>
+      <th>x_corr</th>
+      <td>0.9100</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>act_corr</th>
+      <td>NaN</td>
+      <td>0.3899</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+ 0.5
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>act</th>
+      <th>noise</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>mean</th>
+      <td>0.0107</td>
+      <td>0.0008</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>1.0558</td>
+      <td>0.3442</td>
+    </tr>
+    <tr>
+      <th>x_corr</th>
+      <td>0.9409</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>act_corr</th>
+      <td>NaN</td>
+      <td>0.3235</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+ 0.25
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>act</th>
+      <th>noise</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>mean</th>
+      <td>0.0098</td>
+      <td>-0.0057</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>1.0013</td>
+      <td>0.2461</td>
+    </tr>
+    <tr>
+      <th>x_corr</th>
+      <td>0.9667</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>act_corr</th>
+      <td>NaN</td>
+      <td>0.2298</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+ 0.1
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>act</th>
+      <th>noise</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>mean</th>
+      <td>-0.0057</td>
+      <td>-0.0014</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>0.9969</td>
+      <td>0.1533</td>
+    </tr>
+    <tr>
+      <th>x_corr</th>
+      <td>0.9868</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>act_corr</th>
+      <td>NaN</td>
+      <td>0.1394</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="LinearSkipBlock" class="doc_header"><code>class</code> <code>LinearSkipBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L234" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>LinearSkipBlock</code>(<strong><code>x_dim</code></strong>, <strong><code>layer_dims</code></strong>, <strong><code>op</code></strong>, <strong><code>activation</code></strong>=<em><code>'mish'</code></em>) :: <code>Module</code></p>
+</blockquote>
+
+<pre><code>This lets us easily create residual block equivalents with linear
+layers.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="LinearResBlock" class="doc_header"><code>class</code> <code>LinearResBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L272" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>LinearResBlock</code>(<strong><code>x_dim</code></strong>, <strong><code>hidden_dims</code></strong>, <strong><code>activation</code></strong>=<em><code>'mish'</code></em>) :: <a href="/incendio/layers#LinearSkipBlock"><code>LinearSkipBlock</code></a></p>
+</blockquote>
+
+<pre><code>Equivalent of ResNet block with linear layers.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="LinearDenseBlock" class="doc_header"><code>class</code> <code>LinearDenseBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L284" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>LinearDenseBlock</code>(<strong><code>x_dim</code></strong>, <strong><code>hidden_dims</code></strong>, <strong><code>activation</code></strong>=<em><code>'mish'</code></em>) :: <a href="/incendio/layers#LinearSkipBlock"><code>LinearSkipBlock</code></a></p>
+</blockquote>
+
+<pre><code>Equivalent of DenseNet block with linear layers.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="WeightedLinearResBlock" class="doc_header"><code>class</code> <code>WeightedLinearResBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L292" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>WeightedLinearResBlock</code>(<strong><code>x_dim</code></strong>, <strong><code>hidden_dims</code></strong>, <strong><code>weights</code></strong>=<em><code>(0.25, 0.75)</code></em>, <strong><code>activation</code></strong>=<em><code>'mish'</code></em>) :: <a href="/incendio/layers#LinearSkipBlock"><code>LinearSkipBlock</code></a></p>
+</blockquote>
+
+<pre><code>Like a LinearResBlock but takes a weighted average of the input and output
+rather than adding them. Addition gives them equal weight and we may want to
+weight the output more heavily.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Embeddings-and-Encodings">Embeddings and Encodings<a class="anchor-link" href="#Embeddings-and-Encodings"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="trunc_normal_" class="doc_header"><code>trunc_normal_</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L304" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>trunc_normal_</code>(<strong><code>x</code></strong>, <strong><code>mean</code></strong>=<em><code>0.0</code></em>, <strong><code>std</code></strong>=<em><code>1.0</code></em>)</p>
+</blockquote>
+
+<pre><code>Ported from fastai to remove dependency:
+
+Truncated normal initialization.
+From https://discuss.pytorch.org/t/implementing-truncated-normal-initializer/4778/12</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="PaddedEmbedding" class="doc_header"><code>PaddedEmbedding</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L314" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>PaddedEmbedding</code>(<strong><code>num_embeddings</code></strong>, <strong><code>embedding_dim</code></strong>, <strong><code>padding_idx</code></strong>=<em><code>None</code></em>, <strong>**<code>kwargs</code></strong>)</p>
+</blockquote>
+
+<pre><code>Patched version of Fastai `embedding` that allows us to specify a row of
+    zeros for a padding token.
+
+
+A simple lookup table that stores embeddings of a fixed dictionary and size.
+
+    This module is often used to store word embeddings and retrieve them using indices.
+    The input to the module is a list of indices, and the output is the corresponding
+    word embeddings.
+
+    Args:
+        num_embeddings (int): size of the dictionary of embeddings
+        embedding_dim (int): the size of each embedding vector
+        padding_idx (int, optional): If given, pads the output with the embedding vector at :attr:`padding_idx`
+                                         (initialized to zeros) whenever it encounters the index.
+        max_norm (float, optional): If given, each embedding vector with norm larger than :attr:`max_norm`
+                                    is renormalized to have norm :attr:`max_norm`.
+        norm_type (float, optional): The p of the p-norm to compute for the :attr:`max_norm` option. Default ``2``.
+        scale_grad_by_freq (boolean, optional): If given, this will scale gradients by the inverse of frequency of
+                                                the words in the mini-batch. Default ``False``.
+        sparse (bool, optional): If ``True``, gradient w.r.t. :attr:`weight` matrix will be a sparse tensor.
+                                 See Notes for more details regarding sparse gradients.
+
+    Attributes:
+        weight (Tensor): the learnable weights of the module of shape (num_embeddings, embedding_dim)
+                         initialized from :math:`\mathcal{N}(0, 1)`
+
+    Shape:
+        - Input: :math:`(*)`, LongTensor of arbitrary shape containing the indices to extract
+        - Output: :math:`(*, H)`, where `*` is the input shape and :math:`H=\text{embedding\_dim}`
+
+    .. note::
+        Keep in mind that only a limited number of optimizers support
+        sparse gradients: currently it's :class:`optim.SGD` (`CUDA` and `CPU`),
+        :class:`optim.SparseAdam` (`CUDA` and `CPU`) and :class:`optim.Adagrad` (`CPU`)
+
+    .. note::
+        With :attr:`padding_idx` set, the embedding vector at
+        :attr:`padding_idx` is initialized to all zeros. However, note that this
+        vector can be modified afterwards, e.g., using a customized
+        initialization method, and thus changing the vector used to pad the
+        output. The gradient for this vector from :class:`~torch.nn.Embedding`
+        is always zero.
+
+    Examples::
+
+        &gt;&gt;&gt; # an Embedding module containing 10 tensors of size 3
+        &gt;&gt;&gt; embedding = nn.Embedding(10, 3)
+        &gt;&gt;&gt; # a batch of 2 samples of 4 indices each
+        &gt;&gt;&gt; input = torch.LongTensor([[1,2,4,5],[4,3,2,9]])
+        &gt;&gt;&gt; embedding(input)
+        tensor([[[-0.0251, -1.6902,  0.7172],
+                 [-0.6431,  0.0748,  0.6969],
+                 [ 1.4970,  1.3448, -0.9685],
+                 [-0.3677, -2.7265, -0.1685]],
+
+                [[ 1.4970,  1.3448, -0.9685],
+                 [ 0.4362, -0.4004,  0.9400],
+                 [-0.6431,  0.0748,  0.6969],
+                 [ 0.9124, -2.3616,  1.1151]]])
+
+
+        &gt;&gt;&gt; # example with padding_idx
+        &gt;&gt;&gt; embedding = nn.Embedding(10, 3, padding_idx=0)
+        &gt;&gt;&gt; input = torch.LongTensor([[0,2,0,5]])
+        &gt;&gt;&gt; embedding(input)
+        tensor([[[ 0.0000,  0.0000,  0.0000],
+                 [ 0.1535, -2.0309,  0.9315],
+                 [ 0.0000,  0.0000,  0.0000],
+                 [-0.1655,  0.9897,  0.0635]]])</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">PaddedEmbedding</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">weight</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Parameter containing:
+tensor([[ 0.0000,  0.0000,  0.0000],
+        [ 0.0145, -0.0067, -0.0038],
+        [-0.0176, -0.0179,  0.0010],
+        [-0.0042, -0.0020,  0.0027]], requires_grad=True)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="BloomEmbedding" class="doc_header"><code>class</code> <code>BloomEmbedding</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L328" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>BloomEmbedding</code>(<strong><code>n_emb</code></strong>=<em><code>251</code></em>, <strong><code>emb_dim</code></strong>=<em><code>100</code></em>, <strong><code>n_hashes</code></strong>=<em><code>4</code></em>, <strong><code>padding_idx</code></strong>=<em><code>0</code></em>, <strong><code>pre_hashed</code></strong>=<em><code>False</code></em>) :: <code>Module</code></p>
+</blockquote>
+
+<pre><code>Bloom Embedding layer for memory-efficient word representations.
+Each word is encoded by a combination of rows of the embedding
+matrix. The number of rows can therefore be far lower than the number
+of words in our vocabulary while still providing unique representations.
+The reduction in rows allows us to use memory in other ways: a larger
+embedding dimension, more or larger layers after the embedding,
+larger batch sizes, etc.
+
+Note that if hashing is done in the Dataset, we could use a simple
+nn.EmbeddingBag to achieve the same thing. Many users have reported
+poor performance with this layer though (especially on CPU, but in some
+cases on GPU) so I stick with the standard Embedding. We also bake in
+the truncated normal intialization provided by fastai, with a slight tweak
+to allow a row for padding.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Data</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sentences</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w2i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_w2i</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span> <span class="o">=</span> <span class="n">seq_len</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">make_w2i</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tok_rows</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> 
+                <span class="nb">enumerate</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="n">tok_rows</span><span class="p">))</span><span class="o">.</span><span class="n">most_common</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)}</span>
+    
+    <span class="k">def</span> <span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tok_rows</span><span class="p">):</span>
+        <span class="n">enc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">tok_rows</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tok_rows</span><span class="p">):</span>
+            <span class="n">trunc</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">w2i</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">row</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span><span class="p">]]</span>
+            <span class="n">enc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">trunc</span><span class="p">)]</span> <span class="o">=</span> <span class="n">trunc</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">enc</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sents</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;I walked to the store so I hope it is not closed.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;The theater is closed today and the sky is grey.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;His dog is brown while hers is grey.&#39;</span>
+<span class="p">]</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ds</span> <span class="o">=</span> <span class="n">Data</span><span class="p">(</span><span class="n">sents</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">ds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(tensor([13, 14,  1, 15, 16, 17,  3, 18,  1,  4]), tensor(1))</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">dl</span><span class="p">))</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(tensor([[ 2,  5,  6,  3,  7,  8,  2,  9, 10,  1],
+         [13, 14,  1, 15, 16, 17,  3, 18,  1,  4],
+         [19, 20,  1, 21, 22, 23,  1,  4,  0,  0]]), tensor([0, 1, 1]))</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">dl</span><span class="p">))</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(tensor([[ 2,  5,  6,  3,  7,  8,  2,  9, 10,  1],
+         [13, 14,  1, 15, 16, 17,  3, 18,  1,  4],
+         [19, 20,  1, 21, 22, 23,  1,  4,  0,  0]]), tensor([0, 1, 1]))</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">be</span> <span class="o">=</span> <span class="n">BloomEmbedding</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">be</span><span class="o">.</span><span class="n">emb</span><span class="o">.</span><span class="n">weight</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Parameter containing:
+tensor([[ 0.0000,  0.0000,  0.0000,  0.0000],
+        [ 0.0054, -0.0142, -0.0027, -0.0052],
+        [ 0.0097,  0.0003, -0.0098, -0.0082],
+        [ 0.0049,  0.0084,  0.0028, -0.0158],
+        [ 0.0035,  0.0056, -0.0106, -0.0135],
+        [ 0.0088, -0.0058,  0.0105, -0.0072],
+        [-0.0003, -0.0004, -0.0012,  0.0142],
+        [ 0.0089, -0.0114, -0.0001,  0.0037],
+        [ 0.0089,  0.0007,  0.0076,  0.0034],
+        [-0.0039,  0.0119,  0.0090, -0.0077],
+        [ 0.0040, -0.0154,  0.0072, -0.0024]], requires_grad=True)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[ 2,  5,  6,  3,  7,  8,  2,  9, 10,  1],
+        [13, 14,  1, 15, 16, 17,  3, 18,  1,  4],
+        [19, 20,  1, 21, 22, 23,  1,  4,  0,  0]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># (bs x seq_len) -&gt; (bs -&gt; seq_len -&gt; emb_size)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">be</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">y</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>torch.Size([3, 10, 4])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[ 0.0363, -0.0098,  0.0052,  0.0023],
+        [ 0.0337, -0.0130, -0.0147, -0.0183],
+        [ 0.0075, -0.0316,  0.0120,  0.0236],
+        [ 0.0304, -0.0328,  0.0388, -0.0240],
+        [ 0.0144,  0.0004, -0.0022,  0.0019],
+        [ 0.0084,  0.0117,  0.0089, -0.0284],
+        [ 0.0363, -0.0098,  0.0052,  0.0023],
+        [ 0.0177, -0.0087,  0.0344, -0.0139],
+        [ 0.0272, -0.0108, -0.0036,  0.0130],
+        [ 0.0035, -0.0162,  0.0048,  0.0260]], grad_fn=&lt;SelectBackward&gt;)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Below, we show by step how to get from x to y. This is meant to demonstrate the basic mechanism, not to show how PyTorch actually implements this under the hood. Let's look at a single row of x, corresponding to 1 sentence where each word is mapped to its index in the vocabulary.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([ 2,  5,  6,  3,  7,  8,  2,  9, 10,  1])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Next, we hash each item.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">hashed</span> <span class="o">=</span> <span class="p">[</span><span class="n">probabilistic_hash_item</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="mi">11</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+<span class="n">hashed</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[[8, 2, 7, 8],
+ [2, 8, 1, 2],
+ [6, 6, 10, 10],
+ [10, 5, 5, 5],
+ [6, 9, 7, 2],
+ [5, 9, 4, 0],
+ [8, 2, 7, 8],
+ [5, 10, 8, 9],
+ [7, 8, 6, 2],
+ [6, 10, 6, 0]]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Then use each row of hashed integers to index into the embedding weight matrix.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">hashed</span><span class="p">:</span>
+    <span class="n">row_out</span> <span class="o">=</span> <span class="n">be</span><span class="o">.</span><span class="n">emb</span><span class="o">.</span><span class="n">weight</span><span class="p">[</span><span class="n">row</span><span class="p">]</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row_out</span><span class="p">)</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">output</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>torch.Size([10, 4, 4])
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[[ 0.0089,  0.0007,  0.0076,  0.0034],
+         [ 0.0097,  0.0003, -0.0098, -0.0082],
+         [ 0.0089, -0.0114, -0.0001,  0.0037],
+         [ 0.0089,  0.0007,  0.0076,  0.0034]],
+
+        [[ 0.0097,  0.0003, -0.0098, -0.0082],
+         [ 0.0089,  0.0007,  0.0076,  0.0034],
+         [ 0.0054, -0.0142, -0.0027, -0.0052],
+         [ 0.0097,  0.0003, -0.0098, -0.0082]]], grad_fn=&lt;SliceBackward&gt;)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Finally, we sum up the embedding rows. Above, each word is represented by four rows of the embedding matrix. After summing, we get a single vector for each word.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">output</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[ 0.0363, -0.0098,  0.0052,  0.0023],
+        [ 0.0337, -0.0130, -0.0147, -0.0183],
+        [ 0.0075, -0.0316,  0.0120,  0.0236],
+        [ 0.0304, -0.0328,  0.0388, -0.0240],
+        [ 0.0144,  0.0004, -0.0022,  0.0019],
+        [ 0.0084,  0.0117,  0.0089, -0.0284],
+        [ 0.0363, -0.0098,  0.0052,  0.0023],
+        [ 0.0177, -0.0087,  0.0344, -0.0139],
+        [ 0.0272, -0.0108, -0.0036,  0.0130],
+        [ 0.0035, -0.0162,  0.0048,  0.0260]], grad_fn=&lt;SumBackward1&gt;)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Notice that the values now match the output of our embedding layer.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="n">torch</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Axial encodings are intended to work as positional embeddings for transformer-like architectures. It's possible they could work for word embeddings as well, similar to our use of Bloom embeddings. However, the standard version of axial encodings results in similar vectors for adjacent indices - this makes some sense for positional indices, but for word indices it might require some additional preprocessing. For example, we could compress word embeddings down to 1 dimension and sort them, or simply sort by number of occurrences in our corpus which could be considered to be doing the same thing. Large chunks of the outputs vectors will be shared among different inputs, whereas Bloom embeddings seem like they would have a greater capacity to avoid this issue.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="AxialEncoding" class="doc_header"><code>class</code> <code>AxialEncoding</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L414" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>AxialEncoding</code>(<strong><code>vocab_dim</code></strong>, <strong><code>emb_dim</code></strong>, <strong><code>pad_idx</code></strong>=<em><code>None</code></em>) :: <code>Module</code></p>
+</blockquote>
+
+<pre><code>Axial encodings. These are intended to encode position in a sequence
+(e.g. index in a sentence). It's possible we could adapt these for use as
+word embeddings but this would likely require some experimentation (for
+example, words would likely need to be sorted in a thoughtful manner
+(e.g. pre-trained embeddings compressed to 1D?) since adjacent inputs will
+share half of their encodings).</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="MultiAxialEncoding" class="doc_header"><code>class</code> <code>MultiAxialEncoding</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L457" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>MultiAxialEncoding</code>(<strong><code>vocab_dim</code></strong>, <strong><code>emb_dim</code></strong>, <strong><code>n_blocks</code></strong>=<em><code>2</code></em>, <strong><code>pre_hashed</code></strong>=<em><code>False</code></em>, <strong><code>pad_idx</code></strong>=<em><code>None</code></em>) :: <code>Module</code></p>
+</blockquote>
+
+<pre><code>Adapted axial encodings to allow for more than 2 embedding matrices.
+These are intended to encode position in a sequence (e.g. index in a
+sentence) but might work as word embeddings. This version may be better
+suited for that use case because using more blocks results in fewer shared
+numbers in the output vectors of adjacent inputs.
+
+Some experimentation is still required for this use case (for
+example, words would likely need to be sorted in a thoughtful manner
+(e.g. pre-trained embeddings compressed to 1D?) since adjacent inputs will
+share half of their encodings).</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">reduction_ratio</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="n">emb_dim</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;For testing purposes. Lets us compare the number of weights in a</span>
+<span class="sd">    traditional embedding matrix vs. the number of weights in our axial</span>
+<span class="sd">    encoding.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">normal_n</span> <span class="o">=</span> <span class="n">vocab_size</span> <span class="o">*</span> <span class="n">emb_dim</span>
+    <span class="n">ax_n</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">numel</span><span class="p">()</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">emb</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Normal embedding weights:&#39;</span><span class="p">,</span> <span class="n">normal_n</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Axial encoding weights:&#39;</span><span class="p">,</span> <span class="n">ax_n</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Difference:&#39;</span><span class="p">,</span> <span class="n">normal_n</span> <span class="o">-</span> <span class="n">ax_n</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ratio:&#39;</span><span class="p">,</span> <span class="n">normal_n</span> <span class="o">/</span> <span class="n">ax_n</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">vocab_size</span> <span class="o">=</span> <span class="mi">30_000</span>
+<span class="n">emb_dim</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">bs</span> <span class="o">=</span> <span class="mi">12</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">AxialEncoding</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">emb_dim</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="p">(</span><span class="n">bs</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">ax</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>torch.Size([12, 2])
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>AxialEncoding(
+  (emb): ModuleList(
+    (0): Embedding(174, 50)
+    (1): Embedding(174, 50)
+  )
+)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">ax</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>torch.Size([12, 2, 100])
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">reduction_ratio</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="n">emb_dim</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Normal embedding weights: 3000000
+Axial encoding weights: 17400
+Difference: 2982600
+Ratio: 172.41379310344828
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">vocab_size</span> <span class="o">=</span> <span class="mi">30_000</span>
+<span class="n">emb_dim</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">bs</span> <span class="o">=</span> <span class="mi">12</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">MultiAxialEncoding</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">emb_dim</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="p">(</span><span class="n">bs</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">ax</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>torch.Size([12, 2])
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>MultiAxialEncoding(
+  (emb): ModuleList(
+    (0): Embedding(14, 25)
+    (1): Embedding(14, 25)
+    (2): Embedding(14, 25)
+    (3): Embedding(14, 25)
+  )
+)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">res1</span> <span class="o">=</span> <span class="n">ax</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">res1</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>torch.Size([12, 2, 100])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">vocab_size</span> <span class="o">=</span> <span class="mi">30_000</span>
+<span class="n">emb_dim</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">bs</span> <span class="o">=</span> <span class="mi">12</span>
+
+<span class="n">ax_pre</span> <span class="o">=</span> <span class="n">MultiAxialEncoding</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">emb_dim</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">pre_hashed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax_pre</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>MultiAxialEncoding(
+  (emb): ModuleList(
+    (0): Embedding(14, 25)
+    (1): Embedding(14, 25)
+    (2): Embedding(14, 25)
+    (3): Embedding(14, 25)
+  )
+)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>By setting the weights of our pre-hashed embedding to the weights of our hashing embedding, we can check that the outputs are ultimately the same.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">e</span><span class="p">,</span> <span class="n">e_pre</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">emb</span><span class="p">,</span> <span class="n">ax_pre</span><span class="o">.</span><span class="n">emb</span><span class="p">):</span>
+    <span class="n">e_pre</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">xhash</span> <span class="o">=</span> <span class="n">probabilistic_hash_tensor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">res2</span> <span class="o">=</span> <span class="n">ax_pre</span><span class="p">(</span><span class="n">xhash</span><span class="p">)</span>
+<span class="n">res2</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>torch.Size([12, 2, 100])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">res1</span> <span class="o">==</span> <span class="n">res2</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor(True)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">reduction_ratio</span><span class="p">(</span><span class="n">ax_pre</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="n">emb_dim</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Normal embedding weights: 3000000
+Axial encoding weights: 1400
+Difference: 2998600
+Ratio: 2142.8571428571427
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I imagine that as we increase <code>n_blocks</code>, there's likely a point where we simply won't have enough weights to encode the amount of information that's present in the data. It would take some experimentation to find where that line is, however.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ax_large</span> <span class="o">=</span> <span class="n">MultiAxialEncoding</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">emb_dim</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">pre_hashed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax_large</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>MultiAxialEncoding(
+  (emb): ModuleList(
+    (0): Embedding(4, 12)
+    (1): Embedding(4, 12)
+    (2): Embedding(4, 12)
+    (3): Embedding(4, 12)
+    (4): Embedding(4, 12)
+    (5): Embedding(4, 12)
+    (6): Embedding(4, 12)
+    (7): Embedding(4, 12)
+  )
+)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">reduction_ratio</span><span class="p">(</span><span class="n">ax_large</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="n">emb_dim</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Normal embedding weights: 3000000
+Axial encoding weights: 384
+Difference: 2999616
+Ratio: 7812.5
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 </div>
  
 

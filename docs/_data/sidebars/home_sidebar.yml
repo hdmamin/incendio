@@ -17,7 +17,7 @@ entries:
       url: /utils
     - output: web,pdf
       title: Callbacks
-      url: /callbacks
+      url: /trainer_based_train
     - output: web,pdf
       title: Metrics
       url: /metrics
@@ -31,8 +31,20 @@ entries:
       title: Optimizers
       url: /optimizers
     - output: web,pdf
+      title: Data
+      url: /data
+    - output: web,pdf
+      title: Losses
+      url: /losses
+    - output: web,pdf
+      title: Fast Utils
+      url: /fast_utils
+    - output: web,pdf
       title: Title
-      url: /trainer_based_train
+      url: /scratch_vocabulary
+    - output: web,pdf
+      title: 'To do:'
+      url: /scratch_bloom_embeddings
     output: web
     title: incendio
   output: web

@@ -6,6 +6,7 @@ keywords: fastai
 sidebar: home_sidebar
 
 summary: "The basics for building and training models are contained in this module."
+description: "The basics for building and training models are contained in this module."
 ---
 <!--
 
@@ -18,11 +19,16 @@ summary: "The basics for building and training models are contained in this modu
 -->
 
 <div class="container" id="notebook-container">
-    {% raw %}
         
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -53,9 +59,17 @@ summary: "The basics for building and training models are contained in this modu
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -74,16 +88,24 @@ summary: "The basics for building and training models are contained in this modu
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Model">Model<a class="anchor-link" href="#Model">&#182;</a></h2><p><a href="/incendio/core#BaseModel"><code>BaseModel</code></a> allows models to freeze/unfreeze layers and provides several methods for weight diagnostics. It should not be instantiated directly, but used as a parent class for a model. Like all PyTorch models, its children will still need to call <code>super().__init__()</code> and implement a <code>forward()</code> method.</p>
+<h2 id="Model">Model<a class="anchor-link" href="#Model"> </a></h2><p><a href="/incendio/core#BaseModel"><code>BaseModel</code></a> allows models to freeze/unfreeze layers and provides several methods for weight diagnostics. It should not be instantiated directly, but used as a parent class for a model. Like all PyTorch models, its children will still need to call <code>super().__init__()</code> and implement a <code>forward()</code> method.</p>
 
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -127,6 +149,10 @@ parameters converted too when you call :meth:`to`, etc.</code></pre>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -149,6 +175,10 @@ parameters converted too when you call :meth:`to`, etc.</code></pre>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -178,6 +208,10 @@ parameters converted too when you call :meth:`to`, etc.</code></pre>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -216,6 +250,10 @@ Unfrozen [True, True, True, True]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -246,6 +284,10 @@ Unfrozen [True, True, True, True]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -282,6 +324,10 @@ Unfrozen [True, True, True, True, True, True]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -321,6 +367,10 @@ Unfrozen [True, True, True, True, True, True]
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -361,6 +411,10 @@ As expected, got ValueError(Received more learning rates than layer groups.).
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -376,6 +430,10 @@ As expected, got ValueError(Received more learning rates than layer groups.).
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -425,6 +483,10 @@ Parameter Group 1
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -454,6 +516,10 @@ Parameter Group 1
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -494,6 +560,10 @@ As expected, got ValueError(Received more learning rates than layer groups.).
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -509,6 +579,10 @@ As expected, got ValueError(Received more learning rates than layer groups.).
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -558,6 +632,10 @@ Parameter Group 1
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -587,18 +665,30 @@ Parameter Group 1
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Trainer">Trainer<a class="anchor-link" href="#Trainer">&#182;</a></h1>
+<h1 id="Trainer">Trainer<a class="anchor-link" href="#Trainer"> </a></h1>
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -611,7 +701,7 @@ Parameter Group 1
 <h4 id="handle_interrupt" class="doc_header"><code>handle_interrupt</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/core.py#L109" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>handle_interrupt</code>(<strong><code>meth</code></strong>)</p>
 </blockquote>
 
-<pre><code>Decorator for Trainer.train() method that allows the user to
+<pre><code>Decorator for Trainer.fit() method that allows the user to
 interrupt training with Ctrl+c while still running the
 `on_train_end` method for each of its callbacks. Without this,
 cutting training short would lose that functionality, so we
@@ -634,9 +724,17 @@ callable: The wrapped method.</code></pre>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -646,7 +744,7 @@ callable: The wrapped method.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Trainer" class="doc_header"><code>class</code> <code>Trainer</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/core.py#L140" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Trainer</code>(<strong><code>net</code></strong>, <strong><code>ds_train</code></strong>, <strong><code>ds_val</code></strong>, <strong><code>dl_train</code></strong>, <strong><code>dl_val</code></strong>, <strong><code>criterion</code></strong>, <strong><code>mode</code></strong>:<code>('binary', 'multiclass', 'regression')</code>, <strong><code>out_dir</code></strong>, <strong><code>optim</code></strong>=<em><code>None</code></em>, <strong><code>optim_type</code></strong>=<em><code>'Adam'</code></em>, <strong><code>eps</code></strong>=<em><code>0.001</code></em>, <strong><code>last_act</code></strong>=<em><code>None</code></em>, <strong><code>threshold</code></strong>=<em><code>0.5</code></em>, <strong><code>metrics</code></strong>=<em><code>None</code></em>, <strong><code>callbacks</code></strong>=<em><code>None</code></em>, <strong><code>device</code></strong>=<em><code>device(type='cpu')</code></em>) :: <code>LoggerMixin</code></p>
+<h2 id="Trainer" class="doc_header"><code>class</code> <code>Trainer</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/core.py#L141" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Trainer</code>(<strong><code>net</code></strong>, <strong><code>ds_train</code></strong>, <strong><code>ds_val</code></strong>, <strong><code>dl_train</code></strong>, <strong><code>dl_val</code></strong>, <strong><code>criterion</code></strong>, <strong><code>mode</code></strong>:<code>('binary', 'multiclass', 'regression')</code>, <strong><code>out_dir</code></strong>, <strong><code>optim</code></strong>=<em><code>None</code></em>, <strong><code>optim_type</code></strong>=<em><code>'Adam'</code></em>, <strong><code>eps</code></strong>=<em><code>0.001</code></em>, <strong><code>last_act</code></strong>=<em><code>None</code></em>, <strong><code>threshold</code></strong>=<em><code>0.5</code></em>, <strong><code>metrics</code></strong>=<em><code>None</code></em>, <strong><code>callbacks</code></strong>=<em><code>None</code></em>, <strong><code>device</code></strong>=<em><code>device(type='cpu')</code></em>) :: <code>LoggerMixin</code></p>
 </blockquote>
 
 <pre><code>Mixin class that configures and returns a logger.
@@ -673,6 +771,7 @@ class Foo(LoggerMixin):
 
 </div>
     {% endraw %}
+
 </div>
  
 

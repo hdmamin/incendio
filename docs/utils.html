@@ -6,6 +6,7 @@ keywords: fastai
 sidebar: home_sidebar
 
 summary: "Basic utilities with few dependencies."
+description: "Basic utilities with few dependencies."
 ---
 <!--
 
@@ -18,11 +19,16 @@ summary: "Basic utilities with few dependencies."
 -->
 
 <div class="container" id="notebook-container">
-    {% raw %}
         
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -38,9 +44,15 @@ summary: "Basic utilities with few dependencies."
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>At training time, we will typically want to put the model and the current mini batch on the GPU. When developing on a CPU, a GPU isn't available, so we define a variable that will automatically find the right device. This goes in utils rather than core to avoid circular imports with the callbacks module.</p>
@@ -48,9 +60,15 @@ summary: "Basic utilities with few dependencies."
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -80,9 +98,17 @@ summary: "Basic utilities with few dependencies."
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -131,9 +157,17 @@ False</code></pre>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -167,6 +201,236 @@ tuple[float]</code></pre>
 
 </div>
     {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="concat" class="doc_header"><code>concat</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L66" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>concat</code>(<strong>*<code>args</code></strong>, <strong><code>dim</code></strong>=<em><code>-1</code></em>)</p>
+</blockquote>
+
+<pre><code>Wrapper to torch.cat which accepts tensors as non-keyword
+arguments rather than requiring them to be wrapped in a list.
+This can be useful if we've built some generalized functionality
+where parameters must be passed in a consistent manner.
+
+Parameters
+----------
+args: torch.tensor
+    Multiple tensors to concatenate.
+dim: int
+    Dimension to concatenate on (last dimension by default).
+
+Returns
+-------
+torch.tensor</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="weighted_avg" class="doc_header"><code>weighted_avg</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L87" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>weighted_avg</code>(<strong>*<code>args</code></strong>, <strong><code>weights</code></strong>)</p>
+</blockquote>
+
+<pre><code>Compute a weighted average of multiple tensors.
+
+Parameters
+----------
+args: torch.tensor
+    Multiple tensors with the same dtype and shape that you want to average.
+weights: list
+    Ints or floats to weight each input tensor. The length of this list must
+    match the number of tensors passed in: the first weight will be multiplied
+    by the first tensor, the second weight by the second tensor, etc. If your
+    weights don't sum to 1, they will be normalized automatically.
+
+Returns
+-------
+torch.tensor: Same dtype and shape as each of the input tensors.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="identity" class="doc_header"><code>identity</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L113" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>identity</code>(<strong><code>x</code></strong>)</p>
+</blockquote>
+
+<pre><code>Temporarily copied from htools.
+
+Returns the input argument. Sometimes it is convenient to have this if
+we sometimes apply a function to an item: rather than defining a None
+variable, sometimes setting it to a function, then checking if it's None
+every time we're about to call it, we can set the default as identity and
+safely call it without checking.
+
+Parameters
+----------
+x: any
+
+Returns
+-------
+x: Unchanged input.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="tensor_dict_diffs" class="doc_header"><code>tensor_dict_diffs</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L134" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>tensor_dict_diffs</code>(<strong><code>d1</code></strong>, <strong><code>d2</code></strong>)</p>
+</blockquote>
+
+<pre><code>Compare two dictionaries of tensors. The two dicts must have the
+same keys.
+
+Parameters
+----------
+d1: dict[any: torch.Tensor]
+d2: dict[any: torch.Tensor]
+
+Returns
+-------
+list: Returns the keys where tensors differ for d1 and d2.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="find_tensors" class="doc_header"><code>find_tensors</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L156" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>find_tensors</code>(<strong><code>gpu_only</code></strong>=<em><code>True</code></em>)</p>
+</blockquote>
+
+<pre><code>Prints a list of the Tensors being tracked by the garbage collector.
+From
+https://forums.fast.ai/t/gpu-memory-not-being-freed-after-training-is-over/10265/8
+with some minor reformatting.
+
+Parameters
+----------
+gpu_only: bool
+    If True, only find tensors that are on the GPU.
+
+Returns
+-------
+None: Output is printed to stdout.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 </div>
  
 

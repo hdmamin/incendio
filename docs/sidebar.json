@@ -3,11 +3,15 @@
     "Overview": "/",
     "Core": "/core",
     "Utils": "/utils",
-    "Callbacks": "/callbacks",
+    "Callbacks": "/trainer_based_train",
     "Metrics": "/metrics",
     "Layers": "/layers",
     "NLP": "/nlp",
     "Optimizers": "/optimizers",
-    "Title": "/trainer_based_train"
+    "Data": "/data",
+    "Losses": "/losses",
+    "Fast Utils": "/fast_utils",
+    "Title": "/scratch_vocabulary",
+    "To do:": "/scratch_bloom_embeddings"
   }
 }

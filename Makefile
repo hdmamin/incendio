@@ -1,8 +1,8 @@
 SRC = $(wildcard notebooks/*.ipynb)
 
-all: incendio docs
+all: lib docs
 
-incendio: $(SRC)
+lib: $(SRC)
 	nbdev_build_lib
 	touch incendio
 
@@ -16,8 +16,12 @@ test:
 pypi: dist
 	twine upload --repository pypi dist/*
 
-dist: clean
+dist: clean_dist
 	python setup.py sdist bdist_wheel
 
-clean:
+clean_dist:
 	rm -rf dist
+
+clean:
+	nbdev_clean_nbs
+

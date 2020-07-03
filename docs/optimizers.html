@@ -6,6 +6,7 @@ keywords: fastai
 sidebar: home_sidebar
 
 summary: "The basics for building and training models are contained in this module."
+description: "The basics for building and training models are contained in this module."
 ---
 <!--
 
@@ -18,11 +19,16 @@ summary: "The basics for building and training models are contained in this modu
 -->
 
 <div class="container" id="notebook-container">
-    {% raw %}
         
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -38,9 +44,17 @@ summary: "The basics for building and training models are contained in this modu
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
@@ -59,16 +73,24 @@ summary: "The basics for building and training models are contained in this modu
 </div>
 
 </div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Optimizers">Optimizers<a class="anchor-link" href="#Optimizers">&#182;</a></h2><p>Optimizers like Adam or RMSProp can contain multiple "parameter groups", each with a different learning rate. (Other hyperparameters can vary as well, but we ignore that for now.) The functions below allow us to get a new optimizer or update an existing one. It allows us to easily use differential learning rate, but that is not required: it can also use the same LR for each parameter group.</p>
+<h2 id="Optimizers">Optimizers<a class="anchor-link" href="#Optimizers"> </a></h2><p>Optimizers like Adam or RMSProp can contain multiple "parameter groups", each with a different learning rate. (Other hyperparameters can vary as well, but we ignore that for now.) The functions below allow us to get a new optimizer or update an existing one. It allows us to easily use differential learning rate, but that is not required: it can also use the same LR for each parameter group.</p>
 
 </div>
 </div>
 </div>
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -119,9 +141,17 @@ optim = variable_lr_optimizer(model, lrs=[3e-3, 3e-2, 1e-1])</code></pre>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
@@ -177,10 +207,15 @@ update_optimizer(optim, lrs=[1e-3, 1e-3, 3e-3])</code></pre>
 </div>
 
 </div>
+    {% endraw %}
+
+    {% raw %}
+    
 <div class="cell border-box-sizing code_cell rendered">
 
 </div>
     {% endraw %}
+
 </div>
  
 
