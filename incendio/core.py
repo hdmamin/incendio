@@ -418,34 +418,39 @@ class Trainer(LoggerMixin):
         kwargs: any
             Pass in clean=True to remove existing files in out_dir.
         """
-        stats = defaultdict(list)
+        self.stats = defaultdict(list)
         sum_i = 0
         _ = self.decide_stop('on_train_begin', epochs, lrs, lr_mult, **kwargs)
         for e in range(epochs):
             _ = self.decide_stop('on_epoch_begin', e, stats, None)
             for i, batch in enumerate(self.pbar):
+                _ = self.decide_stop('on_batch_begin', i, sum_i)
                 sum_i += 1
                 *xb, yb = map(lambda x: x.to(self.device), batch)
                 self.optim.zero_grad()
-                _ = self.decide_stop('on_batch_begin', i, sum_i, stats)
+                _ = self.decide_stop('after_zero_grad', i, sum_i, xb, yb)
 
                 # Forward and backward passes.
                 y_score = self.net(*xb)
+                if self.decide_stop('after_forward', i, sum_i): break
                 loss = self.criterion(y_score, yb)
+                if self.decide_stop('after_loss', i, sum_i): break
                 loss.backward()
+                if self.decide_stop('after_backward', i, sum_i): break
                 self.optim.step()
+                if self.decide_stop('after_step', i, sum_i): break
 
                 # Separate because callbacks are only applied during training.
-                self._update_stats(stats, loss, yb, y_score)
-                if self.decide_stop('on_batch_end', i, sum_i, stats): break
+                self._update_stats(self.stats, loss, yb, y_score)
+                if self.decide_stop('on_batch_end', i, sum_i): break
 
             # If on_batch_end callback halts training, else block is skipped.
             else:
                 val_stats = self.validate()
-                if self.decide_stop('on_epoch_end', e, stats, val_stats): break
+                if self.decide_stop('on_epoch_end', e, val_stats): break
                 continue
             break
-        _ = self.decide_stop('on_train_end', e, stats, val_stats)
+        _ = self.decide_stop('on_train_end', e, val_stats)
 
     def validate(self, dl_val=None):
         """Evaluate the model on a validation set.

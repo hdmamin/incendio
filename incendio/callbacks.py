@@ -35,19 +35,34 @@ class TorchCallback:
     def on_train_begin(self, trainer, epochs, lrs, lr_mult, **kwargs):
         pass
 
-    def on_train_end(self, trainer, epoch, stats, val_stats):
+    def on_epoch_begin(self, trainer, epoch, val_stats):
         pass
 
-    def on_epoch_begin(self, trainer, epoch, stats, val_stats):
+    def on_batch_begin(self, trainer, i, sum_i):
         pass
 
-    def on_epoch_end(self, trainer, epoch, stats, val_stats):
+    def after_zero_grad(self, trainer, i, sum_i, xb, yb):
         pass
 
-    def on_batch_begin(self, trainer, i, sum_i, stats):
+    def after_forward(self, trainer, i, sum_i):
         pass
 
-    def on_batch_end(self, trainer, i, sum_i, stats):
+    def after_loss(self, trainer, i, sum_i):
+        pass
+
+    def after_backward(self, trainer, i, sum_i):
+        pass
+
+    def after_step(self, trainer, i, sum_i):
+        pass
+
+    def on_batch_end(self, trainer, i, sum_i):
+        pass
+
+    def on_epoch_end(self, trainer, epoch, val_stats):
+        pass
+
+    def on_train_end(self, trainer, epoch, val_stats):
         pass
 
 
@@ -88,15 +103,15 @@ class StatsHandler(TorchCallback):
     def __init__(self, order=5):
         self.order = order
 
-    def on_epoch_begin(self, trainer, epoch, stats, val_stats):
+    def on_epoch_begin(self, trainer, epoch, val_stats):
         """Resets stats at the start of each epoch."""
-        stats.clear()
+        trainer.stats.clear()
 
-    def on_epoch_end(self, trainer, epoch, stats, val_stats):
+    def on_epoch_end(self, trainer, epoch, val_stats):
         """Computes (possibly weighted) averages of mini-batch stats
         at the end of each epoch.
         """
-        for group in (stats, val_stats):
+        for group in (trainer.stats, val_stats):
             for k, v in group.items():
                 if k == 'batch_size': continue
                 group[k] = np.average(v, weights=group['batch_size'])
@@ -138,13 +153,13 @@ class MetricPrinter(TorchCallback):
             fmt='\n%(asctime)s\n %(message)s'
         )
 
-    def on_epoch_begin(self, trainer, epoch, stats, val_stats):
+    def on_epoch_begin(self, trainer, epoch, val_stats):
         """Create progress bar."""
         trainer.pbar = tqdm(trainer.dl_train)
 
-    def on_epoch_end(self, trainer, epoch, stats, val_stats):
+    def on_epoch_end(self, trainer, epoch, val_stats):
         """Print stats and close progress bar."""
-        data = [[k, v, val_stats[k]] for k, v in stats.items()]
+        data = [[k, v, val_stats[k]] for k, v in trainer.stats.items()]
         table = tabulate(data, headers=['Metric', 'Train', 'Validation'],
                          tablefmt='github', floatfmt='.4f')
         trainer.logger.info(
@@ -152,12 +167,12 @@ class MetricPrinter(TorchCallback):
         )
         trainer.pbar.close()
 
-    def on_batch_end(self, trainer, i, sum_i, stats):
+    def on_batch_end(self, trainer, i, sum_i):
         """Update progress bar with batch stats."""
         if sum_i % self.batch_freq != 0:
             return
         kwargs = {self.pbar_metric:
-                  format(stats[self.pbar_metric][-1], '.4f')}
+                  format(trainer.stats[self.pbar_metric][-1], '.4f')}
         trainer.pbar.set_postfix(**kwargs)
 
 
@@ -179,11 +194,11 @@ class BatchMetricPrinter(TorchCallback):
         self.n_prints = n_prints
         self.curr_prints = 0
 
-    def on_batch_end(self, trainer, i, sum_i, stats):
+    def on_batch_end(self, trainer, i, sum_i):
         if sum_i % batch_freq:
             self.curr_prints += 1
             metric_str = "\n".join(
-                f'{k}={round(v[-1], 4)}' for k, v in stats.items()
+                f'{k}={round(v[-1], 4)}' for k, v in trainer.stats.items()
             )
             trainer.logger.info(f'Batch {sum_i}\n: {metric_str}')
         if self.curr_prints >= self.n_prints:
@@ -236,7 +251,7 @@ class EarlyStopper(TorchCallback):
         self.best_metric = self.init_metric
         self.since_improvement = 0
 
-    def on_epoch_end(self, trainer, epoch, stats, val_stats):
+    def on_epoch_end(self, trainer, epoch, val_stats):
         # Error handling.
         new_val = val_stats.get(self.metric)
         if new_val is None:
@@ -271,12 +286,12 @@ class PerformanceThreshold(TorchCallback):
         self.split = split
         self.op = gt if goal == 'min' else lt
 
-    def on_epoch_end(self, trainer, epoch, stats, val_stats):
+    def on_epoch_end(self, trainer, epoch, val_stats):
         if epoch < self.skip_epochs:
             return
 
         # Error handling.
-        data = val_stats if self.split == 'val' else stats
+        data = val_stats if self.split == 'val' else trainer.stats
         new_val = data.get(self.metric)
         if new_val is None:
             trainer.logger.info(f'{self.metric.title()} not found in metrics. '
@@ -316,7 +331,7 @@ class ModelCheckpoint(TorchCallback):
         self.metric_path = os.path.join(trainer.out_dir,
                                         'best_val_metrics.json')
 
-    def on_epoch_end(self, trainer, epoch, stats, val_stats):
+    def on_epoch_end(self, trainer, epoch, val_stats):
         new_val = val_stats.get(self.metric)
         # Error handling.
         if new_val is None:
@@ -352,11 +367,11 @@ class MetricHistory(TorchCallback):
         self.train_hist.clear()
         self.val_hist.clear()
 
-    def on_epoch_end(self, trainer, epoch, stats, val_stats):
-        self.train_hist.append(stats.copy())
+    def on_epoch_end(self, trainer, epoch, val_stats):
+        self.train_hist.append(trainer.stats.copy())
         self.val_hist.append(val_stats.copy())
 
-    def on_train_end(self, trainer, epoch, stats, val_stats):
+    def on_train_end(self, trainer, epoch, val_stats):
         self.df = pd.concat([
             pd.DataFrame(self.train_hist),
             pd.DataFrame(self.val_hist)\
@@ -517,19 +532,19 @@ class ModelUnfreezer(TorchCallback):
                          for i, n in i2n.items()}
         self.mode = mode
 
-    def on_batch_begin(self, trainer, i, sum_i, stats):
-        if self.mode != 'batch': return
-
+    def on_batch_begin(self, trainer, i, sum_i):
+        if self.mode != 'batch':
+            return
         kwargs = self.i2kwargs.get(sum_i, None)
-        if kwargs: trainer.unfreeze(**kwargs,
-                                    msg_pre=f'Global batch {sum_i}: ')
+        if kwargs:
+            trainer.unfreeze(**kwargs, msg_pre=f'Global batch {sum_i}: ')
 
-    def on_epoch_begin(self, trainer, epoch, stats, val_stats):
-        if self.mode != 'epoch': return
-
+    def on_epoch_begin(self, trainer, epoch, val_stats):
+        if self.mode != 'epoch':
+            return
         kwargs = self.i2kwargs.get(epoch, None)
-        if kwargs: trainer.unfreeze(**kwargs,
-                                    msg_pre=f'Epoch {epoch}: ')
+        if kwargs:
+            trainer.unfreeze(**kwargs, msg_pre=f'Epoch {epoch}: ')
 
 
 # Cell
@@ -649,7 +664,7 @@ class CosineLRScheduler(SchedulerMixin):
         else:
             self.lrs = self._cosine_schedule()
 
-    def on_batch_begin(self, trainer, i, sum_i, stats):
+    def on_batch_begin(self, trainer, i, sum_i):
         self.update_lr(trainer, sum_i)
 
     @staticmethod
@@ -751,10 +766,10 @@ class AdaptiveSawtoothScheduler(SchedulerMixin):
         self.recent_best = float('inf')
         self.lr_mult = lr_mult
 
-    def on_batch_begin(self, trainer, i, sum_i, stats):
+    def on_batch_begin(self, trainer, i, sum_i):
         """Update LR at the start of every batch."""
         try:
-            loss = stats.get('loss')[-1]
+            loss = trainer.stats.get('loss')[-1]
         except:
             return
 
