@@ -14,7 +14,7 @@ test:
 	nbdev_test_nbs
 
 pypi: dist
-	twine upload -r gg-pypi dist/*
+	twine upload dist/*
 
 dist: clean_dist
 	python setup.py sdist bdist_wheel

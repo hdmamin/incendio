@@ -128,7 +128,7 @@ class ConvBlock(nn.Module):
 class ResBlock(nn.Module):
 
     def __init__(self, c_in, kernel_size=3, norm=True, activation=JRelu,
-                 stride=1, pad=1, skip_size=2, **kwargs):
+                 stride=1, padding=1, skip_size=2, **kwargs):
         """Residual block using 2D convolutional layers. Note that kernel_size,
         stride, and pad must be selected such that the height and width of
         the input remain the same.
@@ -146,7 +146,7 @@ class ResBlock(nn.Module):
             Activation function to use.
         stride: int
             # of pixels the filter moves between each convolution. Default 1.
-        pad: int
+        padding: int
             Pixel padding around the input. Default 1.
         skip_size: int
             Number of conv blocks inside the skip connection (default 2).
@@ -163,7 +163,8 @@ class ResBlock(nn.Module):
         self.skip_size = skip_size
         self.layers = nn.ModuleList([
             ConvBlock(c_in, c_in, kernel_size=kernel_size, norm=norm,
-                      activation=None, stride=stride, padding=pad, **kwargs)
+                      activation=None, stride=stride, padding=padding,
+                      **kwargs)
             for i in range(skip_size)
         ])
         self.activation = activation
