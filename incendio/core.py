@@ -422,7 +422,7 @@ class Trainer(LoggerMixin):
         sum_i = 0
         _ = self.decide_stop('on_train_begin', epochs, lrs, lr_mult, **kwargs)
         for e in range(epochs):
-            _ = self.decide_stop('on_epoch_begin', e, stats, None)
+            _ = self.decide_stop('on_epoch_begin', e, None)
             for i, batch in enumerate(self.pbar):
                 _ = self.decide_stop('on_batch_begin', i, sum_i)
                 sum_i += 1
