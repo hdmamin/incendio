@@ -383,9 +383,16 @@ class MetricHistory(TorchCallback):
         self.plot(os.path.join(trainer.out_dir, self.plot_fname))
 
     def plot(self, path=None):
-        cols = self.df.shape[1]
-        fig, ax = plt.subplots(cols//4, 2, figsize=(12, cols))
-        for i, axi in zip(range(cols // 2), ax.flatten()):
+        df_cols = self.df.shape[1]
+        n_rows = max(1, df_cols // 4)
+        n_cols = df_cols // (n_rows * 2)
+        fig, ax = plt.subplots(n_rows, n_cols, figsize=(12, 3*n_rows))
+        if isinstance(ax, Iterable):
+            ax = ax.flatten()
+        else:
+            # If no extra metrics are specified, we only have 1 plot with loss.
+            ax = [ax]
+        for i, axi in zip(range(0, n_cols, 2), ax):
             col = self.df.columns[i]
             axi.plot(self.df[col], label='train')
             axi.plot(self.df[f'val_{col}'], label='val')
@@ -394,10 +401,7 @@ class MetricHistory(TorchCallback):
             axi.set_ylabel('Score')
             axi.legend()
         plt.tight_layout()
-        if path:
-            plt.savefig(path)
-        else:
-            plt.show()
+        plt.show()
 
 
 # Cell
