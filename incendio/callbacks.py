@@ -380,7 +380,8 @@ class MetricHistory(TorchCallback):
         self.df.round(5).to_csv(
             os.path.join(trainer.out_dir, self.fname), index=False
         )
-        self.plot(os.path.join(trainer.out_dir, self.plot_fname))
+        self.plot(os.path.join(trainer.out_dir, self.plot_fname)
+                  if self.plot_fname else None)
 
     def plot(self, path=None):
         df_cols = self.df.shape[1]
@@ -401,7 +402,10 @@ class MetricHistory(TorchCallback):
             axi.set_ylabel('Score')
             axi.legend()
         plt.tight_layout()
-        plt.show()
+        if path:
+            plt.savefig(path)
+        else:
+            plt.show()
 
 
 # Cell
