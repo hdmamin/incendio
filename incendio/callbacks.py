@@ -355,17 +355,23 @@ class ModelCheckpoint(TorchCallback):
 class MetricHistory(TorchCallback):
     """Separate from StatsHandler in case we don't want to log outputs."""
 
-    def __init__(self, fname='history.csv', plot_fname='history.png',
-                 order=90):
+    def __init__(self, fname='history.csv',
+                 plot_fname='history.png', order=90):
         self.train_hist = []
         self.val_hist = []
-        self.fname = fname
-        self.plot_fname = plot_fname
+        self.fname, self.f_path = fname, None
+        self.plot_fname, self.plot_path = plot_fname, None
         self.order = order
 
     def on_train_begin(self, trainer, *args, **kwargs):
         self.train_hist.clear()
         self.val_hist.clear()
+        # Better to catch errors in names at start of training than at end.
+        if self.fname:
+            self.f_path = os.path.join(trainer.out_dir, self.fname)
+        if self.plot_fname:
+            self.plot_path = os.path.join(trainer.out_dir, self.plot_fname)
+
 
     def on_epoch_end(self, trainer, epoch, val_stats):
         self.train_hist.append(trainer.stats.copy())
@@ -377,11 +383,8 @@ class MetricHistory(TorchCallback):
             pd.DataFrame(self.val_hist)\
               .rename(lambda x: f'val_{x}', axis='columns')
         ], axis=1)
-        self.df.round(5).to_csv(
-            os.path.join(trainer.out_dir, self.fname), index=False
-        )
-        self.plot(os.path.join(trainer.out_dir, self.plot_fname)
-                  if self.plot_fname else None)
+        if self.f_path: self.df.round(5).to_csv(self.f_path, index=False)
+        self.plot(self.plot_path)
 
     def plot(self, path=None):
         df_cols = self.df.shape[1]
