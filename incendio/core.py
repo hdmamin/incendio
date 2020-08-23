@@ -462,7 +462,7 @@ class Trainer(LoggerMixin):
             different loaders after training for evaluation. If None is
             passed in, self.dl_val is used.
         """
-        dl_val = self.dl_val or dl_val
+        dl_val = dl_val or self.dl_val
         val_stats = defaultdict(list)
         self.net.eval()
         with torch.no_grad():
