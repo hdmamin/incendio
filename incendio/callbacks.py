@@ -156,7 +156,7 @@ class MetricPrinter(TorchCallback):
 
     def on_epoch_begin(self, trainer, epoch, val_stats):
         """Create progress bar."""
-        trainer.pbar = tqdm(trainer.dl_train)
+        trainer.pbar = tqdm(trainer.dl_train, leave=False)
 
     def on_epoch_end(self, trainer, epoch, val_stats):
         """Print stats and close progress bar."""

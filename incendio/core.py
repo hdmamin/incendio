@@ -100,6 +100,20 @@ class BaseModel(nn.Module):
         plt.tight_layout()
         plt.show()
 
+    def predict(self, *xb):
+        """Predict on one batch of data. This is almost identical to
+        self.__call__: the only differences are that it first puts the model
+        in eval mode and it doesn't compute gradients.
+
+        Parameters
+        ----------
+        xb: torch.tensors
+            One or more tensors comprising the inputs of a single mini batch.
+        """
+        self.eval()
+        with torch.no_grad():
+            return self(*xb)
+
 
 # Cell
 adam = partial(torch.optim.Adam, eps=1e-3)
@@ -466,7 +480,7 @@ class Trainer(LoggerMixin):
         val_stats = defaultdict(list)
         self.net.eval()
         with torch.no_grad():
-            for batch in tqdm(dl_val):
+            for batch in tqdm(dl_val, leave=False):
                 *xb, yb = map(lambda x: x.to(self.device), batch)
                 y_score = self.net(*xb)
                 loss = self.criterion(y_score, yb)
@@ -484,6 +498,9 @@ class Trainer(LoggerMixin):
         xb: torch.tensors
             Inputs to the model. This will often just be one x tensor, but
             sometimes other inputs are required as well (e.g. attention masks).
+        logits: bool
+            If True, output logits. If False, the last activation function is
+            applied.
 
         Returns
         -------
@@ -491,9 +508,7 @@ class Trainer(LoggerMixin):
         """
         xb = map(lambda x: xb.to(self.device), xb)
         self.net.to(self.device)
-        self.net.eval()
-        with torch.no_grad():
-            res = self.net(*xb)
+        res = self.net.predict(*xb)
         if not logits: res = self.last_act(res)
         return res
 
