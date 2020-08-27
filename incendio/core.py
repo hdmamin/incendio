@@ -506,7 +506,7 @@ class Trainer(LoggerMixin):
         -------
         torch.tensor: Model predictions.
         """
-        xb = map(lambda x: xb.to(self.device), xb)
+        xb = map(lambda x: x.to(self.device), xb)
         self.net.to(self.device)
         res = self.net.predict(*xb)
         if not logits: res = self.last_act(res)
