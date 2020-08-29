@@ -57,7 +57,7 @@ class TorchCallback:
     def after_step(self, trainer, i, sum_i):
         pass
 
-    deis_builtinon_batch_end(self, trainer, i, sum_i):
+    def on_batch_end(self, trainer, i, sum_i):
         pass
 
     def on_epoch_end(self, trainer, epoch, val_stats):
