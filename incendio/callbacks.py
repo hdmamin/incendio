@@ -26,7 +26,7 @@ except ImportError:
 from htools import auto_repr, valuecheck, save, delegate
 from .data import BotoUploader
 from .optimizers import variable_lr_optimizer, update_optimizer
-from .utils import DEVICE
+from .utils import DEVICE, is_builtin
 
 
 # Cell
@@ -57,7 +57,7 @@ class TorchCallback:
     def after_step(self, trainer, i, sum_i):
         pass
 
-    def on_batch_end(self, trainer, i, sum_i):
+    deis_builtinon_batch_end(self, trainer, i, sum_i):
         pass
 
     def on_epoch_end(self, trainer, epoch, val_stats):
@@ -397,14 +397,6 @@ class MetricHistory(TorchCallback):
         else:
             # If no extra metrics are specified, we only have 1 plot with loss.
             ax = [ax]
-#         for i, axi in zip(range(0, n_cols, 2), ax):
-#             col = self.df.columns[i]
-#             axi.plot(self.df[col], label='train')
-#             axi.plot(self.df[f'val_{col}'], label='val')
-#             axi.set_title(col.title())
-#             axi.set_xlabel('Epoch')
-#             axi.set_ylabel('Score')
-#             axi.legend()
         for col, axi in zip(self.df.columns, ax):
             axi.plot(self.df[col], label='train')
             axi.plot(self.df[f'val_{col}'], label='val')
