@@ -45,7 +45,7 @@ def tokenize(text, nlp):
 
 
 # Cell
-def tokenize_many(rows, chunk=1_000, nlp):
+def tokenize_many(rows, nlp=None, chunk=1_000):
     """Word tokenize a sequence of strings using multiprocessing. The max
     number of available processes are used.
 
@@ -54,26 +54,28 @@ def tokenize_many(rows, chunk=1_000, nlp):
     rows: Iterable[str]
         A sequence of strings to tokenize. This could be a list, a column of
         a DataFrame, etc.
+    nlp: spacy tokenizer, e.g. spacy.lang.en.English
+        By default, a spacy tokenizer with a small English vocabulary
+        is used. NER, parsing, and tagging are disabled. Any spacy
+        tokenzer can be passed in, but keep in mind other configurations
+        may slow down this function dramatically.
     chunk: int
         This determines how many items to send to multiprocessing at a time.
         The default of 1,000 is usually fine, but if you have extremely
         long pieces of text and memory is limited, you can always decrease it.
         Very small chunk sizes may increase processing time. Note that larger
         values will generally cause the progress bar to update more choppily.
-    nlp: spacy tokenizer, e.g. spacy.lang.en.English
-        By default, a spacy tokenizer with a small English vocabulary
-        is used. NER, parsing, and tagging are disabled. Any spacy
-        tokenzer can be passed in, but keep in mind other configurations
-        may slow down this function dramatically.
 
     Returns
     -------
     list[list[str]]: Each nested list of word tokens corresponds to one
     of the input strings.
     """
+    tokenize_ = partial(tokenize, nlp=nlp or tokenizer())
     length = len(rows)
     with multiprocessing.Pool() as p:
-        res = list(tqdm(p.imap(tokenize, rows, chunksize=chunk), total=length))
+        res = list(tqdm(p.imap(tokenize_, rows, chunksize=chunk),
+                        total=length))
     return res
 
 
