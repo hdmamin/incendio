@@ -24,7 +24,7 @@ tokenizer = partial(spacy.load, name='en_core_web_sm',
 
 
 # Cell
-def tokenize(text, nlp=NLP):
+def tokenize(text, nlp):
     """Word tokenize a single string.
 
     Parameters
@@ -45,7 +45,7 @@ def tokenize(text, nlp=NLP):
 
 
 # Cell
-def tokenize_many(rows, chunk=1_000, nlp=NLP):
+def tokenize_many(rows, chunk=1_000, nlp):
     """Word tokenize a sequence of strings using multiprocessing. The max
     number of available processes are used.
 
