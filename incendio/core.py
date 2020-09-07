@@ -146,7 +146,7 @@ def handle_interrupt(meth):
             instance._stop_training = True
             # Dummy values used for epoch and stats to indicate that
             # training was interrupted. `fit()` method returns None.
-            _ = instance.decide_stop('on_train_end', -1, {}, {})
+            _ = instance.decide_stop('on_train_end', -1, {})
         return res
     return wrapper
 
