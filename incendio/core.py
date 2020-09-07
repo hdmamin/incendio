@@ -139,6 +139,7 @@ def handle_interrupt(meth):
     @wraps(meth)
     def wrapper(*args, **kwargs):
         instance = args[0]
+        res = None
         try:
             res = meth(*args, **kwargs)
         except KeyboardInterrupt:
