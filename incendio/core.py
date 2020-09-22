@@ -79,6 +79,9 @@ class BaseModel(nn.Module):
         """Get shape of each layer's weights."""
         return [tuple(p.shape) for p in self.parameters()]
 
+    def numel(self):
+        return sum(p.numel() for p in self.parameters())
+
     def trainable(self):
         """Check which layers are trainable."""
         return [(tuple(p.shape), p.requires_grad) for p in self.parameters()]
