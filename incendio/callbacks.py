@@ -312,7 +312,9 @@ class PerformanceThreshold(TorchCallback):
 class ModelCheckpoint(TorchCallback):
 
     @valuecheck
-    def __init__(self, metric='loss', goal:('max', 'min')='min', order=25):
+    def __init__(self, metric='loss', goal:('max', 'min')='min',
+                 fname='trainer.pkl', metric_fname='best_val_metrics.json',
+                 order=25):
         # Will use op like: self.op(new_val, current_best)
         if goal == 'min':
             self.init_metric = self.best_metric = float('inf')
@@ -323,14 +325,15 @@ class ModelCheckpoint(TorchCallback):
             self.op = gt
             self.op_best = add
 
+        self.fname = fname
+        self.metric_fname = metric_fname
         self.order = order
         self.metric = metric
         self.metric_path = None
 
     def on_train_begin(self, trainer, *args, **kwargs):
         self.best_metric = self.init_metric
-        self.metric_path = os.path.join(trainer.out_dir,
-                                        'best_val_metrics.json')
+        self.metric_path = os.path.join(trainer.out_dir, self.metric_fname)
 
     def on_epoch_end(self, trainer, epoch, val_stats):
         new_val = val_stats.get(self.metric)
@@ -346,7 +349,7 @@ class ModelCheckpoint(TorchCallback):
                 f'Saving model. {self.metric.title()} improved from '
                 f'{self.best_metric:.4f} to {new_val:.4f}.'
             )
-            trainer.save(f'trainer.pkl')
+            trainer.save(self.fname)
             save({k: round(v, 5) for k, v in val_stats.items()},
                  self.metric_path)
             self.best_metric = new_val
