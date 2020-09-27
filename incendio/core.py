@@ -79,6 +79,9 @@ class BaseModel(nn.Module):
         """Get shape of each layer's weights."""
         return [tuple(p.shape) for p in self.parameters()]
 
+    def numel(self):
+        return sum(p.numel() for p in self.parameters())
+
     def trainable(self):
         """Check which layers are trainable."""
         return [(tuple(p.shape), p.requires_grad) for p in self.parameters()]
@@ -99,6 +102,20 @@ class BaseModel(nn.Module):
             )
         plt.tight_layout()
         plt.show()
+
+    def predict(self, *xb):
+        """Predict on one batch of data. This is almost identical to
+        self.__call__: the only differences are that it first puts the model
+        in eval mode and it doesn't compute gradients.
+
+        Parameters
+        ----------
+        xb: torch.tensors
+            One or more tensors comprising the inputs of a single mini batch.
+        """
+        self.eval()
+        with torch.no_grad():
+            return self(*xb)
 
 
 # Cell
@@ -125,6 +142,7 @@ def handle_interrupt(meth):
     @wraps(meth)
     def wrapper(*args, **kwargs):
         instance = args[0]
+        res = None
         try:
             res = meth(*args, **kwargs)
         except KeyboardInterrupt:
@@ -132,7 +150,7 @@ def handle_interrupt(meth):
             instance._stop_training = True
             # Dummy values used for epoch and stats to indicate that
             # training was interrupted. `fit()` method returns None.
-            _ = instance.decide_stop('on_train_end', -1, {}, {})
+            _ = instance.decide_stop('on_train_end', -1, {})
         return res
     return wrapper
 
@@ -418,34 +436,39 @@ class Trainer(LoggerMixin):
         kwargs: any
             Pass in clean=True to remove existing files in out_dir.
         """
-        stats = defaultdict(list)
+        self.stats = defaultdict(list)
         sum_i = 0
         _ = self.decide_stop('on_train_begin', epochs, lrs, lr_mult, **kwargs)
         for e in range(epochs):
-            _ = self.decide_stop('on_epoch_begin', e, stats, None)
+            _ = self.decide_stop('on_epoch_begin', e, None)
             for i, batch in enumerate(self.pbar):
+                _ = self.decide_stop('on_batch_begin', i, sum_i)
                 sum_i += 1
                 *xb, yb = map(lambda x: x.to(self.device), batch)
                 self.optim.zero_grad()
-                _ = self.decide_stop('on_batch_begin', i, sum_i, stats)
+                _ = self.decide_stop('after_zero_grad', i, sum_i, xb, yb)
 
                 # Forward and backward passes.
                 y_score = self.net(*xb)
+                if self.decide_stop('after_forward', i, sum_i): break
                 loss = self.criterion(y_score, yb)
+                if self.decide_stop('after_loss', i, sum_i): break
                 loss.backward()
+                if self.decide_stop('after_backward', i, sum_i): break
                 self.optim.step()
+                if self.decide_stop('after_step', i, sum_i): break
 
                 # Separate because callbacks are only applied during training.
-                self._update_stats(stats, loss, yb, y_score)
-                if self.decide_stop('on_batch_end', i, sum_i, stats): break
+                self._update_stats(self.stats, loss, yb, y_score)
+                if self.decide_stop('on_batch_end', i, sum_i): break
 
             # If on_batch_end callback halts training, else block is skipped.
             else:
                 val_stats = self.validate()
-                if self.decide_stop('on_epoch_end', e, stats, val_stats): break
+                if self.decide_stop('on_epoch_end', e, val_stats): break
                 continue
             break
-        _ = self.decide_stop('on_train_end', e, stats, val_stats)
+        _ = self.decide_stop('on_train_end', e, val_stats)
 
     def validate(self, dl_val=None):
         """Evaluate the model on a validation set.
@@ -457,11 +480,11 @@ class Trainer(LoggerMixin):
             different loaders after training for evaluation. If None is
             passed in, self.dl_val is used.
         """
-        dl_val = self.dl_val or dl_val
+        dl_val = dl_val or self.dl_val
         val_stats = defaultdict(list)
         self.net.eval()
         with torch.no_grad():
-            for batch in tqdm(dl_val):
+            for batch in tqdm(dl_val, leave=False):
                 *xb, yb = map(lambda x: x.to(self.device), batch)
                 y_score = self.net(*xb)
                 loss = self.criterion(y_score, yb)
@@ -479,16 +502,17 @@ class Trainer(LoggerMixin):
         xb: torch.tensors
             Inputs to the model. This will often just be one x tensor, but
             sometimes other inputs are required as well (e.g. attention masks).
+        logits: bool
+            If True, output logits. If False, the last activation function is
+            applied.
 
         Returns
         -------
         torch.tensor: Model predictions.
         """
-        xb = map(lambda x: xb.to(self.device), xb)
+        xb = map(lambda x: x.to(self.device), xb)
         self.net.to(self.device)
-        self.net.eval()
-        with torch.no_grad():
-            res = self.net(*xb)
+        res = self.net.predict(*xb)
         if not logits: res = self.last_act(res)
         return res
 

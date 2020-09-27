@@ -106,7 +106,7 @@ class ConvBlock(nn.Module):
             (In some cases such as our ResBlock implementation, we pass in None
             so that an extra addition can be performed before the final
             activation.) Do not use the functional form here as it will be
-            added to a sequential object.
+            added to a sequential object. This is an object, not a class.
         kwargs: any
             Additional keyword args are passed to Conv2d. Useful kwargs include
             stride, and padding (see pytorch docs for nn.Conv2d).
@@ -127,9 +127,9 @@ class ConvBlock(nn.Module):
 # Cell
 class ResBlock(nn.Module):
 
-    def __init__(self, c_in, activation=JRelu, f=3, stride=1, pad=1,
-                 skip_size=2, norm=True):
-        """Residual block using 2D convolutional layers. Note that f,
+    def __init__(self, c_in, kernel_size=3, norm=True, activation=JRelu,
+                 stride=1, padding=1, skip_size=2, **kwargs):
+        """Residual block using 2D convolutional layers. Note that kernel_size,
         stride, and pad must be selected such that the height and width of
         the input remain the same.
 
@@ -137,27 +137,34 @@ class ResBlock(nn.Module):
         -----------
         c_in: int
             # of input channels.
+        kernel_size: int
+            Size of filter used in convolution. Default 3 (which becomes 3x3).
+        norm: bool
+            Specifies whether to include a batch norm layer after each conv
+            layer.
         activation: callable
             Activation function to use.
-        f: int
-            Size of filter (f x f) used in convolution. Default 3.
         stride: int
             # of pixels the filter moves between each convolution. Default 1.
-        pad: int
+        padding: int
             Pixel padding around the input. Default 1.
         skip_size: int
             Number of conv blocks inside the skip connection (default 2).
             ResNet paper notes that skipping a single layer did not show
             noticeable improvements.
-        norm: bool
-            Specifies whether to include a batch norm layer after each conv
-            layer.
+        kwargs: any
+            Additional kwargs to pass to ConvBlock which will in turn pass them
+            to Conv2d. If you accidentally pass in a 'c_out', it will be
+            removed since we need all dimensions to remain unchanged.
         """
         super().__init__()
+        # Ensure we don't accidentally pass in a different c_out.
+        kwargs.pop('c_out', None)
         self.skip_size = skip_size
         self.layers = nn.ModuleList([
-            ConvBlock(c_in, c_in, norm=norm, activation=None, kernel_size=f,
-                      stride=stride, padding=pad)
+            ConvBlock(c_in, c_in, kernel_size=kernel_size, norm=norm,
+                      activation=None, stride=stride, padding=padding,
+                      **kwargs)
             for i in range(skip_size)
         ])
         self.activation = activation
