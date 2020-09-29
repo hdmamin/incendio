@@ -2,7 +2,7 @@
 
 __all__ = ['GRelu', 'JRelu', 'Mish', 'mish', 'ConvBlock', 'ResBlock', 'ReflectionPaddedConv2d', 'Dropin',
            'LinearSkipBlock', 'LinearResBlock', 'LinearDenseBlock', 'WeightedLinearResBlock', 'trunc_normal_',
-           'PaddedEmbedding', 'BloomEmbedding', 'AxialEncoding', 'MultiAxialEncoding']
+           'BloomEmbedding', 'AxialEncoding', 'MultiAxialEncoding']
 
 
 # Cell
@@ -318,20 +318,6 @@ def trunc_normal_(x, mean=0.0, std=1.0):
 
 
 # Cell
-@add_docstring(nn.Embedding)
-def PaddedEmbedding(num_embeddings, embedding_dim, padding_idx=None, **kwargs):
-    """Patched version of Fastai `embedding` that allows us to specify a row of
-    zeros for a padding token.
-    """
-    emb = nn.Embedding(num_embeddings, embedding_dim, padding_idx, **kwargs)
-    with torch.no_grad():
-        trunc_normal_(emb.weight, std=.01)
-        if padding_idx is not None:
-            torch.zero_(emb.weight[0])
-    return emb
-
-
-# Cell
 class BloomEmbedding(nn.Module):
     """Bloom Embedding layer for memory-efficient word representations.
     Each word is encoded by a combination of rows of the embedding
@@ -390,7 +376,7 @@ class BloomEmbedding(nn.Module):
         """
         super().__init__()
         self.n_emb = n_emb
-        self.emb = PaddedEmbedding(n_emb, emb_dim, padding_idx=padding_idx)
+        self.emb = InitializedEmbedding(n_emb, emb_dim, padding_idx)
         self.n_hashes = n_hashes
         self.pad_idx = padding_idx
         self.pre_hashed = pre_hashed
@@ -446,7 +432,7 @@ class AxialEncoding(nn.Module):
 
         self.v = self._decompose_mult(vocab_dim)
         self.e = self._decompose_add(emb_dim)
-        self.emb = nn.ModuleList(PaddedEmbedding(self.v, self.e, pad_idx)
+        self.emb = nn.ModuleList(InitializedEmbedding(self.v, self.e, pad_idx)
                                  for _ in range(2))
 
     def _decompose_mult(self, dim):
@@ -483,8 +469,8 @@ class MultiAxialEncoding(nn.Module):
         self.e = self._decompose_add(emb_dim)
         self.pre_hashed = pre_hashed
         # Must set emb blocks before defining process_fn.
-        self.emb = nn.ModuleList(PaddedEmbedding(self.v, self.e, pad_idx)
-                          for _ in range(n_blocks))
+        self.emb = nn.ModuleList(InitializedEmbedding(self.v, self.e, pad_idx)
+                                 for _ in range(n_blocks))
         self.process_fn = identity if pre_hashed else \
             partial(probabilistic_hash_tensor, n_buckets=self.v,
                     n_hashes=len(self.emb), pad_idx=pad_idx)
