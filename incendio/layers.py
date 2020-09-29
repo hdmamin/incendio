@@ -2,7 +2,7 @@
 
 __all__ = ['GRelu', 'JRelu', 'Mish', 'mish', 'ConvBlock', 'ResBlock', 'ReflectionPaddedConv2d', 'Dropin',
            'LinearSkipBlock', 'LinearResBlock', 'LinearDenseBlock', 'WeightedLinearResBlock', 'trunc_normal_',
-           'BloomEmbedding', 'AxialEncoding', 'MultiAxialEncoding']
+           'InitializedEmbedding', 'BloomEmbedding', 'AxialEncoding', 'MultiAxialEncoding']
 
 
 # Cell
@@ -315,6 +315,18 @@ def trunc_normal_(x, mean=0.0, std=1.0):
     From https://discuss.pytorch.org/t/implementing-truncated-normal-initializer/4778/12
     """
     return x.normal_().fmod_(2).mul_(std).add_(mean)
+
+
+# Cell
+class InitializedEmbedding(nn.Embedding):
+    """Same as nn.Embedding but with truncated normal initialization. This
+    also differs from fastai's Embedding class in that it allows padding."""
+
+    def reset_parameters(self):
+        with torch.no_grad():
+            trunc_normal_(self.weight, std=.01)
+            if self.padding_idx is not None:
+                torch.zero_(self.weight[self.padding_idx])
 
 
 # Cell
