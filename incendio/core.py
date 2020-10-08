@@ -496,6 +496,15 @@ class Trainer(LoggerMixin):
         val_stats = defaultdict(list)
         self.net.eval()
         preds = []
+
+        # Questionable logic but when called from the training loop, we don't
+        # return preds and we're already on the GPU. When called explicitly
+        # by the user, we usually do want predictions and we may not be on the
+        # GPU. This just provides nice default behavior: worst case scenario,
+        # the user calls this explicitly without returning preds and an error
+        # is thrown (torch makes it pretty obvious that the solution is to put
+        # the model on the GPU).
+        if return_preds: self.net.to(self.device)
         with torch.no_grad():
             for batch in tqdm(dl_val, leave=False):
                 *xb, yb = map(lambda x: x.to(self.device), batch)
