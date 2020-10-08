@@ -470,7 +470,7 @@ class Trainer(LoggerMixin):
             break
         _ = self.decide_stop('on_train_end', e, val_stats)
 
-    def validate(self, dl_val=None):
+    def validate(self, dl_val=None, return_preds=False, logits=True):
         """Evaluate the model on a validation set.
 
         Parameters
@@ -479,16 +479,34 @@ class Trainer(LoggerMixin):
             Accepting an optional dataloader allows the user to pass in
             different loaders after training for evaluation. If None is
             passed in, self.dl_val is used.
+        return_preds: bool
+            If True, store and return predictions.
+        logits: bool
+            Only matters when returning predictions. If True, output logits.
+            If False, the last activation function is applied.
+
+        Returns
+        -------
+        dict or tuple[dict, torch.tensor]: If `return_pred` is False, just
+        return a dict of metrics. If True, return a tuple where the metric
+        dict is the first item and the tensor of predictions is the second
+        item.
         """
         dl_val = dl_val or self.dl_val
         val_stats = defaultdict(list)
         self.net.eval()
+        preds = []
         with torch.no_grad():
             for batch in tqdm(dl_val, leave=False):
                 *xb, yb = map(lambda x: x.to(self.device), batch)
                 y_score = self.net(*xb)
                 loss = self.criterion(y_score, yb)
                 self._update_stats(val_stats, loss, yb, y_score)
+                if return_preds: preds.append(y_score)
+        if preds:
+            preds = torch.cat(preds, dim=0)
+            if not logits: preds = self.last_act(preds)
+            return val_stats, preds
         return val_stats
 
     def predict(self, *xb, logits=True):
@@ -510,8 +528,8 @@ class Trainer(LoggerMixin):
         -------
         torch.tensor: Model predictions.
         """
-        xb = map(lambda x: x.to(self.device), xb)
         self.net.to(self.device)
+        xb = map(lambda x: x.to(self.device), xb)
         res = self.net.predict(*xb)
         if not logits: res = self.last_act(res)
         return res
@@ -636,10 +654,9 @@ class Trainer(LoggerMixin):
         os.makedirs(self.out_dir)
 
     def __repr__(self):
-        r = (f'Trainer(criterion={repr(self.criterion.__name__)}, '
-             f'out_dir={repr(self.out_dir)})'
-             f'\n\nDatasets: {len(self.ds_train)} train rows, '
-             f'{len(self.ds_val)} val rows'
-             f'\n\nOptimizer: {repr(self.optim)}'
-             f'\n\n{repr(self.net)})')
-        return r
+        return (f'Trainer(criterion={repr(self.criterion.__name__)}, '
+                f'out_dir={repr(self.out_dir)})'
+                f'\n\nDatasets: {len(self.ds_train)} train rows, '
+                f'{len(self.ds_val)} val rows'
+                f'\n\nOptimizer: {repr(self.optim)}'
+                f'\n\n{repr(self.net)})')
