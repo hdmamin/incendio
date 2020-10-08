@@ -464,13 +464,14 @@ class Trainer(LoggerMixin):
 
             # If on_batch_end callback halts training, else block is skipped.
             else:
-                val_stats = self.validate()
+                val_stats = self.validate()[0]
                 if self.decide_stop('on_epoch_end', e, val_stats): break
                 continue
             break
         _ = self.decide_stop('on_train_end', e, val_stats)
 
-    def validate(self, dl_val=None, return_preds=False, logits=True):
+    def validate(self, dl_val=None, return_preds=False, return_labels=False,
+                 logits=True):
         """Evaluate the model on a validation set.
 
         Parameters
@@ -481,21 +482,23 @@ class Trainer(LoggerMixin):
             passed in, self.dl_val is used.
         return_preds: bool
             If True, store and return predictions.
+        return_labels: bool
+            If True, store and return labels.
         logits: bool
             Only matters when returning predictions. If True, output logits.
             If False, the last activation function is applied.
 
         Returns
         -------
-        dict or tuple[dict, torch.tensor]: If `return_pred` is False, just
-        return a dict of metrics. If True, return a tuple where the metric
-        dict is the first item and the tensor of predictions is the second
-        item.
+        list[dict, torch.tensor(s)]: First item is a dict of metrics. A tensor
+        of predictions is appended as a second item if `return_preds`,
+        followed by a tensor of labels if `return_labels`.
         """
         dl_val = dl_val or self.dl_val
         val_stats = defaultdict(list)
         self.net.eval()
         preds = []
+        labels = []
 
         # Questionable logic but when called from the training loop, we don't
         # return preds and we're already on the GPU. When called explicitly
@@ -512,11 +515,17 @@ class Trainer(LoggerMixin):
                 loss = self.criterion(y_score, yb)
                 self._update_stats(val_stats, loss, yb, y_score)
                 if return_preds: preds.append(y_score)
+                if return_labels: labels.append(yb)
+
+        res = [val_stats]
         if preds:
             preds = torch.cat(preds, dim=0)
             if not logits: preds = self.last_act(preds)
-            return val_stats, preds
-        return val_stats
+            res.append(preds)
+        if labels:
+            labels = torch.cat(labels, dim=0)
+            res.append(labels)
+        return res
 
     def predict(self, *xb, logits=True):
         """Make predictions on a batch of data. This automatically does things
