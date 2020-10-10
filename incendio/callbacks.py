@@ -493,15 +493,17 @@ class CometCallback(TorchCallback):
     experiments.
     """
 
-    def __init__(self, project_name, order=100):
+    def __init__(self, project_name, exp_name=None, order=100):
         # High order so this comes after MetricHandler.
         self.project_name = project_name
         self.order = order
+        self.exp_name = exp_name
         # Define when training begins so reported time is more meaningful.
         self.exp = None
 
     def on_train_begin(self, trainer, epochs, lrs, lr_mult, **kwargs):
         self.exp = Experiment(project_name=self.project_name)
+        if self.exp_name: self.exp.set_name(self.exp_name)
         params = {k: v for k, v in vars(trainer).items() if is_builtin(v)}
         self.exp.log_parameters(
             dict(**params, **kwargs, epochs=epochs, lrs=lrs, lr_mult=lr_mult)
