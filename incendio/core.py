@@ -159,10 +159,11 @@ def handle_interrupt(meth):
 class Trainer(LoggerMixin):
 
     @valuecheck
-    def __init__(self, net, ds_train, ds_val, dl_train, dl_val,
-                 criterion, mode:('binary', 'multiclass', 'regression'),
-                 out_dir, optim=None, optim_type=Adam, eps=1e-3, last_act=None,
-                 threshold=0.5, metrics=None, callbacks=None, device=DEVICE):
+    def __init__(self, net, dl_train, dl_val, criterion,
+                 mode:('binary', 'multiclass', 'regression'),
+                 out_dir, optim=None, optim_type=Adam, eps=1e-3,
+                 last_act=None, threshold=0.5, metrics=None, callbacks=None,
+                 device=DEVICE):
         """An object to handle model training. This makes it easy for us to
         model weights, optimizer state, datasets and dataloaders all
         at once.
@@ -172,9 +173,6 @@ class Trainer(LoggerMixin):
         net: BaseModel (inherits from nn.Module)
             A pytorch model. The BaseModel implementation from this library
             should be used, since Trainer relies on its `unfreeze` method.
-        ds_train: torch.utils.data.Dataset
-            Training dataset.
-        ds_val: torch.utils.data.Dataset
             Validation dataset.
         dl_train: torch.utils.data.DataLoader
             Training dataloader. Lazily retrieves items from train dataset.
@@ -262,7 +260,7 @@ class Trainer(LoggerMixin):
             warnings.warn('Inferring optim_type from optim argument.')
 
         self.net = net
-        self.ds_train, self.ds_val = ds_train, ds_val
+        self.ds_train, self.ds_val = dl_train.dataset, dl_val.dataset
         self.dl_train, self.dl_val = dl_train, dl_val
         # Optim created in fit() method. Must be after net is on the GPU.
         self.optim_type = optim_type
