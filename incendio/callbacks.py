@@ -489,21 +489,40 @@ class CometCallback(TorchCallback):
     logged per epoch.
 
     Note: This could use some more work to add more options to store other
-    things, but I want to use what I have so far on my self-supervised learning
-    experiments.
+    things, but I want to use what I have so far on my self-supervised
+    learning experiments.
     """
 
-    def __init__(self, project_name, exp_name=None, order=100):
+    def __init__(self, project_name, exp_name=None, tags=(), order=100):
+        """
+        Parameters
+        ----------
+        project_name: str
+            Name of the project in Comet.
+        exp_name: str
+            Name of the current training run (I typically use names like v1,
+            v2, etc.).
+        tags: Iterable[str]
+            Optional: add tags to the training run. These are things you want
+            to be highly visible when looking at many different runs in the
+            Comet UI. This will typically be major choices like the name of a
+            model architecture or pre-training task, not small specifics like
+            the value of epsilon for an Adam optimizer.
+        order: int
+            Determines order callbacks are executed in.
+        """
         # High order so this comes after MetricHandler.
         self.project_name = project_name
         self.order = order
         self.exp_name = exp_name
+        self.tags = list(tags)
         # Define when training begins so reported time is more meaningful.
         self.exp = None
 
     def on_train_begin(self, trainer, epochs, lrs, lr_mult, **kwargs):
         self.exp = Experiment(project_name=self.project_name)
         if self.exp_name: self.exp.set_name(self.exp_name)
+        if self.tags: self.exp.add_tags(self.tags)
         params = {k: v for k, v in vars(trainer).items() if is_builtin(v)}
         self.exp.log_parameters(
             dict(**params, **kwargs, epochs=epochs, lrs=lrs, lr_mult=lr_mult)
