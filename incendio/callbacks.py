@@ -2,7 +2,8 @@
 
 __all__ = ['TorchCallback', 'BasicConfig', 'StatsHandler', 'MetricPrinter', 'BatchMetricPrinter', 'EarlyStopper',
            'PerformanceThreshold', 'ModelCheckpoint', 'MetricHistory', 'S3Uploader', 'BotoS3Uploader', 'CometCallback',
-           'EC2Closer', 'ModelUnfreezer', 'SchedulerMixin', 'CosineLRScheduler', 'AdaptiveSawtoothScheduler']
+           'CometGradientCallback', 'EC2Closer', 'ModelUnfreezer', 'SchedulerMixin', 'CosineLRScheduler',
+           'AdaptiveSawtoothScheduler']
 
 
 # Cell
@@ -534,6 +535,45 @@ class CometCallback(TorchCallback):
     def on_epoch_end(self, trainer, epoch, val_stats):
         self.exp.log_metrics(trainer.stats, prefix='train', epoch=epoch)
         self.exp.log_metrics(val_stats, prefix='val', epoch=epoch)
+
+
+# Cell
+class CometGradientCallback(CometCallback):
+    """Contains standard Comet.ml tracking but adds some information about
+    gradients. At the moment, this creates a single bar plot at the end of
+    training displaying the average gradient magnitudes by layer. Eventually,
+    we might want to update this to show how magnitudes change by epoch. The
+    only issue here is for a model with many layers (e.g. hundreds), this
+    becomes tricky to visualize in a useful way with the added time dimension.
+    """
+
+    def on_train_begin(self, trainer, epochs, lrs, lr_mult, **kwargs):
+        super().on_train_begin(trainer, epochs, lrs, lr_mult, **kwargs)
+        self.means = defaultdict(list)
+        self.stds = defaultdict(list)
+
+    def after_backward(self, trainer, i, sum_i):
+        for name, weights in trainer.net.named_parameters():
+            if 'bias' in name or not weights.requires_grad:
+                continue
+            abs_grads = np.abs(weights.grad.detach().cpu().numpy())
+            self.means[name].append(abs_grads.mean())
+            self.stds[name].append(abs_grads.std())
+
+    def on_train_end(self, trainer, epoch, val_stats):
+        """Create bar plot and save it to comet.ml."""
+        fig, ax = plt.subplots(figsize=(10, 6))
+        plt.bar(range(len(self.means)),
+                [np.mean(v) for v in self.means.values()],
+                yerr=[np.mean(v) for v in self.stds.values()],
+                align='edge', alpha=.7)
+        plt.xticks(range(len(self.means)),
+                   labels=[''.join(k.split('.')[:-1])
+                           for k in self.means.keys()],
+                   rotation=60)
+        plt.tight_layout()
+        self.exp.log_figure('grad_avg', fig)
+        super().on_train_end(trainer, epoch, val_stats)
 
 
 # Cell

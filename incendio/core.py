@@ -313,7 +313,7 @@ class Trainer(LoggerMixin):
 
     def load(self, fname=None, old_path=None):
         """This lets a trainer load previously saved model and optimizer
-        weights. This is an in-place operation, so nothing is returned.
+        weights. This is an in-place operation so nothing is returned.
 
         Parameters
         ----------
