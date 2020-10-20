@@ -36,7 +36,9 @@ def reproducible(seed=1, verbose=True):
 def gpu_setup(make_reproducible=True, seed=1, verbose=1):
     if make_reproducible: reproducible(seed, verbose)
     if not torch.cuda.is_available(): warnings.warn('Cuda not available.')
-    if DEVICE.type != 'cuda': warnings.warn('Incendio device is not cuda.')
+    if DEVICE.type != 'cuda':
+        print(DEVICE)
+        warnings.warn('Incendio device is not cuda.')
 
 
 # Cell

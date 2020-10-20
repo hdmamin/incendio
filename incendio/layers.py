@@ -3,10 +3,11 @@
 __all__ = ['GRelu', 'JRelu', 'Mish', 'mish', 'ConvBlock', 'ResBlock', 'ReflectionPaddedConv2d', 'SmoothSoftmaxBase',
            'SmoothSoftmax', 'SmoothLogSoftmax', 'SpatialSoftmax', 'Dropin', 'LinearSkipBlock', 'LinearResBlock',
            'LinearDenseBlock', 'WeightedLinearResBlock', 'trunc_normal_', 'InitializedEmbedding', 'BloomEmbedding',
-           'AxialEncoding', 'MultiAxialEncoding']
+           'AxialEncoding', 'MultiAxialEncoding', 'SiameseBase']
 
 
 # Cell
+from abc import abstractmethod, ABC
 from functools import partial
 import numpy as np
 from operator import add, truediv, sub
@@ -15,6 +16,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from htools import add_docstring
+from .core import BaseModel
 from .data import probabilistic_hash_tensor
 from .utils import concat, weighted_avg, identity
 
@@ -589,3 +591,26 @@ class MultiAxialEncoding(nn.Module):
         res_blocks = [e(hashed.squeeze()) for e, hashed in
                       zip(self.emb, torch.chunk(xhash, xhash.shape[0], -1))]
         return torch.cat(res_blocks, dim=-1)
+
+
+# Cell
+class SiameseBase(BaseModel, ABC):
+    """Parent class to implement a Siamese network or triplet network (or any
+    network that passes n inputs of the same shape through a shared encoder).
+    It concatenates the items into a single batch so the encoder's forward
+    method (implemented as self._forward) only needs to be called once.
+    """
+
+    def forward(self, *xb):
+        bs = xb[0].shape[0]
+        xb = self._forward(torch.cat(xb, dim=0))
+        return xb.view(bs, -1, *xb.shape[1:])
+
+    @abstractmethod
+    def _forward(self, xb):
+        """Forward pass for a single batch of x. Note that the batch dimension
+        here will be batch_size * n, where n is the number of images in a
+        single example (e.g. n=2 for a traditional Siamese Network, but you
+        can go arbitrarily high).
+        """
+        raise NotImplementedError
