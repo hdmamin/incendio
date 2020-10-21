@@ -120,6 +120,24 @@ class BaseModel(nn.Module):
         with torch.no_grad():
             return self(*xb)
 
+    def load(self, path, map_location=None):
+        state = torch.load(path, map_location=map_location)
+        # Check if it's a saved incendio trainer instead of just a model.
+        # Think this is pretty safe with torch naming method.
+        if 'model' in state: state = state['model']
+        self.load_state_dict(state)
+
+    def load_encoder(self, path):
+        """Load encoder weights from a pre-trained model. This requires us the
+        model encoder to be stored as self.enc.
+        """
+        if not hasattr(self, 'enc'):
+            raise RuntimeError('Model doesn\'t have `enc` attribute.')
+
+        state = torch.load(path, map_location=map_location)
+        if 'model' in state: state = state['model']
+        self.enc.load_state_dict(state, strict=False)
+
 
 # Cell
 adam = partial(torch.optim.Adam, eps=1e-3)
@@ -357,6 +375,9 @@ class Trainer(LoggerMixin):
         except (AttributeError, KeyError) as e:
             self.logger.warning('Could not load optimizer. '
                                 ' Loading model weights only.\n' + repr(e))
+
+    def load_encoder(self, path):
+        self.net.load_encoder(path)
 
     def add_callbacks(self, *callbacks):
         """Attach additional callbacks to Trainer. Note that callback order
