@@ -377,6 +377,11 @@ class Trainer(LoggerMixin):
                                 ' Loading model weights only.\n' + repr(e))
 
     def load_encoder(self, path):
+        """Wrapper to BaseModel's `load_encoder` method. Ignore optimizer
+        state dict since we'll typically be training on a new task rather
+        than resuming training.
+        """
+        self.logger.info(f'Loading encoder weights from {path}.')
         self.net.load_encoder(path)
 
     def add_callbacks(self, *callbacks):
