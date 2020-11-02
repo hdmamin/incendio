@@ -1,0 +1,75 @@
+11/1 - Planning
+---------------
+Deadline: 12/31/20 (depending on what I decide to include here, this could end up being as short as a few days or as long as a few months. I think it's important to set some sort of soft timebox so this is it. Extending past this would be fine if I want to and wrapping up far earlier would also be fine.)
+
+Final Product: 
+    -addition of transformers-based data augmentation capabilitites to incendio. I expect this to include 3 methods though I'm open to change:
+		-mask filling: swap 1 or more words in the source
+		-text generation: truncate source and fill in the end with seq2seq
+		-paraphrase: pretty simple, just use pretrained model
+	Each method should have 3 possible interfaces:
+		-base function: the core functionality. Pass in a string and return an augmented string.
+		-composable random transform: It's possible this won't require anything different than the base function, but basically I want it to be super easy to plug these into a torch dataset. This would let us augment data on the fly. In reality, I suspect this would be way too slow and we'd want to pre-compute these, but it would be nice to have the option.
+		-CLI: provide the option for a user to run something like "incendio augment data/searches.csv --out_path data/searches-augmented.csv --mode mask --mask_n 2" to create a new file with augmented text. Maybe should support other common file structures, e.g. 1 file for each item.
+
+	-Optionally, this could include tasks such as:
+		-CLI: class to make it easier to construct a train.py script given a Trainer. Basically, I've found it still ends up being annoyingly slow to construct very similar training scripts for each project, even with all the boilerplate incendio.Trainer provides. There's a wide range in possible complexity here: on the high end, I have some fuzzy vision of something that identifies all the possible args/kwargs used in a script and jams them all into one train func so we get them as command line options. But maybe that's overcomplicating things and I just need to enforce a stricter approach to what is called in the train script and then call them in order (get_data, get_callbacks, get_metrics, etc.).
+		-finalize work from annotated gpt2 notebooks: port some attention-related layers/helpers to incendio. Some of this stuff might already be available in huggingface or pytorch but it wouldn't hurt to implement them myself anyway to better understand them.
+		-finalize and port work from spatial attention notebooks: probably too computationally intensive to be actually useful at this point, and it sounds like similar concepts may already be common. But it would be cool.
+		-layers/building blocks of lambda networks: would be cool and a good way to make me take the time to really understand what they're doing.
+		-various einops-based layers
+		-tensor debugger: inspired by image from einops tutorial, see if I can come up with something to make it easier to validate that a layer/model does what I think it does to a tensor. There are often cases where I think something's working but I want to 100% confirm that it's not jumbling up batches/axes in an unintended way. Could use a similar concept (perhaps an input image where every batch/row/column has a different "color" (rgb value)?) or see if I can do something similar to one of my img_wang strategies (attaching attributes to tensors to keep track of specific items in a batch; however, I've found it's hard to make these things stick. Many tensor operations seem to delete these, perhaps because they're copying or creating new tensors under the hood and base tensors don't have my added attributes. Might be solvable through monkeypatching.)
+		-massive overhaul to trainer: make it possible to access everything during training (set self.xb, self.yb every batch)? Or maybe a wiser approach is to mimic lightning and make it easier for user to overwrite certain steps (e.g. instead of loss = self.criterion(y, y_hat) call loss = self.compute_loss() (unsure of args at the moment, maybe none?) where "compute_loss" is a method of trainer, as opposed to self.criterion which is an attribute containing a torch loss function. Idea is we want it to be easier to do custom stuff like passing x to a loss function for contrastive loss or training a seq2seq model without unnecessarily duplicating tensors.
+		-Building + hosting docs - did I ever do this? I can't remember.
+		-better readmes - in the spirit of fleshing out the library.
+		-semi cheating since it's not incendio, but htools docs and readme - would be nice to update those too.
+
+Concepts: 
+    -interface design: practice writing useful, user-friendly components. I don't know that these need to be particularly customizable (i.e. user (me) will be using the finished product, not building custom variants), but they should be flexible enough that if useful new pipelines types emerge, I can easily add them.
+	-features of python packaging: strengthen knowledge of CLIs, optional dependencies, etc. I like the idea of letting users install incendio (with no deps) or incendio[all] (all deps). 
+	-optional: if implementing things like lambda layers or finishing off attention-related layers, this will involve some solid ML comprehension.
+
+Tech: 
+	-Can't think of anything new I'd need to use or that would be particularly useful here. Perhaps focusing on getting github actions working since I'm pretty sure Incendio's still failing whatever gets run on git pushes.
+	
+Requirements:
+
+	-Complete the transformers augmentation bullet points outlined in Final Product.
+	-Update docs and readme.
+	-Other items are optional, though I think it would be a good idea to close out some of these items and this is a good opportunity. But I don't want to require it since this was initially mean to be a quick project to re-energize me prior to a larger, more ambitious project.
+
+Pre-Mortem:
+    What could go wrong?
+
+	-I get bored and tempted by other project distractions, e.g. Liza.ai. 
+		[SOLUTION] I made the requirements flexible enough that this project should be pretty quick to wrap up if I want to. If I find myself getting distracted, toss the optional ideas for now and just churn out the mandatory items. This should let me move on to other stuff pretty quickly. Also, this system has been highly effective so even if I get distracted it won't be enough to overpower my discipline. If img_wang didn't break me, I can't imagine a scenario where this does. Famous last words, etc., but I really don't see that happening.
+
+	-I spend most of my time struggling with nbdev to get docs and workflows working, and this frustration ends up overpowering the intended refreshing benefits.
+		[SOLUTION] Even if this is true, it would still be a worthwhile project - building docs, at least, seems pretty important. And so far the project's been pretty fun. And I can think of this as part of the reality of library building.
+
+	-Code burnout due to work coding, incendio coding, and DS/Algos coding.
+		[SOLUTION] Can back off the DS/Algos coding a little if truly necessary (e.g. weekends only? It would be nice to get the daily accumulation benefit but I do think that might be pushing things cognitively), or fit that in as post-5 pm work.
+	
+	-More and more ideas pile up and this turns into a never-ending project at the cost of other cool stuff (liza.ai, eleuther.ai, openmined research, fastai/lightning/spacy/allennlp/torch contributions).
+		[SOLUTION] Would this be so bad? It would likely mean incendio turns into something pretty damn cool. There is the downside that putting off contributing to larger open source projects allows me to retain certain weaknesses (e.g. a little fuzziness about certain aspects of git that don't matter when you're the only contributor). This also hides the reality of working on open source: maybe if I contributed to big projects, I'd find that the reality is mostly fixing documention typos, writing unit tests, and occasionally tracking down obscure bugs in other people's code (in fact, I think this is pretty likely). If that's true, maybe I should confirm it soon so I don't spend too long in pursuit of a long-term goal I wouldn't enjoy. But I want to do a fun project now so I don't like the idea of picking something that has a significant chance of being unrewarding. This is a bit of a conundrum but it's maybe less of an issue to worry about in a pre-mortem and more of a tradeoff to be aware that I'm making.
+
+	-Not knowing when to end. I wrote down so many optional items that this could last anywhere from days to years.
+		[SOLUTION] I think I can play this by ear initially, but to provide some guidance, how about this: I'll say the project should last between 1 and 8 weeks, inclusive. If I want to end earlier or start later, I have to return here and write 100+ words justifying it.In other words, I can do what I want but I need to treat the decision with respect and put serious thought into it if I want to break from these rather flexible constraints.
+
+Most of these problems don't sound like real problems. This project can be pretty short and low stakes if I want it to be so that seems reasonable. Img_wang had some unforeseen problems so I shouldn't be too confident in this. Perhaps this is a good section to add: what were the gaps between expectations and outcomes last time and why should I be confident they won't reoccur this time?
+
+-not enjoying what I thought I'd enjoy: I'm less worried about that here because I've already spent quite a bit of time on library development and generally found it extremely enjoyable. I've always have found model training a bit exhausting in a way that library dev never has been.
+-unclear finishing constraints: if anything this is even fuzzier with so many optional items, but I think the timeboxing helps.
+-fulfilling the letter of the requirements but not the spirit: I'm not sure what that would even mean in this context. I suppose I could encounter a situation where I get docs working in something other than nbdev, or I run into a limit of how many github pages I can deploy (don't think that exists though). Not too worried about this.
+
+11/1/20
+-------
+Progress: Officially chose project 3. Wrote plans and pre-mortem. 
+
+Plans: Start working on paraphrasing augmentation. I'd like to have rough versions of all 3 augmentations, then I can think more about how to refactor them into a better, more consistent interface. That can be followed by torch transform and CLI, in that order.
+
+11/2/20
+-------
+Progress:
+
+Plans:
