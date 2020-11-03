@@ -25,3 +25,6 @@ clean_dist:
 clean:
 	nbdev_clean_nbs
 
+scratch:
+	cp -i scratch_notebooks/TEMPLATE.ipynb scratch_notebooks/nb-untitled.ipynb
+

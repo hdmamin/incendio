@@ -70,6 +70,13 @@ Plans: Start working on paraphrasing augmentation. I'd like to have rough versio
 
 11/2/20
 -------
-Progress:
+Progress: Wrote paraphrasing function. Started working on a more cohesive api: built initial version of ParaphrasePipeline (no pegasus pipeline for this task) and FillMaskTransform. Experimented a bit with a more general TransformerTransform but at the moment I'm a bit confused whether I want it to be a parent class, an abstract class, or a high level wrapper. Need to think about this - maybe simplest to build out the three separate transform classes first, then see how I might refactor them.
 
-Plans:
+Plans: Write (or at least start) paraphrase transform and/or generation transform classes. Still need to think a bit about current implementation of mask transform: do we want this to act on strings, list-likes, or either? Mask transform also has the issue of n (number of words to mask) vs. n (number of variants to return).
+
+11/3/20
+-------
+Progress: 
+
+Plans: 
+
