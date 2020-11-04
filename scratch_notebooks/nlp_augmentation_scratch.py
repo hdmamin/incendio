@@ -11,13 +11,13 @@ from transformers import pipeline
 
 MASK = '<mask>'
 fill_mask = pipeline('fill-mask')
+generate = pipeline('text-generation')
 
 
 def mask(txt, n=1):
     tokens = txt.split(' ')
     idx = np.random.randint(0, len(tokens), n)
     return ' '.join(t if i not in idx else MASK for i, t in enumerate(tokens))
-
 
 
 def augment(t, n=1, return_all=False):
@@ -59,3 +59,4 @@ def generative_augment(text, min_length=5, max_length=15, **generate_kwargs):
     n_curr = int(len(text.split()) * 1.1)
     return generate(text, min_length=n_curr + min_length,
     max_length=n_curr + max_length, **generate_kwargs)
+

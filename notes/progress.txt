@@ -76,7 +76,15 @@ Plans: Write (or at least start) paraphrase transform and/or generation transfor
 
 11/3/20
 -------
-Progress: 
+Progress: Ported parallelize func to htools and wrote docs. Updated parallelpipeline to accept either strings or list-like objects (tried to use multiprocessing but this was taking ages, maybe trying to pickle model?). Built first pass at ParaphraseTransform and GenerativeTransform. Adjusted fillmasktransform (and new ones) to allow passing in pipelines, mostly to speed up dev time - have to consider whether I want that functionality to stick around.
 
-Plans: 
+Plans: Continue building out tfms. Consider how I want to handle options (should params be provided at instantiation or in __call__? Might be nice to have defaults in __init__ but allow overriding them in __call__ for on the fly tfm purposes). Think about desired inputs/outputs and if my current implementation aligns: for ex, should n (# of variations) be inside tfm or should we just call __call__ multiple times, or maybe this should happen in my higher level wrapper TransformerTransform (this last one sounds better)? If finish, begin thinking about refactoring (do we want base class/mixin, wrapper, both? And how should everything fit into my existing RandomTransform framework - we could just wrap them, of course, but at some point it seems like we're creating a ton of different classes and maybe there's a point of over-abstraction here?)
+
+11/4/20
+-------
+Progress:
+
+Plans:
+
+
 

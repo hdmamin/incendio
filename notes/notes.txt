@@ -16,3 +16,15 @@ Thoughts on axial encodings vs bloom embeddings
 
 -larger emb matrices  
 -each row serves multiple purposes - maybe "pulled in multiple directions" by diff words
+
+---
+NLP augmentation pipeline and transform thoughts:
+
+-huggingface pipelines can accept either a single string or an iterable container
+    -> therefore, my paraphrasePipeline should do the same
+-should transforms work on strings, list-likes, or either?
+    Use cases:
+        1. generate csv - in this case, we'll need to process a large number of items. This supports accepting list-likes. However, this will all happen under the hood so we could easily make __call__ process a single string and use the pipeline in a way that handles more.
+        2. Torch dataset on-the-fly transform - process single str
+        3. general function - unsure.
+    Either way, we probably should have a function (whether it's __call__ or something internal) that processes a single str at a time. The only reason not to do this would be if I realize something about the way we batch strings makes this undesirable.
