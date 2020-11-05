@@ -82,9 +82,17 @@ Plans: Continue building out tfms. Consider how I want to handle options (should
 
 11/4/20
 -------
+Progress: Wrote listlike() helper function (eventually should port this to htools). Made each transform able to handle lists or strings (both for __call__ and _preprocess - maybe overkill but might be nice to be able to preprocess lists all at once). Thought a bit about interfaces and possible refactoring strategies but everything seems just different enough that I'm not sure it calls for it. Adjusted generativetransform slightly to return list of strings rather than list of dicts.
+
+Plans: Consider a single high level class to interact with, i.e. TransformerTransform('fill-mask'), and build if it seems like a good idea. Other possible tasks: port listlike to htools, write new tolist() func to accompany it, port transforms and pipelines to incendio, write docs.
+
+11/5/20
+-------
 Progress:
 
 Plans:
+
+
 
 
 
