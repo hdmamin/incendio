@@ -88,11 +88,13 @@ Plans: Consider a single high level class to interact with, i.e. TransformerTran
 
 11/5/20
 -------
-Progress:
+Progress: Experimented a bit with possibility of a base class but ultimately decided against it. Experimented a bit with possibility of a high level wrapper but also decided against that. (See paraphrasing-transform.ipynb for rationale for both.) Added reprs to all 3 transforms. Ported listlike to htools and wrote new `always_true` and `tolist` funcs (probably should test both though).
 
-Plans:
+Plans: Investigate possible issue of max batch size in ParaphrasePipeline. Port classes to htools and write docs.
 
+11/6/20
+-------
+Progress: 
 
-
-
+Plans: 
 
