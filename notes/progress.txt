@@ -94,6 +94,12 @@ Plans: Investigate possible issue of max batch size in ParaphrasePipeline. Port 
 
 11/6/20
 -------
+Progress: Adjusted FillMask transform to handle lists more efficiently. Also updated its error handling to deal with sequences that are too short to mask while maintaining min_keep. Updated generative transform to get length from pipeline tokenizer rather than naive split + hacky adjustment. Tried mask and generative transforms on list of 100 sentences to benchmark speed and find bugs. Tried paraphrase transform on 10 sentences since it's very slow (maybe it's faster on GPU?) and started running on 100 sentences but haven't seen results yet.
+
+Plans: Consider if I should do anything about FillMask returning 5 examples per row by default (inconsistent interface?). Other options: port classes to incendio, write docs, test paraphrase transform on GPU to see if it's faster. Look at results of paraphrase transform on 100 sentences.
+
+11/7/20
+-------
 Progress: 
 
 Plans: 
