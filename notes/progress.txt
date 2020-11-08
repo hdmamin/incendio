@@ -100,7 +100,15 @@ Plans: Consider if I should do anything about FillMask returning 5 examples per 
 
 11/7/20
 -------
-Progress: 
+Progress: Found and fixed bug where FillMask tfm was dropping n-1 branches of the masking tree (this had quite a large effect, dramatically reducing the number of samples returned. Fixing it was not trivial.). Added ability to set n (a.k.a. topk) in fillmask tfm. Also added option to select best (most likely) or random sequences when specifying n in fillmask tfm.
 
-Plans: 
+Plans: Consider if we can make the n/topk/self.n interface a little simpler to understand for fillmask tfm. Consider my choices of defaults for fillmask tfm. Work on adding gpu support to paraphrase tfm. 
+
+11/8/20
+-------
+Progress:
+
+Plans:
+
+
 

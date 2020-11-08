@@ -28,3 +28,8 @@ NLP augmentation pipeline and transform thoughts:
         2. Torch dataset on-the-fly transform - process single str
         3. general function - unsure.
     Either way, we probably should have a function (whether it's __call__ or something internal) that processes a single str at a time. The only reason not to do this would be if I realize something about the way we batch strings makes this undesirable.
+
+---
+Problem:
+
+1. Sometime during tonight's FillMask edits, __call__ now only returns n items for each round of masking. Before, this number grew quickly: when inputting 1 string, the first round would produce (by default) 5, the second would product 25, the third 125,... (5**n). I'm not sure the new version is bad - I think it may be faster - but I'm confused why this has changed.
