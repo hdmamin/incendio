@@ -106,9 +106,13 @@ Plans: Consider if we can make the n/topk/self.n interface a little simpler to u
 
 11/8/20
 -------
-Progress:
+Progress: Tested ParaphraseTFM gpu support in colab and timed it (~7x faster). Refactored nlp tfms a bit (still have it in my mind that we might be able to refactor our a base class, but right now it might just be for init which seems not worth it). Rebuilt FillMask n system a little bit: now we have self.n and self.max_n. Also adjusted local n param in FillMask __call__ to use -1 the way I used to use None (wanted None to work like the other tfms where it falls back to self.n).
 
-Plans:
+Plans: Consider expanding what params are available in constructor (ideally all that are available in __call__; this reminds me of my desire for a better version of kwargs_fallback() than my current htools version. I'd prefer a decorator that auto adds all init kwargs to the func signature). Other option: finally get started porting to incendio and writing docs.
 
+11/9/20
+-------
+Progress: 
 
+Plans: 
 
