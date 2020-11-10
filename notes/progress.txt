@@ -112,7 +112,9 @@ Plans: Consider expanding what params are available in constructor (ideally all 
 
 11/9/20
 -------
-Progress: 
+Progress: Ported 4 classes to incendio and added a few examples for each without commentary. Documented some GenerativeTfm params. Added preprocess kwargs to __call__ for generativetfm. Experimented a bit with an @abstractattrs class decorator (see ipython) but didn't quite get it working yet.
 
-Plans: 
+Plans: Write more docstrings. Maybe add some explanation of examples. Maybe fiddle a bit more with @abstractattrs.
+
+
 
