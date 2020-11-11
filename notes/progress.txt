@@ -116,5 +116,24 @@ Progress: Ported 4 classes to incendio and added a few examples for each without
 
 Plans: Write more docstrings. Maybe add some explanation of examples. Maybe fiddle a bit more with @abstractattrs.
 
+11/10/20
+-------
+Progress: Wrote docs for ParaphrasePipeline, ParaphraseTransform, GenerativeTransform, and part of FillMaskTransform.. Explored huggingface model hub a bit and found some other paraphrase model options (hoping some might be smaller and/or better).
+
+Plans: Finish docs for FillMaskTransform. Maybe some written explanation of examples. Or pick one of outstanding TODOs below.
+
+11/11/20
+-------
+Progress: 
+
+Plans: 
 
 
+
+# TODO: huggingface backtranslate (no concerns about rate limiting :D )
+# TODO: easier loading of other models in paraphrasepipeline. (May want to to rm or change the @add_docstring on __call__ in that case since it's no longer pegasus specific. But I think the generate method is shared or similar for most huggingface models.) Examples:
+    https://huggingface.co/ramsrigouthamg/t5_paraphraser
+    https://huggingface.co/Vamsi/T5_Paraphrase_Paws
+# TODO: add stormlight model to huggingface model hub
+# TODO: high level wrapper for random tfm? Meaning for each sample, randomly pick 1 or n of fillmask/generate/paraphrase/backtranslate. Or maybe this should be a RandomPipeline that isn't text transform-specific?
+# TODO: add kwargs to other tfms besides Paraphrase
