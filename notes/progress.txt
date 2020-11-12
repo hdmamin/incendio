@@ -124,16 +124,25 @@ Plans: Finish docs for FillMaskTransform. Maybe some written explanation of exam
 
 11/11/20
 -------
+Progress: Finished docs for FillMaskTransform. Started adding kwargs to more transform __call__ methods but after looking through transformers repo, realized this only seems available for text generation models. Started working on BackTranslationTransform but found out huggingface provides no pretrained _ to english models (only english to _). Looked through model hub a bit more and found some intriguingly named math models, but there are no examples.
+
+Plans: Explore loading other paraphrase models in colab (faster to test on gpu and nice to avoid clogging up laptop storage if possible). Maybe try out some of the math models in colab (may require some guesswork or internet sleuthing to determine how to use these since no examples are provided; not sure what I'd end up doing with these but maybe once I see what they can do some ideas will arise).
+
+11/12/20
+-------
 Progress: 
 
 Plans: 
 
 
-
-# TODO: huggingface backtranslate (no concerns about rate limiting :D )
 # TODO: easier loading of other models in paraphrasepipeline. (May want to to rm or change the @add_docstring on __call__ in that case since it's no longer pegasus specific. But I think the generate method is shared or similar for most huggingface models.) Examples:
     https://huggingface.co/ramsrigouthamg/t5_paraphraser
     https://huggingface.co/Vamsi/T5_Paraphrase_Paws
-# TODO: add stormlight model to huggingface model hub
 # TODO: high level wrapper for random tfm? Meaning for each sample, randomly pick 1 or n of fillmask/generate/paraphrase/backtranslate. Or maybe this should be a RandomPipeline that isn't text transform-specific?
-# TODO: add kwargs to other tfms besides Paraphrase
+# TODO: add stormlight model to huggingface model hub
+# TODO: try out huggingface math models in colab (avoid taking up space on laptop):
+    https://huggingface.co/mrm8488/t5-base-finetuned-math-linear-algebra-1d
+    https://huggingface.co/mrm8488/t5-base-finetuned-math-linear-algebra-2d
+    https://huggingface.co/mrm8488/t5-base-finetuned-math-qa-test
+    https://huggingface.co/mrm8488/t5-base-finetuned-math-seq-next-term
+    https://huggingface.co/mrm8488/t5-base-finetuned-math-calculus-differentiate
