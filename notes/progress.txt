@@ -130,14 +130,17 @@ Plans: Explore loading other paraphrase models in colab (faster to test on gpu a
 
 11/12/20
 -------
-Progress: 
+Progress: Tried loading 2 new paraphrase models in colab (turns out they're the same). They were less than half the size of my current paraphrase model and a bit faster but I had some trouble getting good results (they tend to continue past 1 sentence and end up getting cut off, though that didn't happen in the sample code snippet and it was trained on quora question pairs so it seems odd that it would learn to generate longer sequences). Discovered there's a TextToTextPipeline that seems compatible with pegasus. Started rewriting ParaphraseTransform to use it (probably good for consistency, and I think it does some other useful things like making sure we don't download the model multiple times). 
 
-Plans: 
+Plans: Continue working on new ParaphraseTransform and test it, ideally both on CPU and GPU. Confirm my decision to exclude smaller paraphrase model due to quality issues (if I can solve these, it would be appealing due to size/speed gains). Maybe test other tfms on GPU (realized Pipeline accepts a "device" arg but I'll have to check if pipeline does; regardless I think my method of manually placing pipe.model.to(DEVICE) should work).
+
+11/13/20
+--------
+Plans:
+
+Progress:
 
 
-# TODO: easier loading of other models in paraphrasepipeline. (May want to to rm or change the @add_docstring on __call__ in that case since it's no longer pegasus specific. But I think the generate method is shared or similar for most huggingface models.) Examples:
-    https://huggingface.co/ramsrigouthamg/t5_paraphraser
-    https://huggingface.co/Vamsi/T5_Paraphrase_Paws
 # TODO: high level wrapper for random tfm? Meaning for each sample, randomly pick 1 or n of fillmask/generate/paraphrase/backtranslate. Or maybe this should be a RandomPipeline that isn't text transform-specific?
 # TODO: add stormlight model to huggingface model hub
 # TODO: try out huggingface math models in colab (avoid taking up space on laptop):
