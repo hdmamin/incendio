@@ -136,9 +136,15 @@ Plans: Continue working on new ParaphraseTransform and test it, ideally both on 
 
 11/13/20
 --------
-Plans:
+Plans: Tried all pipelines on colab and realized they don't use the GPU by default. Changed that behavior and added a warning if GPU is available and they're not using it. Fixed bug in new ParaphraseTransform where results were being incorrectly mapped back to inputs. Fixed bug in GenerativeTransform where some args weren't being passed to __call__ when input is listlike. Added way to get name from pipeline if a pipe is passed in.
 
-Progress:
+Progress: Maybe try out smaller paraphrase pipeline again to see if I can get it working - if so, refactor to allow it; if not, make decision and close the book on that. Maybe worth one more look to see if we can refactor out a baseTfm since inits look so similar. Other options: pick one of todo items below. 
+
+11/14/20
+--------
+Plans: 
+
+Progress: 
 
 
 # TODO: high level wrapper for random tfm? Meaning for each sample, randomly pick 1 or n of fillmask/generate/paraphrase/backtranslate. Or maybe this should be a RandomPipeline that isn't text transform-specific?
