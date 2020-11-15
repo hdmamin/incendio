@@ -33,3 +33,37 @@ NLP augmentation pipeline and transform thoughts:
 Problem:
 
 1. Sometime during tonight's FillMask edits, __call__ now only returns n items for each round of masking. Before, this number grew quickly: when inputting 1 string, the first round would produce (by default) 5, the second would product 25, the third 125,... (5**n). I'm not sure the new version is bad - I think it may be faster - but I'm confused why this has changed.
+
+11/14/20
+--------
+zanderbush/Paraphrase: 
+    size: 486 MB
+    arch: AutoModelWithLMHead, AutoTokenizer
+    notes: Tried generating text but it either output something completely unrelated or "{input} -> {input}". Must be doing something wrong but there's no documentation. There's also a v2 and v3 version but I it looks like they'd have similar issues.
+
+mrm8488/t5-small-finetuned-quora-for-paraphrasing
+    size: 419 MB
+    arch: AutoModelForSeq2SeqLM or AutoModelWithLMHead, AutoTokenizer
+    notes: Getting either "{input} {input}" or "?? ?? ??". Tried AutoModelWithLMHead as well. Later found I need to prepend with 'paraphrase: ' but when I did that the output was identical to the input. UPDATE: got this working (need to pass in one string at a time) but it seems a bit question-biased, probably due to its training on the Quora sentence pair corpus.
+
+aakashD/t5_paraphrase
+    size: 850 MB
+    arch: AutoModelForSeq2SeqLM (seems like it should be T5ForConditionalGeneration though?), AutoTokenizer
+    notes: Trouble loading tokenizer. Thought I tried this before?
+
+ceshine/t5-paraphrase-paws-msrp-opinosis
+    size: 850 MB
+    arch: AutoModelForSeq2SeqLM, AutoTokenizer
+    notes: Seems to work better if we preprend with 'paraphrase: '. No docs so not sure if this is required. Output seems quite repetitive (with the input and/or with other outputs) but maybe that's due to using generate_kwargs from a different example.
+
+Vamsi/T5_Paraphrase_Paws
+    size: 850 MB
+    arch: AutoModelForSeq2SeqLM, AutoTokenizer
+    notes: I think this may be same as prev model but this has docs. Realized this also uses "paraphrase: " prefix but there's a "</s>" suffix, which I probably needed for earlier models too. Tried using recommended kwargs and it's still very repetitive.
+
+Sidenote: I realized identical size prob just means they used the same architecture. I.e. they took a standard huggingface model but then tuned it on their own data. So these could still be huge differences in quality between different models.
+
+Conclusions: All of these seem noticeably worse than the pegasus model. That's bigger/slower but on GPU it's not too bad and it's the only one that seems to consistently avoid duplicates or outputting the input. I think let's just stick with this for now. If I really want to use a different model I still can by passing them in as a pipeline. Maybe better models will emerge.
+
+It kind of seems like pipeline ignores kwargs (temperature seemingly has no effect) but I'm not sure. num_return_sequences does work so maybe the impact of others is just low.
+

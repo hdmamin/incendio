@@ -142,16 +142,24 @@ Progress: Maybe try out smaller paraphrase pipeline again to see if I can get it
 
 11/14/20
 --------
-Plans: 
+Plans: Tried every paraphrase model I could find on GPU and none compared well to the pegasus model. Decided to leave that as is. Earlier today, it occurred to me that I can speed up fuzzykeydict with LSH or something similar and started experimenting with some components from datasketch package.
 
-Progress: 
+Progress: Brief diversion: see if I can feasibly upload stormlight model to Model Hub and serve the streamlit app temporarily using colab and ngrok (follow example in open tab). Want to see if this is possible before ROW is released. Afterwards, I'll get back to this. (If I decide that doesn't count as incendio work, I can take another look at my tfm classes and see if we can refactor out a base class.)
 
 
-# TODO: high level wrapper for random tfm? Meaning for each sample, randomly pick 1 or n of fillmask/generate/paraphrase/backtranslate. Or maybe this should be a RandomPipeline that isn't text transform-specific?
-# TODO: add stormlight model to huggingface model hub
-# TODO: try out huggingface math models in colab (avoid taking up space on laptop):
+# TODO: outstanding tasks
+
+-high level wrapper for random tfm? Meaning for each sample, randomly pick 1 or n of fillmask/generate/paraphrase/backtranslate. Or maybe this should be a RandomPipeline that isn't text transform-specific?
+- add stormlight model to huggingface model hub
+- try out huggingface math models in colab (avoid taking up space on laptop):
     https://huggingface.co/mrm8488/t5-base-finetuned-math-linear-algebra-1d
     https://huggingface.co/mrm8488/t5-base-finetuned-math-linear-algebra-2d
     https://huggingface.co/mrm8488/t5-base-finetuned-math-qa-test
     https://huggingface.co/mrm8488/t5-base-finetuned-math-seq-next-term
     https://huggingface.co/mrm8488/t5-base-finetuned-math-calculus-differentiate
+- CLI to generate augmented text (to new csv or to many txt files, for example)
+-abstractattrs decorator (might fit better in htools. see lsh scratch nb)
+-extend lshforest to work with levenshtein/other similarity measure(s)?
+    -update FuzzyKeyDict to use this (should be much more efficient for cases where len(dict) is large, which is usually the case for any kind of embeddings w2i dict). Consider whether this belongs in incendio.nlp instead.
+-Update spellotape (and/or incendio?) to allow easy loading of domain embeddings and TLD embeddings.
+
