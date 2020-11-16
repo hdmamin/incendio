@@ -146,6 +146,11 @@ Plans: Tried every paraphrase model I could find on GPU and none compared well t
 
 Progress: Brief diversion: see if I can feasibly upload stormlight model to Model Hub and serve the streamlit app temporarily using colab and ngrok (follow example in open tab). Want to see if this is possible before ROW is released. Afterwards, I'll get back to this. (If I decide that doesn't count as incendio work, I can take another look at my tfm classes and see if we can refactor out a base class.)
 
+11/15/20
+--------
+Plans: Made a couple final tweaks to paraphrase tfm (basically decided to not worry about supporting non-pegasus models for now after a brief attempt at it - makes more sense to have user pass in pipe explicitly in that case. Updated docstrings a bit.). Then spent most of my time trying to get stormlight streamlit app running in colab with ngrok (first with docker, then without). Got it running successfully once but still need a few tweaks to ensure the process is reproducible with no user troubleshooting.
+
+Progress: Try running through full colab streamlit process again from start to finish and confirm it works. Update readme with link to colab and brief description of what it does. For a more incendio-specific task, could start creating bare bones files for tfm CLI.
 
 # TODO: outstanding tasks
 

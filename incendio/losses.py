@@ -5,11 +5,13 @@ __all__ = ['smooth_soft_labels', 'soft_label_cross_entropy_with_logits', 'soft_l
 
 
 # Cell
+from functools import partial
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
 from htools import add_docstring, valuecheck, identity
+from .layers import SmoothLogSoftmax
 
 
 # Cell
@@ -154,6 +156,9 @@ def contrastive_loss(x1, x2, y, m=1.25, p=2, reduction='mean'):
     "Dimensionality Reduction by Learning an Invariant Mapping":
     http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf
 
+    Similar examples always contribute to the loss while negatives only do
+    if they are sufficiently similar.
+
     A couple words of caution: this uses the convention that y=1 represents a
     positive label (similar examples) despite the paper doing the opposite.
     Also, the value of m (margin) might benefit from some tuning as I'm not
@@ -226,6 +231,7 @@ class ContrastiveLoss1d(nn.Module):
         torch.Tensor: scalar if `reduction` is not 'none', otherwise tensor
         has same shape as `y_true`.
         """
+        assert y_true.ndim == 2, "y_true must be rank 2."
         return self.loss(x1, x2, y_true)
 
 
