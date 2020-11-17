@@ -152,6 +152,21 @@ Plans: Made a couple final tweaks to paraphrase tfm (basically decided to not wo
 
 Progress: Try running through full colab streamlit process again from start to finish and confirm it works. Update readme with link to colab and brief description of what it does. For a more incendio-specific task, could start creating bare bones files for tfm CLI.
 
+11/16/20
+--------
+Progress: Mostly worked on getting colab notebook working (still had a fair bit of troubleshooting to get done but I think it works now). Updated readme, added instructions to colab notebook, added colab-specific requirements.txt, added GPU support for text generation, and recorded a new gif for the readme. Very briefly started creating skeleton for incnedio text augmentation CLI.
+
+Plans: Maybe write up a short description and post to r/stormlight_archive. Start fleshing out cli.py.
+
+11/17/20
+--------
+Progress:
+
+Plans:
+
+
+
+
 # TODO: outstanding tasks
 
 -high level wrapper for random tfm? Meaning for each sample, randomly pick 1 or n of fillmask/generate/paraphrase/backtranslate. Or maybe this should be a RandomPipeline that isn't text transform-specific?
