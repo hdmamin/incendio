@@ -154,11 +154,17 @@ Progress: Try running through full colab streamlit process again from start to f
 
 11/16/20
 --------
-Progress: Mostly worked on getting colab notebook working (still had a fair bit of troubleshooting to get done but I think it works now). Updated readme, added instructions to colab notebook, added colab-specific requirements.txt, added GPU support for text generation, and recorded a new gif for the readme. Very briefly started creating skeleton for incnedio text augmentation CLI.
+Progress: Mostly worked on getting colab notebook working (still had a fair bit of troubleshooting to get done but I think it works now). Updated readme, added instructions to colab notebook, added colab-specific requirements.txt, added GPU support for text generation, and recorded a new gif for the readme. Uploaded gifs to imgur and wrote comment with some background. Very briefly started creating skeleton for incnedio text augmentation CLI.
 
 Plans: Maybe write up a short description and post to r/stormlight_archive. Start fleshing out cli.py.
 
 11/17/20
+--------
+Progress: Submitted post to r/stormlight_archive. Thought about cli interface a bit and started writing signature and docs (would be nice to have my CLIConstructor idea implemented for this). Decided to try randompipeline, brainstormed interface a bit, and started writing implementation.
+
+Plans: Diagnose and fix randompipeline repr. Update tolist to allow repeating primitives n times. Consider higher level wrapper (NLPTransform) and or a different kind of random transform (pick 1 of n rather than apply tfm w/ prob p).
+
+11/18/20
 --------
 Progress:
 
@@ -166,10 +172,11 @@ Plans:
 
 
 
-
 # TODO: outstanding tasks
 
 -high level wrapper for random tfm? Meaning for each sample, randomly pick 1 or n of fillmask/generate/paraphrase/backtranslate. Or maybe this should be a RandomPipeline that isn't text transform-specific?
+    -investigate why repr is just showing RandomTransform while self.funcs shows RandomTranform(func, p=.5)
+    -consider adding functionality to tolist to allow us to repeat a primitive n times into a list
 - add stormlight model to huggingface model hub
 - try out huggingface math models in colab (avoid taking up space on laptop):
     https://huggingface.co/mrm8488/t5-base-finetuned-math-linear-algebra-1d
