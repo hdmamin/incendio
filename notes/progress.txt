@@ -166,6 +166,12 @@ Plans: Diagnose and fix randompipeline repr. Update tolist to allow repeating pr
 
 11/18/20
 --------
+Progress: Diagnosed and fixed randompipeline repr (this was because BasicPipeline assumed callables were all functions but here they're classes. Updated repr in htools). Wrote fancier version of tolist that can repeat primitives to a desired length, updated docstring, and re-ported to htools. Finalized and wrote docstrings for RandomPipeline.
+
+Plans: Port RandomPipeline to Incendio (prob belongs in the data module but give this a little thought) and maybe start porting some examples. Could also begin on a different kind of random transform that always applies 1 of n transforms (rather than all n in order) or return to task of NLP transform cli.
+
+11/29/20
+--------
 Progress:
 
 Plans:
