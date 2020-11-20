@@ -170,7 +170,13 @@ Progress: Diagnosed and fixed randompipeline repr (this was because BasicPipelin
 
 Plans: Port RandomPipeline to Incendio (prob belongs in the data module but give this a little thought) and maybe start porting some examples. Could also begin on a different kind of random transform that always applies 1 of n transforms (rather than all n in order) or return to task of NLP transform cli.
 
-11/29/20
+11/19/20
+--------
+Progress: Wrote docs for plot_images and made it work on numpy images as well. Added a couple examples. Ported RandomPipeline and examples to incendio.data. Worked on CLI functionality (so far keeping it simple: 1 tfm and load from 1 csv -> 1 output csv).
+
+Plans: Find better csv for testing (recent-grads.csv text col is too short). Try to get basic functionality working (output a few rows to csv). Next items: add error handling options to cli, maybe option to return df (when importing function instead of cli, if I want to allow that?). Consider reworking behavior where I return a nested list instead of a flat one (maybe allow options for both).
+
+11/20/20
 --------
 Progress:
 

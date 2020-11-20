@@ -1168,7 +1168,7 @@ class FillMaskTransform:
     name = 'fill-mask'
     MASK = '<mask>'
 
-    def __init__(self, pipe=None, n=1, max_n=3):
+    def __init__(self, pipe=None, n=1, max_n=None):
         """
         Parameters
         ----------
@@ -1179,10 +1179,11 @@ class FillMaskTransform:
             n is intentionally bigger than the default n in __call__. This is
             the number of candidates generated, so if we use strategy='random'
             it makes sense for this to be larger.
-        max_n: int
+        max_n: int or None
             Used as topk attribute when sampling generated candidates. This
             must be >=n. Increasing this should not slow down generation. When
             using strategy='random', you probably want this to be strictly >n.
+            Defaults to n+2.
         """
         if pipe:
             self.pipe = pipe
@@ -1191,8 +1192,9 @@ class FillMaskTransform:
             self.pipe = pipeline(self.name,
                                  device=0 if torch.cuda.is_available()
                                  else -1)
+        # Set n before max_n.
         self.n = n
-        self.max_n = max_n
+        self.max_n = max_n or n+2
 
         assert type(self.pipe).__name__ == 'FillMaskPipeline'
         if 'cuda' not in str(self.pipe.device) and torch.cuda.is_available():
