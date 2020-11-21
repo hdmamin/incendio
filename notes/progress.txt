@@ -178,6 +178,12 @@ Plans: Find better csv for testing (recent-grads.csv text col is too short). Try
 
 11/20/20
 --------
+Progress: Tried to figure out how to get cli working in setup.py (I've done this with click before but not fire). After much frustration, I made some progress: incendio is now recognized as a command, though it's calling generate automatically without any args. Also spent a while exploring various approaches to auto-bump version in htools (and, once that works, in all of my packages) but haven't found a satisfactory answer yet (extra args are apparently a bad idea for makefile commands, couldn't get bumpversion py package working).
+
+Plans: Continue trying to get console script working or continue fleshing out script (running with python incendio/cli.py for now). Alternatively, take a break from this frustration and work a bit on minhash stuff for future version of fuzzykeydict. Or pick something from Todos below.
+
+11/21/20
+--------
 Progress:
 
 Plans:
@@ -186,6 +192,7 @@ Plans:
 
 # TODO: outstanding tasks
 
+- CLI to generate augmented text (to new csv or to many txt files, for example)
 -high level wrapper for random tfm? Meaning for each sample, randomly pick 1 or n of fillmask/generate/paraphrase/backtranslate. Or maybe this should be a RandomPipeline that isn't text transform-specific?
     -investigate why repr is just showing RandomTransform while self.funcs shows RandomTranform(func, p=.5)
     -consider adding functionality to tolist to allow us to repeat a primitive n times into a list
@@ -196,9 +203,12 @@ Plans:
     https://huggingface.co/mrm8488/t5-base-finetuned-math-qa-test
     https://huggingface.co/mrm8488/t5-base-finetuned-math-seq-next-term
     https://huggingface.co/mrm8488/t5-base-finetuned-math-calculus-differentiate
-- CLI to generate augmented text (to new csv or to many txt files, for example)
 -abstractattrs decorator (might fit better in htools. see lsh scratch nb)
 -extend lshforest to work with levenshtein/other similarity measure(s)?
     -update FuzzyKeyDict to use this (should be much more efficient for cases where len(dict) is large, which is usually the case for any kind of embeddings w2i dict). Consider whether this belongs in incendio.nlp instead.
 -Update spellotape (and/or incendio?) to allow easy loading of domain embeddings and TLD embeddings.
-
+-auto bump version (htools?)
+-decorator: let kwargs in method optionally override any instance vars
+-cliRunner: unsure exactly how this would work, but somehow find all the functions in a script, then add all their arguments (with default values) to a top level main function's signature which will then be called from the command line.
+-updated version of log_cmd that logs full signature instead of just explicit commands (check first if I have any function that already does this - thought @debug could but doesn't look like it. Maybe I'm remember the combination of @debug and @log_stdout, but that's not quite the same.)
+    -update log_cmd to handle lists/dicts/bool vars better
