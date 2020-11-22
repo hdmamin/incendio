@@ -459,9 +459,9 @@ class BloomEmbedding(nn.Module):
             row in the embedding matrix as a vector of zeros. If None, no
             padding vector will be allocated.
         pre_hashed: bool
-            Pass in True if the input tensor will already be hashed by the time
-            it enters this layer (you may prefer pre-compute the hashes in the
-            Dataset to save computation time during training). In this
+            Pass in True if the input tensor will already be hashed by the
+            time it enters this layer (you may prefer pre-compute the hashes
+            in the Dataset to save computation time during training). In this
             scenario, the layer is a simple embedding bag with mode "sum".
             Pass in False if the inputs will be word indices that have not yet
             been hashed. In this case, hashing will be done inside the
@@ -484,7 +484,9 @@ class BloomEmbedding(nn.Module):
         self.pre_hashed = pre_hashed
         self.process_fn = identity if pre_hashed else \
             partial(probabilistic_hash_tensor, n_buckets=n_emb,
-                    n_hashes=n_hashes, pad_idx=pad_idx)
+                    n_hashes=n_hashes, pad_idx=padding_idx)
+        # Makes interface consistent with nn.Embedding. Don't change name.
+        self.embedding_dim = self.emb.embedding_dim
 
     def forward(self, x):
         """
@@ -536,6 +538,8 @@ class AxialEncoding(nn.Module):
         self.e = self._decompose_add(emb_dim)
         self.emb = nn.ModuleList(InitializedEmbedding(self.v, self.e, pad_idx)
                                  for _ in range(2))
+        # Makes interface consistent with nn.Embedding. Don't change name.
+        self.embedding_dim = self.e * 2
 
     def _decompose_mult(self, dim):
         return int(np.ceil(np.sqrt(dim)))
@@ -560,6 +564,13 @@ class MultiAxialEncoding(nn.Module):
     example, words would likely need to be sorted in a thoughtful manner
     (e.g. pre-trained embeddings compressed to 1D?) since adjacent inputs will
     share half of their encodings).
+
+    I made this separate from AxialEncoding (at least for now) since I made a
+    few tweaks to the original design to make this possible and I wanted to
+    preserve the option to use the simpler, well-tested method
+    (AxialEncoding). Here, we use a probabilistic hashing scheme to map each
+    input to multiple embedding rows, while the original design uses
+    x%v and x//v.
     """
 
     def __init__(self, vocab_dim, emb_dim, n_blocks=2, pre_hashed=False,
@@ -576,7 +587,8 @@ class MultiAxialEncoding(nn.Module):
         self.process_fn = identity if pre_hashed else \
             partial(probabilistic_hash_tensor, n_buckets=self.v,
                     n_hashes=len(self.emb), pad_idx=pad_idx)
-        self.emb_dim = self.e * self.n_blocks
+        # Makes interface consistent with nn.Embedding. Don't change name.
+        self.embedding_dim = self.e * self.n_blocks
 
     def _decompose_mult(self, dim):
         return int(np.ceil(dim ** (1 / self.n_blocks)))

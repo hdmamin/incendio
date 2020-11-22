@@ -16,10 +16,11 @@ from textblob import TextBlob
 import torch
 from tqdm.auto import tqdm
 from transformers import PegasusForConditionalGeneration, PegasusTokenizer, \
-    PegasusTokenizerFast, pipeline
+    PegasusTokenizerFast, pipeline, Text2TextGenerationPipeline
 from transformers.modeling_utils import PreTrainedModel
 
-from htools import save, load, add_docstring, tolist, auto_repr, listlike
+from htools import save, load, add_docstring, tolist, auto_repr, listlike, \
+    flatten
 from .utils import DEVICE
 
 
@@ -945,23 +946,22 @@ class ParaphraseTransform:
 
     name = 'tuner007/pegasus_paraphrase'
 
-    def __init__(self, pipe=None, n=1):
+    def __init__(self, n=1, pipe=None):
         """
         Parameters
         ----------
-        pipe: ParaphrasePipeline or None
         n: int
             Default number of samples to generate. You can override this in
             __call__.
+        pipe: transformers Text2TextGenerationPipeline or None
         """
         if pipe:
             self.pipe = pipe
             self.name = pipe.model.config._name_or_path
         else:
-            self.name = name
             self.pipe = Text2TextGenerationPipeline(
-                PegasusForConditionalGeneration.from_pretrained(name),
-                PegasusTokenizer.from_pretrained(name),
+                PegasusForConditionalGeneration.from_pretrained(self.name),
+                PegasusTokenizer.from_pretrained(self.name),
                 device=0 if torch.cuda.is_available() else -1
             )
         self.n = n
@@ -976,7 +976,7 @@ class ParaphraseTransform:
         return text
 
     @add_docstring(PreTrainedModel.generate)
-    def __call__(self, text, n=None, **kwargs):
+    def __call__(self, text, n=None, flat=True, **kwargs):
         """
         Parameters
         ----------
@@ -984,19 +984,22 @@ class ParaphraseTransform:
             Raw text to transform.
         n: int or None
             If None, use the default self.n.
+        flat: bool
+            If True, return flat list of strings. If False, return list of
+            nested lists where list i contains n augmentations of input i.
         kwargs: any
             Additional kwargs are passed to the model's text generation
             method. Its docstring is included below for convenience.
 
         Returns
         -------
-        list: either a list of n strings (if input text is a single string)
-        or a list of lists, each of length n.
+        list: either a list with n strings per input string, or a list of
+        lists, each of length n, if flat=False.
         """
         n = n or self.n
         rows = [row['generated_text'] for row in
                 self.pipe(text, num_return_sequences=n, **kwargs)]
-        if listlike(text):
+        if listlike(text) and not flat:
             rows = [rows[i*n:(i+1)*n] for i in range(len(text))]
         return rows
 
@@ -1014,14 +1017,14 @@ class GenerativeTransform:
 
     name = 'text-generation'
 
-    def __init__(self, pipe=None, n=1):
+    def __init__(self, n=1, pipe=None):
         """
         Parameters
         ----------
-        pipe: Huggingface TextGenerationPipeline or None
         n: int
             Default number of samples to generate. You can override this in
             __call__.
+        pipe: Transformers TextGenerationPipeline or None
         """
         if pipe:
             self.pipe = pipe
@@ -1093,9 +1096,9 @@ class GenerativeTransform:
         return (truncated, n_drop) if return_tuple else truncated
 
     @add_docstring(PreTrainedModel.generate)
-    def __call__(self, text, n=None, min_length=2, max_length=7, drop=None,
-                 drop_pct=None, rand_low=None, rand_high=None, min_keep=3,
-                 **generate_kwargs):
+    def __call__(self, text, n=None, flat=True, min_length=2, max_length=7,
+                 drop=None, drop_pct=None, rand_low=None, rand_high=None,
+                 min_keep=3, **generate_kwargs):
         """
         Parameters
         ----------
@@ -1103,6 +1106,9 @@ class GenerativeTransform:
         n: int or None
             Number of samples to generate for each input. Defaults to self.n
             if None.
+        flat: bool
+            If True, return flat list of strings. If False, return list of
+            nested lists where list i contains n augmentations of input i.
         min_length: int
             Min number of tokens to generate.
         max_length: int
@@ -1134,15 +1140,16 @@ class GenerativeTransform:
 
         Returns
         -------
-        list: either a list of n strings (if input text is a single string)
-        or a list of lists, each of length n.
+        list: either a list with n strings per input string, or a list of
+        lists, each of length n, if flat=False.
         """
         n = n or self.n
         if listlike(text):
-            return [self(row, n, min_length=min_length, max_length=max_length,
-                         drop=drop, drop_pct=drop_pct, rand_low=rand_low,
-                         rand_high=rand_high, min_keep=min_keep,
-                         **generate_kwargs) for row in text]
+            res = [self(row, n, flat=flat, min_length=min_length,
+                        max_length=max_length, drop=drop, drop_pct=drop_pct,
+                        rand_low=rand_low, rand_high=rand_high,
+                        min_keep=min_keep, **generate_kwargs) for row in text]
+            return flatten(res) if flat else res
 
         # `generate` counts current length as part of min_length.
         text = self._preprocess(text, drop, drop_pct, rand_low=rand_low,
@@ -1168,13 +1175,10 @@ class FillMaskTransform:
     name = 'fill-mask'
     MASK = '<mask>'
 
-    def __init__(self, pipe=None, n=1, max_n=None):
+    def __init__(self, n=1, max_n=None, pipe=None):
         """
         Parameters
         ----------
-        pipe: transformers FillMaskPipeline
-            We let users pass in an existing pipeline since instantiation can
-            be slow.
         n: int
             n is intentionally bigger than the default n in __call__. This is
             the number of candidates generated, so if we use strategy='random'
@@ -1184,6 +1188,9 @@ class FillMaskTransform:
             must be >=n. Increasing this should not slow down generation. When
             using strategy='random', you probably want this to be strictly >n.
             Defaults to n+2.
+        pipe: transformers FillMaskPipeline
+            We let users pass in an existing pipeline since instantiation can
+            be slow.
         """
         if pipe:
             self.pipe = pipe
@@ -1237,8 +1244,8 @@ class FillMaskTransform:
                         for i, t in enumerate(tokens))
 
     @add_docstring(PreTrainedModel.generate)
-    def __call__(self, text, n=None, n_mask=1, min_keep=3, return_all=False,
-                 errors='raise', strategy='best', **kwargs):
+    def __call__(self, text, n=None, flat=True, n_mask=1, min_keep=3,
+                 return_all=False, errors='raise', strategy='best', **kwargs):
         """
         Parameters
         ----------
@@ -1252,6 +1259,10 @@ class FillMaskTransform:
             a total of 9 samples, then 27, then finally 81 which is what will
             be returned. The intermediate samples can be returned by
             specifying `return_all=True`.
+        flat: bool
+            If True, return flat list of strings. If False, return list of
+            nested lists where list i contains n augmented versions of input
+            i.
         n_mask: int
             Number of words to mask. Because the model can only fill 1 masked
             word at a time, `n_mask` forward passes will be performed.
@@ -1279,6 +1290,12 @@ class FillMaskTransform:
         kwargs: any
             Forwarded to model's `generate` method. Its docstring is provided
             below for convenience.
+
+        Returns
+        -------
+        list: either a list with n strings per input string, or a list of
+        lists, each of length n, if flat=False. This is slightly different if
+        return_all=True (see its description for details).
         """
         # Make sure we generate adequate number of sequences. Model topk must
         # be >= our desired n.
@@ -1291,8 +1308,10 @@ class FillMaskTransform:
         # handle each one separately because each is passed through pipeline
         # repeatedly.
         if listlike(text):
-            return [self(row, n, n_mask, min_keep, return_all, errors)
-                    for row in text]
+            res = [self(row, n=n, flat=flat, n_mask=n_mask, min_keep=min_keep,
+                        return_all=return_all, errors=errors,
+                        strategy=strategy, **kwargs) for row in text]
+            return flatten(res) if flat else res
 
         res = [[text]]
         for i in range(n_mask):
@@ -1315,7 +1334,7 @@ class FillMaskTransform:
                     raise ValueError('strategy should be "random" or "best".')
             res.append(text)
         if not return_all: res = res[n_mask]
-        return res
+        return flatten(res) if flat else res
 
     @property
     def max_n(self):
