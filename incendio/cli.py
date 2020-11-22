@@ -21,6 +21,7 @@ from tqdm.auto import tqdm
 
 from htools.cli import fire
 from htools.core import tolist, save, load
+from htools.meta import immutify_defaults
 from incendio.nlp import FillMaskTransform, GenerativeTransform, \
     ParaphraseTransform
 
@@ -32,17 +33,17 @@ TRANSFORMS = {
 }
 
 
-def generate(source, dest, transforms, n=5, text_col='text', id_cols=(),
-             stack_transforms=False, nrows=None):
-    # Note: use list args like --id_cols '[col1, col2]'
+@immutify_defaults
+def generate(source, dest, transform, n=5, text_col='text', id_cols=(),
+             nrows=None, tfm_kwargs={}, call_kwargs={}):
+    # Use list args like --id_cols '[col1, col2]'
+    # Use dict args like --call_kwargs '{"drop_pct": .2, "min_keep": 4}'
     source, dest = Path(source), Path(dest)
 
-    # TODO: starting with simple case of 1 transform. Worry about adding
-    # flexibility later.
-    # tfms = [TRANSFORMS[t] for t in tolist(transforms)]
-    transform = TRANSFORMS[transforms](n=n)
-    df = pd.read_csv(source, usecols=[text_col] + list(id_cols))
-    res = transform(df[text_col].tolist())
+    # For simplicity, we stick to one transform at a time.
+    transform = TRANSFORMS[transform](n=n, **tfm_kwargs)
+    df = pd.read_csv(source, usecols=[text_col] + list(id_cols), nrows=nrows)
+    res = transform(df[text_col].tolist(), **call_kwargs)
     print(res)
     # df_res = transform(df[text_col].tolist())
     # df_res.ends().pprint()

@@ -184,9 +184,16 @@ Plans: Continue trying to get console script working or continue fleshing out sc
 
 11/21/20
 --------
+Progress: Updated AxialEncoding, MultiAxialEncoding, and BloomEmbedding to have user-facing embedding_dim attributes for consistency with nn.Embedding. Updated all 3 transforms to return flat output by default and fixed bug in 1 where a couple kwargs weren't passed to the listlike version (also wasn't using param names before so I updated that for safety). Updated docstrings. Found text data to use to test CLI (quora question pairs from msan631). Moved CLI to scratch notebook for now since CLI will create pipeline every time which is slow for testing. Started experimenting with ways to re-attach ID cols to augmented output which is what motivated the switch to flat outputs.
+
+Plans: Continue working on re-attaching ID cols to flat outputs in scratch notebook. If I need a change, could start work on cliRunner, return to abstractattrs cls decorator, or return to work on minhash stuff.
+
+11/22/20
+--------
 Progress:
 
 Plans:
+
 
 
 
@@ -194,8 +201,6 @@ Plans:
 
 - CLI to generate augmented text (to new csv or to many txt files, for example)
 -high level wrapper for random tfm? Meaning for each sample, randomly pick 1 or n of fillmask/generate/paraphrase/backtranslate. Or maybe this should be a RandomPipeline that isn't text transform-specific?
-    -investigate why repr is just showing RandomTransform while self.funcs shows RandomTranform(func, p=.5)
-    -consider adding functionality to tolist to allow us to repeat a primitive n times into a list
 - add stormlight model to huggingface model hub
 - try out huggingface math models in colab (avoid taking up space on laptop):
     https://huggingface.co/mrm8488/t5-base-finetuned-math-linear-algebra-1d
