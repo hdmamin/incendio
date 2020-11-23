@@ -190,6 +190,12 @@ Plans: Continue working on re-attaching ID cols to flat outputs in scratch noteb
 
 11/22/20
 --------
+Progress: Finished writing simple version of generate() function (more flexibility to pass in a source path or df; option to avoid saving output; force output to be flat; reattach ID cols after generation). Tried to use linear algebra 1d and prime factor seq2seq models in colab but couldn't get them working correctly, though I did find a couple t5 tuning tutorials that look useful. Messaged the the person who uploaded the models to see if he could provide examples.
+
+Plans: Document generate and port to lib (thinking I should rename this and place it in nlp module, but could potentially go in data module). Still need to investigate how to make this available as CLI (maybe investigate nbdev's call_parse decorator). Other option: maybe return to abstractattrs deco.
+
+11/23/20
+--------
 Progress:
 
 Plans:
