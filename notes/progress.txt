@@ -196,10 +196,15 @@ Plans: Document generate and port to lib (thinking I should rename this and plac
 
 11/23/20
 --------
+Progress: Found a bunch of new bugs in abstractattrs and fixed some of them: methods fail to satisfy both instance var and class var requirements now. Initially tried to disqualify properties as well but had some trouble and realized they arguably should qualify. Tried out abstractproperty to confirm differences. Started writing docs and outlining differences from abstractproperty.
+
+Plans: Investigate abstractattrs behavior with classmethods and staticmethods. Clean up and finish documenting abstractattrs.
+
+11/24/20
+--------
 Progress:
 
 Plans:
-
 
 
 
