@@ -219,6 +219,9 @@ Plans:
     https://huggingface.co/mrm8488/t5-base-finetuned-math-qa-test
     https://huggingface.co/mrm8488/t5-base-finetuned-math-seq-next-term
     https://huggingface.co/mrm8488/t5-base-finetuned-math-calculus-differentiate
+
+    https://huggingface.co/mrm8488/t5-base-finetuned-qasc (combine 2 facts into a question)
+    https://twitter.com/mrm8488/status/1295680004039344135 (twitter vid showing how to use one of the math models)
 -abstractattrs decorator (might fit better in htools. see lsh scratch nb)
 -extend lshforest to work with levenshtein/other similarity measure(s)?
     -update FuzzyKeyDict to use this (should be much more efficient for cases where len(dict) is large, which is usually the case for any kind of embeddings w2i dict). Consider whether this belongs in incendio.nlp instead.
