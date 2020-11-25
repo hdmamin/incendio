@@ -202,9 +202,22 @@ Plans: Investigate abstractattrs behavior with classmethods and staticmethods. C
 
 11/24/20
 --------
+Progress: Explored several pretrained transformers in colab (linalg, calculus, qasc) with mixed results. Updated htools log_cmd to better handle lists/tuples/dicts.
+
+Plans: Investigate abstractattrs behavior with classmethods and staticmethods. Clean up and finish documenting abstractattrs.
+
+11/25/20
+--------
+Progress: Tested abstractattrs on classmethods and staticmethods, cleaned up class and wrote more documentation and exmaples, and wrote hasstatic method to check if a class/instance possesses a staticmethod (not detected by standard inspect.ismethod). Investigated property more and determined it should only count as an instance attribute, not a class attribute, then implemented change.
+
+Plans: Document nlp generate and port to lib (thinking I should rename this and place it in nlp module, but could potentially go in data module). Still need to investigate how to make this available as CLI (maybe investigate nbdev's call_parse decorator). 
+
+11/26/20
+--------
 Progress:
 
 Plans:
+
 
 
 
@@ -212,17 +225,6 @@ Plans:
 
 - CLI to generate augmented text (to new csv or to many txt files, for example)
 -high level wrapper for random tfm? Meaning for each sample, randomly pick 1 or n of fillmask/generate/paraphrase/backtranslate. Or maybe this should be a RandomPipeline that isn't text transform-specific?
-- add stormlight model to huggingface model hub
-- try out huggingface math models in colab (avoid taking up space on laptop):
-    https://huggingface.co/mrm8488/t5-base-finetuned-math-linear-algebra-1d
-    https://huggingface.co/mrm8488/t5-base-finetuned-math-linear-algebra-2d
-    https://huggingface.co/mrm8488/t5-base-finetuned-math-qa-test
-    https://huggingface.co/mrm8488/t5-base-finetuned-math-seq-next-term
-    https://huggingface.co/mrm8488/t5-base-finetuned-math-calculus-differentiate
-
-    https://huggingface.co/mrm8488/t5-base-finetuned-qasc (combine 2 facts into a question)
-    https://twitter.com/mrm8488/status/1295680004039344135 (twitter vid showing how to use one of the math models)
--abstractattrs decorator (might fit better in htools. see lsh scratch nb)
 -extend lshforest to work with levenshtein/other similarity measure(s)?
     -update FuzzyKeyDict to use this (should be much more efficient for cases where len(dict) is large, which is usually the case for any kind of embeddings w2i dict). Consider whether this belongs in incendio.nlp instead.
 -Update spellotape (and/or incendio?) to allow easy loading of domain embeddings and TLD embeddings.

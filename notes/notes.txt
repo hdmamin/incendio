@@ -67,3 +67,16 @@ Conclusions: All of these seem noticeably worse than the pegasus model. That's b
 
 It kind of seems like pipeline ignores kwargs (temperature seemingly has no effect) but I'm not sure. num_return_sequences does work so maybe the impact of others is just low.
 
+
+11/24/20
+--------
+Summary of some interesting math-y huggingface models I played around with in colab. The samples I tried did not work that well though, except for a few basic examples with the calculus differentiation model.
+
+    https://huggingface.co/mrm8488/t5-base-finetuned-math-linear-algebra-1d (like calculus model, append ' </s>'. Enter inputs like 'solve 44 = 2*x + 6'. Didn't seem to work very well though)
+    https://huggingface.co/mrm8488/t5-base-finetuned-math-linear-algebra-2d
+    https://huggingface.co/mrm8488/t5-base-finetuned-math-qa-test
+    https://huggingface.co/mrm8488/t5-base-finetuned-math-seq-next-term
+    https://huggingface.co/mrm8488/t5-base-finetuned-math-calculus-differentiate (append ' </s>' to raw strings like 'differentiate 3*x**2 - 4*x +1'. Works pretty well for simple examples but doesn't seem capable of things like sin/cos/log/exp. Also struggled with some more complex examples of the standard case.)
+
+    https://huggingface.co/mrm8488/t5-base-finetuned-qasc (combine 2 facts into a question)
+    https://twitter.com/mrm8488/status/1295680004039344135 (twitter vid showing how to use one of the math models)
