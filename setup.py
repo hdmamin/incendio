@@ -45,7 +45,6 @@ setuptools.setup(
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     zip_safe=False,
-    # entry_points={'console_scripts': cfg.get('console_scripts', '').split()},
-    entry_points={'console_scripts': ['incendio=incendio.cli:generate']}, # TODO: may need to uninstall and reinstall to test this
+    entry_points={'console_scripts': cfg.get('console_scripts', '').split()},
     **setup_cfg)
 

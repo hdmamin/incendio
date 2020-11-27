@@ -214,6 +214,18 @@ Plans: Document nlp generate and port to lib (thinking I should rename this and 
 
 11/26/20
 --------
+Progress: Documented, renamed, and ported generate() (now augment_text_df()) to nlp module. Decided this was unnecessary as a CLI and cleaned up setup.py and removed old cli.py file.
+
+Plans: Investigate bug in add_kwargs where positional args don't work correctly. Maybe give one last try at actually adding them to signature (see python cookbook etc.) or try implementing version with f.__globals__.
+
+11/27/20
+--------
+Progress: Tracked down and fixed bug with positional args, updated behavior so positional=False works more how I wanted, did a fair bit of function cleanup and documentation. Read through python cookbook's method of injecting a parameter and realized they don't achieve what I want either.
+
+Plans: Investigate possibility of adding support for args/kwargs. Other options: work on min hash stuff or override_init_kwargs.
+
+11/28/20
+--------
 Progress:
 
 Plans:
@@ -223,7 +235,6 @@ Plans:
 
 # TODO: outstanding tasks
 
-- CLI to generate augmented text (to new csv or to many txt files, for example)
 -high level wrapper for random tfm? Meaning for each sample, randomly pick 1 or n of fillmask/generate/paraphrase/backtranslate. Or maybe this should be a RandomPipeline that isn't text transform-specific?
 -extend lshforest to work with levenshtein/other similarity measure(s)?
     -update FuzzyKeyDict to use this (should be much more efficient for cases where len(dict) is large, which is usually the case for any kind of embeddings w2i dict). Consider whether this belongs in incendio.nlp instead.
