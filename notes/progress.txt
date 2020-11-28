@@ -226,9 +226,12 @@ Plans: Investigate possibility of adding support for args/kwargs. Other options:
 
 11/28/20
 --------
-Progress:
+Progress: Built out a lot of LSHdict functionality: levenshtein post-processing on candidates, refactored getitem and added methods for similar_keys and similar_values, added customizability for n_candidates and n_keys both in __init__ and in single methods, experimented a bit with comparing times to fuzzykeydict and using different values of n_candidates.
 
-Plans:
+Plans: Maybe clean up FuzzyKeyDict to match LSHdict interface more closely (decided it's best to separate getitem goal (return value corresponding to key or nearest neighbor) from similar_keys/values goal). Write docs for similar_values method. Work out incendio/htools version issues and publish to pypi so I can use them for GG stuff. 
+
+11/29/20
+--------
 
 
 
