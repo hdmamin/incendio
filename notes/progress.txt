@@ -220,9 +220,9 @@ Plans: Investigate bug in add_kwargs where positional args don't work correctly.
 
 11/27/20
 --------
-Progress: Tracked down and fixed bug with positional args, updated behavior so positional=False works more how I wanted, did a fair bit of function cleanup and documentation. Read through python cookbook's method of injecting a parameter and realized they don't achieve what I want either.
+Progress: Tracked down and fixed bug with positional args, updated behavior so positional=False works more how I wanted, did a fair bit of function cleanup and documentation. Read through python cookbook's method of injecting a parameter and realized they don't achieve what I want either. Also made some progress on minhash stuff: made tentative lshdict and started testing it on a couple datasets (including top 10k domains from common crawl).
 
-Plans: Investigate possibility of adding support for args/kwargs. Other options: work on min hash stuff or override_init_kwargs.
+Plans: Investigate possibility of adding support for args/kwargs. Other options: add levenshtein postprocessing to lshdict getitem, and maybe add more options (n_candidates, n_nearest, return_list, return_scores).
 
 11/28/20
 --------
