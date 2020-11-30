@@ -232,15 +232,20 @@ Plans: Maybe clean up FuzzyKeyDict to match LSHdict interface more closely (deci
 
 11/29/20
 --------
+Progress: Finished LSHdict and updated FuzzyKeyDict to match interfact (also built abstract base with some mixins). Now getitem always returns a single value and I made one `similar` method that can return keys/vals or various combinations of keys/vals/similarity scores. Wrote lots of documentation too and ported everything (including ngrams() and lsh_hash_word) to htools and published v6.0.0.
 
+Plans: Start working on new approach to kwargs_fallback decorator. Alternative: could work more on add_kwargs support for args/kwargs but I think I might want something lighter after returning to work. Other easy alternatives: get started on isproperty/hasproperty, isstatic, equivalents for abstractmethod/staticmethod/classmethod etc.
 
+11/30/20
+--------
+Progress:
+
+Plans:
 
 
 # TODO: outstanding tasks
 
 -high level wrapper for random tfm? Meaning for each sample, randomly pick 1 or n of fillmask/generate/paraphrase/backtranslate. Or maybe this should be a RandomPipeline that isn't text transform-specific?
--extend lshforest to work with levenshtein/other similarity measure(s)?
-    -update FuzzyKeyDict to use this (should be much more efficient for cases where len(dict) is large, which is usually the case for any kind of embeddings w2i dict). Consider whether this belongs in incendio.nlp instead.
 -Update spellotape (and/or incendio?) to allow easy loading of domain embeddings and TLD embeddings.
 -auto bump version (htools?)
 -decorator: let kwargs in method optionally override any instance vars
