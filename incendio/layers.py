@@ -2,8 +2,8 @@
 
 __all__ = ['GRelu', 'JRelu', 'Mish', 'mish', 'ConvBlock', 'ResBlock', 'ReflectionPaddedConv2d', 'SmoothSoftmaxBase',
            'SmoothSoftmax', 'SmoothLogSoftmax', 'SpatialSoftmax', 'Dropin', 'LinearSkipBlock', 'LinearResBlock',
-           'LinearDenseBlock', 'WeightedLinearResBlock', 'trunc_normal_', 'InitializedEmbedding', 'BloomEmbedding',
-           'AxialEncoding', 'MultiAxialEncoding', 'SiameseBase']
+           'LinearDenseBlock', 'WeightedLinearResBlock', 'SkipConnection', 'trunc_normal_', 'InitializedEmbedding',
+           'BloomEmbedding', 'AxialEncoding', 'MultiAxialEncoding', 'SiameseBase']
 
 
 # Cell
@@ -348,13 +348,15 @@ class LinearSkipBlock(nn.Module):
             addition for residual blocks, but any operation is possible.
         activation: callable
             Activation function or callable class. This will be applied after
-            each layer. The final activation is applied after the `op` function.
+            each layer. The final activation is applied after the `op`
+            function.
         """
         super().__init__()
         self.skip_size = len(layer_dims)
         self.activation = activation
         self.layers = nn.ModuleList([nn.Linear(d_in, d_out) for d_in, d_out
-                                     in zip([x_dim]+list(layer_dims), layer_dims)])
+                                     in zip([x_dim]+list(layer_dims),
+                                            layer_dims)])
         self.op = op
 
     def forward(self, x):
@@ -387,14 +389,109 @@ class LinearDenseBlock(LinearSkipBlock):
 
 # Cell
 class WeightedLinearResBlock(LinearSkipBlock):
-    """Like a LinearResBlock but takes a weighted average of the input and output
-    rather than adding them. Addition gives them equal weight and we may want to
-    weight the output more heavily.
+    """Like a LinearResBlock but takes a weighted average of the input and
+    output rather than adding them. Addition gives them equal weight and we
+    may want to weight the output more heavily.
     """
 
-    def __init__(self, x_dim, hidden_dims, weights=(.25, .75), activation=mish):
+    def __init__(self, x_dim, hidden_dims, weights=(.25, .75),
+                 activation=mish):
         super().__init__(x_dim, hidden_dims,
-                         partial(weighted_avg, weights=list(weights)), activation)
+                         partial(weighted_avg, weights=list(weights)),
+                         activation)
+
+
+# Cell
+class SkipConnection(nn.Module):
+    """More generalized version of skip connection. Eventually maybe rewrite
+    various res/dense/weighted conv blocks with this.
+
+    Examples
+    --------
+    >> x = torch.randn(3, 4)
+    >> dense = nn.Linear(4, 2)
+    >> dense(x).shape
+
+    torch.Size([3, 2])
+
+    >> skip = SkipConnection(dense, op='cat')
+    >> skip(x).shape
+
+    torch.Size([3, 6])
+
+    >> skip = SkipConnection(dense, op='add')
+    >> skip(x).shape
+
+    RuntimeError: The size of tensor a (4) must match the size of tensor b (2)
+    at non-singleton dimension 1
+    """
+
+    def __init__(self, block, op='add', input_weight=None):
+        """
+        Parameters
+        ----------
+        block: nn.Module
+            A torch layer/model that takes in some input x (and optionally
+            other args/kwargs) and performs some computations on it. When
+            using op='add', this should output a tensor with the same shape
+            as its first input.
+        op: str
+            One of ('add', 'cat', 'weighted_avg'). This determines how the
+            input will be attached to the output. If you choose 'cat',
+            concatenation will occur over the last axis and input will precede
+            output.
+        input_weight: float or None
+            If op='weighted_avg', you must provide a float in (0, 1) that
+            determines how heavily to weight the input x. For example, 0.2
+            means the output of `block` will be much more heavily weighted
+            than the input tensor, while 0.5 is equivalent to computing the
+            mean (and in most cases is essentially equivalent to computing
+            the sum).
+        """
+        super().__init__()
+        self.block = block
+        if op == 'add':
+            self.op = torch.add
+        elif op == 'cat':
+            self.op = self._cat
+        elif op == 'weighted_avg':
+            if input_weight is None or input_weight <= 0 or input_weight >= 1:
+                raise ValueError('input_weight must be a float in (0, 1) '
+                                 'when op="weighted".')
+            self.weights = input_weight, 1-input_weight
+            self.op = self._weighted_avg
+        else:
+            raise ValueError('op must be in ("add", "cat", "weighted_avg").')
+
+    def forward(self, x, *args, **kwargs):
+        """
+        Parameters
+        ----------
+        x: torch.Tensor
+            This first item is considered to be the input which will be
+            combined with the output of self.block.
+        args, kwargs: any
+            Additional args will be forwarded to self.block.
+
+        Returns
+        -------
+        torch.Tensor: Should have same shape as x unless you're making use of
+        broadcasting, which should rarely be needed here.
+        """
+        return self.op(x, self.block(x, *args, **kwargs))
+
+    @staticmethod
+    def _cat(x1, x2):
+        """Wrapper since torch.cat has a different interface than torch.add
+        (list of args vs. *args).
+        """
+        return torch.cat([x1, x2], dim=-1)
+
+    def _weighted_avg(x1, x2):
+        """In our use case, the first tensor will be the original input tensor
+        and the second will be the output of self.block.
+        """
+        return self.weights[0]*x1 + self.weights[1]*x2
 
 
 # Cell
@@ -410,7 +507,8 @@ def trunc_normal_(x, mean=0.0, std=1.0):
 # Cell
 class InitializedEmbedding(nn.Embedding):
     """Same as nn.Embedding but with truncated normal initialization. This
-    also differs from fastai's Embedding class in that it allows padding."""
+    also differs from fastai's Embedding class in that it allows padding.
+    """
 
     def reset_parameters(self):
         with torch.no_grad():
@@ -493,8 +591,9 @@ class BloomEmbedding(nn.Module):
         Parameters
         ----------
         x: torch.LongTensor
-            Input tensor of word indices (bs x seq_len) if pre_hashed is False.
-            Hashed indices (bs x seq_len x n_hashes) if pre_hashed is False.
+            Input tensor of word indices (bs x seq_len) if pre_hashed is
+            False. Hashed indices (bs x seq_len x n_hashes) if pre_hashed is
+            False.
 
         Returns
         -------

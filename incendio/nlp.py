@@ -2,7 +2,7 @@
 
 __all__ = ['tokenizer', 'tokenize', 'tokenize_many', 'Vocabulary', 'Embeddings', 'back_translate',
            'postprocess_embeddings', 'compress_embeddings', 'ParaphraseTransform', 'GenerativeTransform',
-           'FillMaskTransform']
+           'FillMaskTransform', 'NLP_TRANSFORMS', 'augment_text_df']
 
 
 # Cell
@@ -10,6 +10,9 @@ from collections import Counter
 from functools import partial
 import multiprocessing
 import numpy as np
+import os
+import pandas as pd
+from pathlib import Path
 from sklearn.decomposition import PCA
 import spacy
 from textblob import TextBlob
@@ -20,7 +23,7 @@ from transformers import PegasusForConditionalGeneration, PegasusTokenizer, \
 from transformers.modeling_utils import PreTrainedModel
 
 from htools import save, load, add_docstring, tolist, auto_repr, listlike, \
-    flatten
+    flatten, immutify_defaults
 from .utils import DEVICE
 
 
@@ -1287,6 +1290,10 @@ class FillMaskTransform:
             samples and if n < self.max_n, this means we need some way of
             selecting which samples to keep. 'random' selects randomly without
             replacement, while 'best' chooses the n most likely generations.
+            Note: when n_mask > 1, you should probably use strategy='random'
+            if you want relatively diverse results. If 'best', the benefit of
+            additional iterations is diminished because we are likely to end
+            up with very similar (or even identical) results.
         kwargs: any
             Forwarded to model's `generate` method. Its docstring is provided
             below for convenience.
@@ -1349,3 +1356,110 @@ class FillMaskTransform:
         if max_n < self.n:
             raise ValueError(f'max_n must be >= self.n (currently {self.n}.')
         self.pipe.topk = max_n
+
+
+# Cell
+NLP_TRANSFORMS = {
+    'fillmask': FillMaskTransform,
+    'paraphrase': ParaphraseTransform,
+    'generative': GenerativeTransform
+}
+
+
+# Cell
+@immutify_defaults
+def augment_text_df(source, transform='fillmask', dest=None, n=5,
+                    text_col='text', id_cols=(), nrows=None, tfm_kwargs={},
+                    call_kwargs={}):
+    """Create augmented versions of a dataframe of text, optionally preserving
+    other columns for identification purposes. We recommend precomputing and
+    saving variations of your data rather than doing this on the fly in a
+    torch dataset since they can be rather space- and time-intensive.
+    Augmented versions of an input row should generally be kept in the same
+    training split: in order to keep the label the same, we usually want to
+    make relatively limited changes to the raw text (just enough to provide a
+    regularizing effect).
+
+    Parameters
+    ----------
+    source: str, Path, or pd.DataFrame
+        If str or Path, this is a csv containing our text data. Alternatively,
+        you can pass in a dataframe itself.
+    transform: str or callable
+        If str, this must be one of the keys in `NLP_TRANSFORMS` from this
+        same module - this will be used to create a new transform object.
+        Alternatively, you can pass in a previously created object (NOT the
+        class). The default is the mask filling transform as it's relatively
+        quick and effective. 'paraphrase' may give better (but slower)
+        results. Anecdotally, 'generative' seems to provide lower quality
+        results, but perhaps by experimenting with hyperparameters it could
+        be more useful.
+    dest: str, Path, or None
+        If str or Path, this is where the output file will be saved to
+        (directories will be created as needed). If None, nothing will be
+        saved and the function will merely return the output DF for you to do
+        with as you wish.
+    n: int
+        Number of samples to generate for each raw row.
+    text_col: str
+        Name of column in DF containing the text to augment.
+    id_cols: Iterable[str]
+        Columns containing identifying information such as labels, row_ids,
+        etc. These also help us map the augmented text rows to their
+        corresponding raw rows.
+    nrows: int or None
+        Max number of rows from the source DF to generate text for. Useful for
+        testing (equivalently, you could pass in df.head(nrows) and leave this
+        as None).
+    tfm_kwargs: dict
+        Arguments to pass to `transform`'s constructor. These are ignored when
+        passing in a transform object rather than a string.
+    call_kwargs: dict
+        Arguments to pass to the __call__ method of `transform` to affect
+        the augmentation process.
+
+    Returns
+    -------
+    pd.DataFrame: DF of generated text with columns `text_col` and `id_cols`.
+    By default, this will have 5x the rows as your source DF, but this can
+    easily be adjusted through the `nrows` parameter.
+    """
+    # Load data.
+    if isinstance(source, (str, Path)):
+        df = pd.read_csv(Path(source), usecols=[text_col] + list(id_cols),
+                         nrows=nrows)
+    elif isinstance(source, pd.DataFrame):
+        df = source.head(nrows)
+    else:
+        raise TypeError('`source` must be a str/Path or pd.DataFrame.')
+
+    # Prepare for output file if necessary.
+    if isinstance(dest, (str, Path)):
+        dest = Path(dest)
+        os.makedirs(dest.parent, exist_ok=True)
+    elif dest is not None:
+        raise ValueError('`dest` must be a str/Path containing the output '
+                         'file name to create, or None if you just want to '
+                         'return a df.')
+
+    # For simplicity, we stick to one transform at a time. Slow to load so at
+    # least for now, let user pass in the transform itself.
+    transform = NLP_TRANSFORMS[transform](n=n, **tfm_kwargs) \
+        if isinstance(transform, str) else transform
+
+    # Generate new variations of input text.
+    res = transform(df[text_col].tolist(), **{**call_kwargs, 'flat': True})
+    res = pd.DataFrame(res, columns=[text_col])
+
+    # Attach identifier columns to output (e.g. we usually want to store
+    # labels and or sample IDs. Most of our augmentation methods make
+    # relatively minor changes to the input so all variations of 1 input
+    # should remain in the same set, usually training.).
+    if id_cols:
+        df_id = pd.concat([df[col].repeat(res.shape[0] // df.shape[0])
+                           for col in id_cols], axis=1).reset_index(drop=True)
+        res = pd.concat([df_id, res], axis=1)
+
+    # Optionally save output.
+    if dest: res.to_csv(dest, index=False)
+    return res

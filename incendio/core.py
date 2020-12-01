@@ -18,7 +18,7 @@ from torch.optim import Adam
 from tqdm.auto import tqdm
 import warnings
 
-from htools import load, save, LoggerMixin, valuecheck, hasarg
+from htools import load, save, LoggerMixin, valuecheck, hasarg, func_name
 from .callbacks import BasicConfig, StatsHandler, MetricPrinter
 from .data import plot_images
 from .metrics import batch_size
@@ -699,7 +699,7 @@ class Trainer(LoggerMixin):
         os.makedirs(self.out_dir)
 
     def __repr__(self):
-        return (f'Trainer(criterion={repr(self.criterion.__name__)}, '
+        return (f'Trainer(criterion={repr(func_name(self.criterion))}, '
                 f'out_dir={repr(self.out_dir)})'
                 f'\n\nDatasets: {len(self.ds_train)} train rows, '
                 f'{len(self.ds_val)} val rows'

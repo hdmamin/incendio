@@ -119,12 +119,14 @@ def weighted_avg(*args, weights):
     Parameters
     ----------
     args: torch.tensor
-        Multiple tensors with the same dtype and shape that you want to average.
+        Multiple tensors with the same dtype and shape that you want to
+        average.
     weights: list
-        Ints or floats to weight each input tensor. The length of this list must
-        match the number of tensors passed in: the first weight will be multiplied
-        by the first tensor, the second weight by the second tensor, etc. If your
-        weights don't sum to 1, they will be normalized automatically.
+        Ints or floats to weight each input tensor. The length of this list
+        must match the number of tensors passed in: the first weight will be
+        multiplied by the first tensor, the second weight by the second
+        tensor, etc. If your weights don't sum to 1, they will be normalized
+        automatically.
 
     Returns
     -------
