@@ -238,9 +238,17 @@ Plans: Start working on new approach to kwargs_fallback decorator. Alternative: 
 
 11/30/20
 --------
+Progress: Started on autocli and made some good progress: it basically just needs add_kwargs to work (though I'm starting to question whether it's useful enough to justify the hackiness). CLI class seems to work aside from child args/kwargs but it's a bit clunky.
+
+Plans: Try to get args/kwargs working in add_kwargs. Update code to avoid reconstructing parameters manually (see scratch-auto-cli nb). Update cli class to see if we can avoid passing in funcs manually (maybe we can just decorate main() like in untitled nb?). ALternative: is/has property/static/abstract/classmethod etc.
+
+12/1/20
+-------
 Progress:
 
 Plans:
+
+
 
 
 # TODO: outstanding tasks
