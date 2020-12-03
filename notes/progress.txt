@@ -250,7 +250,13 @@ Plans: Investigate how/if we can use kwargs in original function. Or start is/ha
 
 12/2/20
 -------
-Progress:
+Progress: Started early exploration of isstatic and related functions. Also started taking another stab at kwargs fallback decorator.
+
+Plans: Could continue work on isstatic or kwargs_fallback. Alternatively, could work on updating docs for htools and incendio: realized both are quite out of date.
+
+12/3/20
+-------
+Proress:
 
 Plans:
 
@@ -265,4 +271,3 @@ Plans:
 -decorator: let kwargs in method optionally override any instance vars
 -cliRunner: unsure exactly how this would work, but somehow find all the functions in a script, then add all their arguments (with default values) to a top level main function's signature which will then be called from the command line.
 -updated version of log_cmd that logs full signature instead of just explicit commands (check first if I have any function that already does this - thought @debug could but doesn't look like it. Maybe I'm remember the combination of @debug and @log_stdout, but that's not quite the same.)
-    -update log_cmd to handle lists/dicts/bool vars better
