@@ -256,7 +256,13 @@ Plans: Could continue work on isstatic or kwargs_fallback. Alternatively, could 
 
 12/3/20
 -------
-Proress:
+Proress: Tentatively finished fallback decorator (options to keep/drop a few vars, call the deco with or without parentheses, and optionally save kwargs). It doesn't add specific kwargs and defaults to method signature and I don't think it'll be able to. Fleshed out docs for it as well and cleaned it up and tested out some different cases. Ported temporary_global_scope decorator and wrote brief documentation.
+
+Plans: Port fallback decorator (consider renaming? self_fallback, fallback_self, default_kwargs, ...?). Other options: build docs for htools/incendio, more thoroughly test add_kwargs, update CLI with finished (?) add_kwargs, or return to is/has static/abstract etc.
+
+12/4/20
+-------
+Progress:
 
 Plans:
 
