@@ -335,6 +335,7 @@ class ModelCheckpoint(TorchCallback):
     def on_train_begin(self, trainer, *args, **kwargs):
         self.best_metric = self.init_metric
         self.metric_path = os.path.join(trainer.out_dir, self.metric_fname)
+        self.last_saved_epoch = None
 
     def on_epoch_end(self, trainer, epoch, val_stats):
         new_val = val_stats.get(self.metric)
@@ -354,6 +355,7 @@ class ModelCheckpoint(TorchCallback):
             save({k: round(v, 5) for k, v in val_stats.items()},
                  self.metric_path)
             self.best_metric = new_val
+            self.last_saved_epoch = epoch
 
 
 # Cell
