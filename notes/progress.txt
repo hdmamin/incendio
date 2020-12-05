@@ -262,6 +262,12 @@ Plans: Port fallback decorator (consider renaming? self_fallback, fallback_self,
 
 12/4/20
 -------
+Progress: Ported fallback decorator and added some examples. Got isstatic tentatively working. Started a second approach to isstatic using hasstatic and discovered a possible bug in hasstatic (I think it only works on classes, not instances).
+
+Plans: Continue investigate hasstatic and fix if necessary. Choose an implementation of isstatic and port + document. Maybe add a 'methodof' or 'parent' function (class a method/attr belongs to). Alternative: revisit old notebooks on spatial attention, attentiveconcatpool, and/or annotatedgpt2 and try to start finalizing some components to port to incendio.
+
+12/5/20
+-------
 Progress:
 
 Plans:
