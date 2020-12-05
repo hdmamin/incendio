@@ -268,6 +268,12 @@ Plans: Continue investigate hasstatic and fix if necessary. Choose an implementa
 
 12/5/20
 -------
+Progress: Investigated hasstatic and realized the problem was with new isstatic. Fixed new isstatic and ported and documented. Also refactored, ported, and documented method_of function. Wrote, ported, and documented has_classmethod and is_classmethod.
+
+Plans: Version of log_cmd that logs full signature and converts to shell script and/or version of debug that saves signature as dict -> json file. Maybe add option to include shbang in `save` or `log_cmd`. Optional: revisit old nbs on attention pooling, spatial attention, gpt3 and finalize/port some things to lib (or at least start the process).
+
+12/6/20
+-------
 Progress:
 
 Plans:
@@ -280,6 +286,5 @@ Plans:
 -high level wrapper for random tfm? Meaning for each sample, randomly pick 1 or n of fillmask/generate/paraphrase/backtranslate. Or maybe this should be a RandomPipeline that isn't text transform-specific?
 -Update spellotape (and/or incendio?) to allow easy loading of domain embeddings and TLD embeddings.
 -auto bump version (htools?)
--decorator: let kwargs in method optionally override any instance vars
 -cliRunner: unsure exactly how this would work, but somehow find all the functions in a script, then add all their arguments (with default values) to a top level main function's signature which will then be called from the command line.
 -updated version of log_cmd that logs full signature instead of just explicit commands (check first if I have any function that already does this - thought @debug could but doesn't look like it. Maybe I'm remember the combination of @debug and @log_stdout, but that's not quite the same.)
