@@ -280,7 +280,14 @@ Plans: Confirm add_kwargs works as desired and port, also update auto cli with i
 
 12/7/20
 -------
-Progress:
+Progress: Updated docs for add_kwargs, renamed 1 param from "positional" to "required", and very briefly looked over notebook results again. Experimented with log_cmd options to give us the option of executing the decorator on imported code (first tried global vars but realized need to use env vars). Very briefly started returning to the problem of pickling custom objects.
+
+Plans: Explore autocli notebook again with updated version of add_kwargs. Alternative: investigate solutions to safely pickling custom objects.
+
+
+12/8/20
+-------
+Progress: 
 
 Plans:
 
