@@ -287,9 +287,12 @@ Plans: Explore autocli notebook again with updated version of add_kwargs. Altern
 
 12/8/20
 -------
-Progress: 
+Progress: Found bug in temporary_global_scope, built new similar version that works only on functions and replaced the old one in library. Updated add_kwargs accordingly. Tested auto_cli with new add_kwargs and it seems to work with simple function decoration (i.e. no need for autocli class). Started looking more into pickling options and made simple fix that SHOULD mean dotdict is picklable now! No solution yet for Args (namedtuple) or other dict subclasses.
 
-Plans:
+Plans: Work on using __reduce__ to make other dict subclasses picklable. If finish that, look more into namedtuple pickling options (maybe more complicated since I also brilliantly chose to name the dynamically produced namedtuple Args too). Other: could finally make a shell or bash function so I don't always have to look up which variation to use.
+
+12/9/20
+-------
 
 
 
@@ -299,4 +302,4 @@ Plans:
 -high level wrapper for random tfm? Meaning for each sample, randomly pick 1 or n of fillmask/generate/paraphrase/backtranslate. Or maybe this should be a RandomPipeline that isn't text transform-specific?
 -Update spellotape (and/or incendio?) to allow easy loading of domain embeddings and TLD embeddings.
 -auto bump version (htools?)
--cliRunner: unsure exactly how this would work, but somehow find all the functions in a script, then add all their arguments (with default values) to a top level main function's signature which will then be called from the command line.
+-shell/bash: convenience func to exec shell command
