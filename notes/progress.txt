@@ -293,8 +293,9 @@ Plans: Work on using __reduce__ to make other dict subclasses picklable. If fini
 
 12/9/20
 -------
+Progress: Read more about pickling, tested FuzzyKeyDict and it seems to work off the shelf. Tested LSHdict and it fails since update() tries to hash word and add it to forest which doesn't exist yet when first unpickling. Experimented briefly with removing index call in getitem but realized this didn't solve the problem so reverted to old method. Wrote a few notes in docs for both fuzzykeydict and lshdict about this. Looked up different shell command options and added function to htools.core using subprocess.run, along with instructions in docs for if you want to use non-blocking version.
 
-
+Plans: Look into namedtuple pickling. Maybe begin strkeyordereddict.
 
 
 # TODO: outstanding tasks
@@ -302,4 +303,3 @@ Plans: Work on using __reduce__ to make other dict subclasses picklable. If fini
 -high level wrapper for random tfm? Meaning for each sample, randomly pick 1 or n of fillmask/generate/paraphrase/backtranslate. Or maybe this should be a RandomPipeline that isn't text transform-specific?
 -Update spellotape (and/or incendio?) to allow easy loading of domain embeddings and TLD embeddings.
 -auto bump version (htools?)
--shell/bash: convenience func to exec shell command
