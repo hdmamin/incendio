@@ -297,6 +297,19 @@ Progress: Read more about pickling, tested FuzzyKeyDict and it seems to work off
 
 Plans: Look into namedtuple pickling. Maybe begin strkeyordereddict.
 
+12/10/20
+--------
+Progress: Wrote simple OrderedDict subclass that allows indexing with integers and ported to lib. Wrote decorator factory "function_interface" that allows us to enforce various aspects of signatures (e.g. includes some params, includes some required params, starts with some sequence of params, accepts **kwargs, etc.). Looked a little more into pickling issues but decided it's not worth updating other structures for now.
+
+Plans: Port and document function_interface decorator factory. Switch back to incendio and start thinking about how to make training loop more customizable: probably should have each step call a separate method (e.g. instead of loss = self.criterion(yhat, ytrue) call loss = self._criterion(yhat, ytrue), where _criterion is a method instead of the attribute criterion; however, this may not be enough since that still wouldn't let us access things like xb. May need to just make everything an attr of trainer if I really want it to be customizable.)
+
+12/11/20
+--------
+Progress:
+
+Plans:
+
+
 
 # TODO: outstanding tasks
 
