@@ -305,14 +305,15 @@ Plans: Port and document function_interface decorator factory. Switch back to in
 
 12/11/20
 --------
+Progress: Ported and documented function_interface and added an option to create a decorator automatically that mimics an existing function. Added to_parquet method in spellotape file handler. Shortened some imported var names in htools.meta (inspect.signature -> signature) and assessed how many places there are where I could use `bound_args` (a lot). Started revisiting contextdecorator and I think I identified the main bug that stopped me last time (it was actually in timeboxed rather than in contextdecorator itself: need to return True to avoid propagating exception).
+
+Plans: More testing of context decorator: see how approach #2 differs and if I can get that working as well. Think about if there's a way to do this more easily with contextmanager (and if I can use "with" syntax in __call__). Maybe see if I should adjust timeboxed logic in lib version or if @contextmanager handles that already (just checked, pretty sure it does by placing logic in finally but make extra sure).
+
+12/12/20
+--------
 Progress:
 
 Plans:
 
 
 
-# TODO: outstanding tasks
-
--high level wrapper for random tfm? Meaning for each sample, randomly pick 1 or n of fillmask/generate/paraphrase/backtranslate. Or maybe this should be a RandomPipeline that isn't text transform-specific?
--Update spellotape (and/or incendio?) to allow easy loading of domain embeddings and TLD embeddings.
--auto bump version (htools?)
