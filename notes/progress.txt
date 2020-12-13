@@ -311,9 +311,16 @@ Plans: More testing of context decorator: see how approach #2 differs and if I c
 
 12/12/20
 --------
+Progress: Investigated difference between two contextmanager implementations (2nd one accepts init args), cleaned up the second one a bit and refactored it (removed some unnecessary methods), tested timebox child more thoroughly, cleaned up notebook a little bit to remove tests. Added abstractmethods for enter and exit, attribute to remind user what exit signature is, briefly toyed with idea of using contextlib.contextmanager but realized it wasn't well-suited to subclassing, documented (including Timer child example) and ported to lib!
+
+Plans: Investige python prefix trie libraries more thoroughly and consider if it's worth adding my own version to htools. Look over coursera spellcheck stuff and see if there's anything interesting worth porting. Alternative: get to issue of making incendio training loop easier to customize.
+
+12/13/20
+--------
 Progress:
 
 Plans:
+
 
 
 
