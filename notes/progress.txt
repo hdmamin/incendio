@@ -317,9 +317,17 @@ Plans: Investige python prefix trie libraries more thoroughly and consider if it
 
 12/13/20
 --------
+Progress: Briefly investigated other trie libraries and found they're a little different than what we built in Terence's class (use key-value pairs, don't fully understand what they're doing). Started building new version of TrieNode and Trie: user can now add items (items can be strings, ints (passed in as a list), or tuples), use + operator, and check if an item is contained in a trie.
+
+Plans: Better repr/str for trie and trie node. Look through terence's slides/other sources and see what stuff we might want to do with this (e.g. some sort of min distance between two words, check if word is prefix of another, check how many children a word has? Consider other similarity measures we might use to account for words where a character differed early on but the rest of the sequences are similar). Other options: work on way to iterate over trie (not sure exactly what desired behavior is here, have to consider), change var names from "word" to something more general since sequences work, consider what should happen with lists of lists (internally convert to tuples to make hashable or throw error?).
+
+12/14/20
+--------
 Progress:
 
 Plans:
+
+
 
 
 
