@@ -323,6 +323,12 @@ Plans: Better repr/str for trie and trie node. Look through terence's slides/oth
 
 12/14/20
 --------
+Progress: Added repr to trienode. Started working on prefixed_by method of Trie but had trouble, so working on traverse function.
+
+Plans: Continue work on traverse function. If stuck, could look at old hackerrank for help. Alternative: incendio training loop customizability.
+
+12/15/20
+--------
 Progress:
 
 Plans:
