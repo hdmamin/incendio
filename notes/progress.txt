@@ -329,9 +329,17 @@ Plans: Continue work on traverse function. If stuck, could look at old hackerran
 
 12/15/20
 --------
+Progress: Wrote working walk function (the power of starting from scratch!) and added to trie as _values and values methods. Wrote working prefixed_by function using walk() and added to trie as method. (Note: there were some odd subtleties getting these functions to work as methods, which is why I mention them separately.) Wrote a little documentation for __add__, __contains__, and __init__. Wrote first pass at assigning item type (works but breaks objviz).
+
+Plans: Investigate objviz and see if there's a way around this or if it's a bug in the library (storing any type as an attribute seems to break it, but check that it's not hinging on the attr name type_). If unavoidable, consider if it's worth breaking objviz functionality to include this (could always create subclasses so there's no need to store type_, or store type_ as a str, or maybe we can split type up into 'str' and 'everything else' and use bool). Using knowledge of type_, add some sort of preprocess function that will make values() and prefixed_by() work with different types. If finish all that, could start working on suffix trie option.
+
+12/16/20
+--------
 Progress:
 
 Plans:
+
+
 
 
 
