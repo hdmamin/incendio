@@ -335,6 +335,12 @@ Plans: Investigate objviz and see if there's a way around this or if it's a bug 
 
 12/16/20
 --------
+Progress: Looked into objviz bug and confirmed it's a problem with lolviz library. Experimented with a few workarounds and settled on saving the class name as a string instead of a type. Added postprocessing method to join strings and tested various methods (values, prefixed_by, __contains__) on tries with different types (str, list[str], list[tuple[str]]). Added type checking to make sure user inputs right type for append, __add__, prefixed_by, __contains__ (checks both overall type and type of first item, which matters if we're doing somemthing like a list of ngram tuples). Started working on suffix trie option and it seems to work, but with some not thought out consequences on "prefixed_by".
+
+Plans: Consider what desired interface is for suffix trie (should "dolphin" be considered to be prefixed by "dol", "hin", or "nih"? Or should suffix trie instead implement "suffixed_by" and raise error for "prefixed_by"?) and work on solution. Consider changing prefixed_by/suffixed_by to startswith/endswith (reusing familiar interface per Hettinger talk). Add "extend" method (should be a quick win).
+
+12/17/20
+--------
 Progress:
 
 Plans:
