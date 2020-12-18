@@ -341,6 +341,12 @@ Plans: Consider what desired interface is for suffix trie (should "dolphin" be c
 
 12/17/20
 --------
+Progress: Changed prefixed_by to startswith, added endswith, and updated both to work for both suffix trees and prefix trees but to throw a warning in the inefficient case (also made it work on various dtypes). Experimented with refactoring out some of __contains__ functionality to _find, which allows us to reuse it in startswith and endswith. Cleaned up notebook a little (add in some simple tests with assert, remove some unnecessary objvizes, tested some more edge cases and dtypes).
+
+Plans: Test new version of startswith on all combos of non-str tries and suffix trees. If it looks good, maybe replace startswith/endswith/contains with new versions that rely on _find. Think more about where validation and reversal should occur and update accordingly (thinking maybe these should all occur in user-facing methods rather than internal ones). Maybe create 1 method that does both (or just 1 if user specifies). Other options if finish early: write docs, research what else tries are typically used for, or start work on typos/neighbors method.
+
+12/18/20
+--------
 Progress:
 
 Plans:
