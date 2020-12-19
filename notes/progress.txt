@@ -353,9 +353,16 @@ Plans: Test and update longest_common_prefix to work on other dtypes and suffix 
 
 12/19/20
 --------
+Progress: Organized notebook a bit by adding titles and brief descriptions of each trie (dtype, suffix or not) and added some more tests. Tested longest_matching_prefix on more dtypes and realized it didn't work on lists (fixed that) or in suffix mode. Started working on longest_matching_suffix and have some basic functionality working but there are still a bunch of edge cases and bugs I haven't ironed out yet. Found and fixed 2 bugs in longest_matching_prefix: empty lists were returned if the input sequence was present in trie and it had no edges, and also if the longest matching prefix was not equal to the input but was present in trie with no edges.
+
+Plans: Work on longest_matching_suffix. If finish early, see if we can refactor with longest_matching_prefix into 1 base function. Consider renaming (longest_common_suffix?). If I finish REALLy early, could think about feasibility of passing in kv pairs (word: idx or word: prob).
+
+12/20/20
+--------
 Progress:
 
 Plans:
+
 
 
 
