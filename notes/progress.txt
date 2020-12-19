@@ -347,9 +347,17 @@ Plans: Test new version of startswith on all combos of non-str tries and suffix 
 
 12/18/20
 --------
+Progress: Tested new startswith using _find, updated endswith to use it as well, and tested both on all combos of dtypes and prefix/suffix. Experimented with common startswith/endswith base but decided against it (they're just barely different enough to make it justify keeping, at least for now). Read up a little on what else people do with tries and built early version of longest_common_prefix (first as func, then ported to method but only tested on prefix mode and strings so far). Cleaned up some old commented out code.
+
+Plans: Test and update longest_common_prefix to work on other dtypes and suffix mode. Write longest_common_suffix and refactor if applicable. Consider more whether we could feasibly add an optional value field (e.g. a word index or probability). Alternative: spellotape wrapper to easily load domain embeddings and TLD embeddings.
+
+12/19/20
+--------
 Progress:
 
 Plans:
+
+
 
 
 
