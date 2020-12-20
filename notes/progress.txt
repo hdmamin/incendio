@@ -359,9 +359,17 @@ Plans: Work on longest_matching_suffix. If finish early, see if we can refactor 
 
 12/20/20
 --------
+Progress: Got longest_matching_suffix working (and changed names to longest_common_{suffix,prefix}) as a function, ported it back to a method, and refactored base to work for both prefix and suffix. Formalized more checks into tests in notebook. Started adding early skeleton of logic to check if brute force solution is needed and implement it (i.e. if suffix=True, no efficient way to get longest common prefix).
+
+Plans: Work on brute force solution for longest common prefix and longest common suffix. Add warning strings. Formalize more notebook checks into tests.
+
+12/21/20
+--------
 Progress:
 
 Plans:
+
+
 
 
 
