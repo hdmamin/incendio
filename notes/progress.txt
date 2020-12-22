@@ -365,9 +365,16 @@ Plans: Work on brute force solution for longest common prefix and longest common
 
 12/21/20
 --------
+Progress: Built brute force solution for longest_common_prefix and suffix, wrote warnings for each method, and formalized many notebook checks into tests. Wrote some method docstrings. Added method to reverse direction (prefix tree to suffix tree and vice versa).
+
+Plans: Consider desired interface of reverse method: might want to rename to avoid confusion. Consider whether trie should be iterable (values aren't really ordered so we could yield iter(self.values())). Options: could give some thought to the possibility of implementing support for values (indices, probs, etc.) or take another shot at making values yield items as we find them rather than building up a whole list. Easier option: add docstrings and look to start wrapping this up.
+
+12/22/20
+--------
 Progress:
 
 Plans:
+
 
 
 
