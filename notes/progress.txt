@@ -371,20 +371,15 @@ Plans: Consider desired interface of reverse method: might want to rename to avo
 
 12/22/20
 --------
+Progress: Got generator version of values traversal working as function and ported to class! Rewrote all other methods using new generator version. Updated warning messages now that brute force methods are no longer space inefficient (just time inefficient). Wrote a few docstrings. Converted a few checks to tests.
+
+Plans: Maybe experiment a bit with possibly of passing in kv pair (e.g. word indices). Consider whether I want to implement __iter__ in place of (or in addition to) values(). Consider if I want to rename reverse(). Easy alternative: write some docstrings and or formalize some more checks into tests. Other alternative: easy domain and TLD embedding loading in spellotape.
+
+12/23/20
+--------
 Progress:
 
 Plans:
-
-
-
-
-
-
-
-
-
-
-
 
 
 
