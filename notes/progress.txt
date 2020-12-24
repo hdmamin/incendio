@@ -377,9 +377,17 @@ Plans: Maybe experiment a bit with possibly of passing in kv pair (e.g. word ind
 
 12/23/20
 --------
+Progress: Considered remaining ideas and decided kv pairs are too different from my current interface and distance/typo methods don't have pressing needs or concrete desired implementations. Wrote some docs and ported to lib. Found and fixed bug in TrieNode. Tried pickling and it seems to work, though I had to import both Trie and TrieNode first to make this work which is annoying. Wrote __repr__ for Trie which truncates very large values lists. Renamed reverse to flip to avoid confusion with reversed() (which is not implemented).
+
+Plans: Try loading a large text file and see if there are any noticeable performance benefits (memory size, lookup time, etc.). Begin designing interface for loading various embeddings in spellotape (i.e. what format do I want to load data in: w2i and embedding ndarray? w2vec? Is i2w needed?), then start implementing.
+
+12/24/20
+--------
 Progress:
 
 Plans:
+
+
 
 
 
