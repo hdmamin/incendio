@@ -383,9 +383,17 @@ Plans: Try loading a large text file and see if there are any noticeable perform
 
 12/24/20
 --------
+Progress: Tested trie on glove embeddings and found it provides a nice speedup when using longest_common_prefix and startswith (though __contains__ is no better). Implemented new __len__ method that's much faster for big tries. In spellotape, started s3_load_pickl function (I think this works on pickle and zip but need to test a bit more). Wrote load_tld_embeddings func and started load_domain_embeddings func.
+
+Plans: Continue fleshing out load_tld_embeddings. Maybe start load_char_embeddings. Document functions and clean up notebook a bit (maybe move load_s3 to utils).
+
+12/25/20
+--------
 Progress:
 
 Plans:
+
+
 
 
 
