@@ -389,9 +389,17 @@ Plans: Continue fleshing out load_tld_embeddings. Maybe start load_char_embeddin
 
 12/25/20
 --------
+Progress: Added s3_load_pickle to FileHandler as staticmethod. Finished load_domain_embeddings and load_tld_embeddings and added option to return as incendio.Embeddings object. Wrote some (minimal) documentation and cleaned up notebook a bit. 
+
+Plans: Load_char_embeddings func. Maybe also start considering whether I want to wrap this up now or rebuild incendio training loop first (I suppose that's a big enough undertaking that I might want to push it til after break to leave some time for complete relaxation).
+
+12/26/20
+--------
 Progress:
 
 Plans:
+
+
 
 
 
