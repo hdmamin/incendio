@@ -395,9 +395,17 @@ Plans: Load_char_embeddings func. Maybe also start considering whether I want to
 
 12/26/20
 --------
+Progress: Wrote load_char_embeddings in spellotape. Revised load_tld_embeddings significantly (realized I saved a few other versions with different vocab sizes and embedding dims, and the default learned embeddings I was loading did some weird stuff with the w2i dict. I still left that as an option but added a warning since it's nearest neighbors results looked a little questionable).
+
+Plans: Maybe push and upload all changes and do postmortem? Could start work on incendio loop but might be best to take a week break first.
+
+12/27/20
+--------
 Progress:
 
 Plans:
+
+
 
 
 
