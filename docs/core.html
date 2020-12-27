@@ -24,6 +24,21 @@ description: "The basics for building and training models are contained in this 
     
 <div class="cell border-box-sizing code_cell rendered">
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/hmamin/incendio/incendio/callbacks.py:26: UserWarning: Accio not available.
+  warnings.warn(&#39;Accio not available.&#39;)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -65,6 +80,21 @@ description: "The basics for building and training models are contained in this 
     
 <div class="cell border-box-sizing code_cell rendered">
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/hmamin/anaconda3/lib/python3.7/site-packages/ipykernel/ipkernel.py:287: DeprecationWarning: `should_run_async` will not call `transform_cell` automatically in the future. Please pass the result to `transformed_cell` argument and any exception that happen during thetransform in `preprocessing_exc_tuple` in IPython 7.17 and above.
+  and should_run_async(code)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -76,11 +106,10 @@ description: "The basics for building and training models are contained in this 
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Used in notebook but not needed in package.</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
-<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="k">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DataLoader</span>
 
-<span class="kn">from</span> <span class="nn">htools</span> <span class="k">import</span> <span class="n">assert_raises</span>
+<span class="kn">from</span> <span class="nn">htools</span> <span class="kn">import</span> <span class="n">assert_raises</span>
 </pre></div>
 
     </div>
@@ -115,7 +144,7 @@ description: "The basics for building and training models are contained in this 
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="BaseModel" class="doc_header"><code>class</code> <code>BaseModel</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/core.py#L27" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>BaseModel</code>() :: <code>Module</code></p>
+<h2 id="BaseModel" class="doc_header"><code>class</code> <code>BaseModel</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/core.py#L30" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>BaseModel</code>() :: <code>Module</code></p>
 </blockquote>
 
 <pre><code>Base class for all neural network modules.
@@ -139,7 +168,11 @@ a tree structure. You can assign the submodules as regular attributes::
             return F.relu(self.conv2(x))
 
 Submodules assigned in this way will be registered, and will have their
-parameters converted too when you call :meth:`to`, etc.</code></pre>
+parameters converted too when you call :meth:`to`, etc.
+
+:ivar training: Boolean represents whether this module is in training or
+                evaluation mode.
+:vartype training: bool</code></pre>
 
 </div>
 
@@ -160,7 +193,7 @@ parameters converted too when you call :meth:`to`, etc.</code></pre>
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">SimpleModel</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>  
         <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -186,7 +219,7 @@ parameters converted too when you call :meth:`to`, etc.</code></pre>
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">GroupedModel</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>  
         <span class="n">g1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
              <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
@@ -698,7 +731,7 @@ Parameter Group 1
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="handle_interrupt" class="doc_header"><code>handle_interrupt</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/core.py#L109" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>handle_interrupt</code>(<strong><code>meth</code></strong>)</p>
+<h4 id="handle_interrupt" class="doc_header"><code>handle_interrupt</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/core.py#L147" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>handle_interrupt</code>(<strong><code>meth</code></strong>)</p>
 </blockquote>
 
 <pre><code>Decorator for Trainer.fit() method that allows the user to
@@ -744,7 +777,7 @@ callable: The wrapped method.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Trainer" class="doc_header"><code>class</code> <code>Trainer</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/core.py#L141" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Trainer</code>(<strong><code>net</code></strong>, <strong><code>ds_train</code></strong>, <strong><code>ds_val</code></strong>, <strong><code>dl_train</code></strong>, <strong><code>dl_val</code></strong>, <strong><code>criterion</code></strong>, <strong><code>mode</code></strong>:<code>('binary', 'multiclass', 'regression')</code>, <strong><code>out_dir</code></strong>, <strong><code>optim</code></strong>=<em><code>None</code></em>, <strong><code>optim_type</code></strong>=<em><code>'Adam'</code></em>, <strong><code>eps</code></strong>=<em><code>0.001</code></em>, <strong><code>last_act</code></strong>=<em><code>None</code></em>, <strong><code>threshold</code></strong>=<em><code>0.5</code></em>, <strong><code>metrics</code></strong>=<em><code>None</code></em>, <strong><code>callbacks</code></strong>=<em><code>None</code></em>, <strong><code>device</code></strong>=<em><code>device(type='cpu')</code></em>) :: <code>LoggerMixin</code></p>
+<h2 id="Trainer" class="doc_header"><code>class</code> <code>Trainer</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/core.py#L180" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Trainer</code>(<strong><code>net</code></strong>, <strong><code>dl_train</code></strong>, <strong><code>dl_val</code></strong>, <strong><code>criterion</code></strong>, <strong><code>mode</code></strong>:<code>('binary', 'multiclass', 'regression')</code>, <strong><code>out_dir</code></strong>, <strong><code>optim</code></strong>=<em><code>None</code></em>, <strong><code>optim_type</code></strong>=<em><code>'Adam'</code></em>, <strong><code>eps</code></strong>=<em><code>0.001</code></em>, <strong><code>last_act</code></strong>=<em><code>None</code></em>, <strong><code>threshold</code></strong>=<em><code>0.5</code></em>, <strong><code>metrics</code></strong>=<em><code>None</code></em>, <strong><code>callbacks</code></strong>=<em><code>None</code></em>, <strong><code>device</code></strong>=<em><code>device(type='cpu')</code></em>) :: <code>LoggerMixin</code></p>
 </blockquote>
 
 <pre><code>Mixin class that configures and returns a logger.
@@ -761,6 +794,41 @@ class Foo(LoggerMixin):
     def walk(self, location):
         self.logger.info(f'walk received argument {location}')
         return f'walking to {location}'</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="PredictionExaminer" class="doc_header"><code>class</code> <code>PredictionExaminer</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/core.py#L711" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>PredictionExaminer</code>(<strong><code>trainer</code></strong>)</p>
+</blockquote>
+
+<pre><code>Examine model predictions. This lets us view rows where the model was
+very confidently wrong, barely wrong, confidently right, barely right, or
+just random rows.</code></pre>
 
 </div>
 

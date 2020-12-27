@@ -24,6 +24,21 @@ description: "Custom activations, layers, and layer blocks are contained in this
     
 <div class="cell border-box-sizing code_cell rendered">
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/hmamin/incendio/incendio/callbacks.py:26: UserWarning: Accio not available.
+  warnings.warn(&#39;Accio not available.&#39;)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -43,14 +58,21 @@ description: "Custom activations, layers, and layer blocks are contained in this
 </div>
 </div>
 
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
 <div class="output_wrapper">
 <div class="output">
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>The autoreload extension is already loaded. To reload it, use:
-  %reload_ext autoreload
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/hmamin/anaconda3/lib/python3.7/site-packages/ipykernel/ipkernel.py:287: DeprecationWarning: `should_run_async` will not call `transform_cell` automatically in the future. Please pass the result to `transformed_cell` argument and any exception that happen during thetransform in `preprocessing_exc_tuple` in IPython 7.17 and above.
+  and should_run_async(code)
 </pre>
 </div>
 </div>
@@ -64,30 +86,66 @@ description: "Custom activations, layers, and layer blocks are contained in this
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Used for testing only.</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span><span class="p">,</span> <span class="n">Counter</span>
-<span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">chain</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span><span class="p">,</span> <span class="n">Counter</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="k">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DataLoader</span>
 
-<span class="kn">from</span> <span class="nn">htools</span> <span class="k">import</span> <span class="n">assert_raises</span><span class="p">,</span> <span class="n">InvalidArgumentError</span>
-<span class="kn">from</span> <span class="nn">incendio.data</span> <span class="k">import</span> <span class="n">probabilistic_hash_item</span>
+<span class="kn">from</span> <span class="nn">htools</span> <span class="kn">import</span> <span class="n">assert_raises</span><span class="p">,</span> <span class="n">InvalidArgumentError</span><span class="p">,</span> <span class="n">smap</span>
+<span class="kn">from</span> <span class="nn">incendio.data</span> <span class="kn">import</span> <span class="n">probabilistic_hash_item</span>
 <span class="kn">import</span> <span class="nn">pandas_htools</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/hmamin/anaconda3/lib/python3.7/site-packages/pandas_flavor/register.py:31: UserWarning: registration of accessor &lt;class &#39;pandas_flavor.register.register_dataframe_method.&lt;locals&gt;.inner.&lt;locals&gt;.AccessorMethod&#39;&gt; under name &#39;ends&#39; for type &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt; is overriding a preexisting attribute with the same name.
+  register_dataframe_accessor(method.__name__)(AccessorMethod)
+/Users/hmamin/anaconda3/lib/python3.7/site-packages/pandas_flavor/register.py:53: UserWarning: registration of accessor &lt;class &#39;pandas_flavor.register.register_series_method.&lt;locals&gt;.inner.&lt;locals&gt;.AccessorMethod&#39;&gt; under name &#39;ends&#39; for type &lt;class &#39;pandas.core.series.Series&#39;&gt; is overriding a preexisting attribute with the same name.
+  register_series_accessor(method.__name__)(AccessorMethod)
+/Users/hmamin/anaconda3/lib/python3.7/site-packages/pandas_flavor/register.py:31: UserWarning: registration of accessor &lt;class &#39;pandas_flavor.register.register_dataframe_method.&lt;locals&gt;.inner.&lt;locals&gt;.AccessorMethod&#39;&gt; under name &#39;filter_by_count&#39; for type &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt; is overriding a preexisting attribute with the same name.
+  register_dataframe_accessor(method.__name__)(AccessorMethod)
+/Users/hmamin/anaconda3/lib/python3.7/site-packages/pandas_flavor/register.py:31: UserWarning: registration of accessor &lt;class &#39;pandas_flavor.register.register_dataframe_method.&lt;locals&gt;.inner.&lt;locals&gt;.AccessorMethod&#39;&gt; under name &#39;grouped_mode&#39; for type &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt; is overriding a preexisting attribute with the same name.
+  register_dataframe_accessor(method.__name__)(AccessorMethod)
+/Users/hmamin/anaconda3/lib/python3.7/site-packages/pandas_flavor/register.py:31: UserWarning: registration of accessor &lt;class &#39;pandas_flavor.register.register_dataframe_method.&lt;locals&gt;.inner.&lt;locals&gt;.AccessorMethod&#39;&gt; under name &#39;impute&#39; for type &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt; is overriding a preexisting attribute with the same name.
+  register_dataframe_accessor(method.__name__)(AccessorMethod)
+/Users/hmamin/anaconda3/lib/python3.7/site-packages/pandas_flavor/register.py:31: UserWarning: registration of accessor &lt;class &#39;pandas_flavor.register.register_dataframe_method.&lt;locals&gt;.inner.&lt;locals&gt;.AccessorMethod&#39;&gt; under name &#39;target_encode&#39; for type &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt; is overriding a preexisting attribute with the same name.
+  register_dataframe_accessor(method.__name__)(AccessorMethod)
+/Users/hmamin/anaconda3/lib/python3.7/site-packages/pandas_flavor/register.py:31: UserWarning: registration of accessor &lt;class &#39;pandas_flavor.register.register_dataframe_method.&lt;locals&gt;.inner.&lt;locals&gt;.AccessorMethod&#39;&gt; under name &#39;top_categories&#39; for type &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt; is overriding a preexisting attribute with the same name.
+  register_dataframe_accessor(method.__name__)(AccessorMethod)
+/Users/hmamin/anaconda3/lib/python3.7/site-packages/pandas_flavor/register.py:53: UserWarning: registration of accessor &lt;class &#39;pandas_flavor.register.register_series_method.&lt;locals&gt;.inner.&lt;locals&gt;.AccessorMethod&#39;&gt; under name &#39;vcounts&#39; for type &lt;class &#39;pandas.core.series.Series&#39;&gt; is overriding a preexisting attribute with the same name.
+  register_series_accessor(method.__name__)(AccessorMethod)
+/Users/hmamin/anaconda3/lib/python3.7/site-packages/pandas_flavor/register.py:31: UserWarning: registration of accessor &lt;class &#39;pandas_flavor.register.register_dataframe_method.&lt;locals&gt;.inner.&lt;locals&gt;.AccessorMethod&#39;&gt; under name &#39;pprint&#39; for type &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt; is overriding a preexisting attribute with the same name.
+  register_dataframe_accessor(method.__name__)(AccessorMethod)
+/Users/hmamin/anaconda3/lib/python3.7/site-packages/pandas_flavor/register.py:53: UserWarning: registration of accessor &lt;class &#39;pandas_flavor.register.register_series_method.&lt;locals&gt;.inner.&lt;locals&gt;.AccessorMethod&#39;&gt; under name &#39;pprint&#39; for type &lt;class &#39;pandas.core.series.Series&#39;&gt; is overriding a preexisting attribute with the same name.
+  register_series_accessor(method.__name__)(AccessorMethod)
+/Users/hmamin/anaconda3/lib/python3.7/site-packages/pandas_flavor/register.py:31: UserWarning: registration of accessor &lt;class &#39;pandas_flavor.register.register_dataframe_method.&lt;locals&gt;.inner.&lt;locals&gt;.AccessorMethod&#39;&gt; under name &#39;lambda_sort&#39; for type &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt; is overriding a preexisting attribute with the same name.
+  register_dataframe_accessor(method.__name__)(AccessorMethod)
+/Users/hmamin/anaconda3/lib/python3.7/site-packages/pandas_flavor/register.py:53: UserWarning: registration of accessor &lt;class &#39;pandas_flavor.register.register_series_method.&lt;locals&gt;.inner.&lt;locals&gt;.AccessorMethod&#39;&gt; under name &#39;lambda_sort&#39; for type &lt;class &#39;pandas.core.series.Series&#39;&gt; is overriding a preexisting attribute with the same name.
+  register_series_accessor(method.__name__)(AccessorMethod)
+/Users/hmamin/anaconda3/lib/python3.7/site-packages/pandas_flavor/register.py:31: UserWarning: registration of accessor &lt;class &#39;pandas_flavor.register.register_dataframe_method.&lt;locals&gt;.inner.&lt;locals&gt;.AccessorMethod&#39;&gt; under name &#39;coalesce&#39; for type &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt; is overriding a preexisting attribute with the same name.
+  register_dataframe_accessor(method.__name__)(AccessorMethod)
+/Users/hmamin/anaconda3/lib/python3.7/site-packages/pandas_flavor/register.py:53: UserWarning: registration of accessor &lt;class &#39;pandas_flavor.register.register_series_method.&lt;locals&gt;.inner.&lt;locals&gt;.AccessorMethod&#39;&gt; under name &#39;stringify&#39; for type &lt;class &#39;pandas.core.series.Series&#39;&gt; is overriding a preexisting attribute with the same name.
+  register_series_accessor(method.__name__)(AccessorMethod)
+/Users/hmamin/anaconda3/lib/python3.7/site-packages/pandas_flavor/register.py:53: UserWarning: registration of accessor &lt;class &#39;pandas_flavor.register.register_series_method.&lt;locals&gt;.inner.&lt;locals&gt;.AccessorMethod&#39;&gt; under name &#39;is_list_col&#39; for type &lt;class &#39;pandas.core.series.Series&#39;&gt; is overriding a preexisting attribute with the same name.
+  register_series_accessor(method.__name__)(AccessorMethod)
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -118,7 +176,7 @@ description: "Custom activations, layers, and layer blocks are contained in this
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="GRelu" class="doc_header"><code>class</code> <code>GRelu</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L22" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>GRelu</code>(<strong><code>leak</code></strong>=<em><code>0.0</code></em>, <strong><code>max</code></strong>=<em><code>inf</code></em>, <strong><code>sub</code></strong>=<em><code>0.0</code></em>) :: <code>Module</code></p>
+<h2 id="GRelu" class="doc_header"><code>class</code> <code>GRelu</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L25" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>GRelu</code>(<strong><code>leak</code></strong>=<em><code>0.0</code></em>, <strong><code>max</code></strong>=<em><code>inf</code></em>, <strong><code>sub</code></strong>=<em><code>0.0</code></em>) :: <code>Module</code></p>
 </blockquote>
 
 <pre><code>Generic ReLU.</code></pre>
@@ -158,7 +216,7 @@ description: "Custom activations, layers, and layer blocks are contained in this
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Mish" class="doc_header"><code>class</code> <code>Mish</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L49" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Mish</code>() :: <code>Module</code></p>
+<h2 id="Mish" class="doc_header"><code>class</code> <code>Mish</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L52" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Mish</code>() :: <code>Module</code></p>
 </blockquote>
 
 <pre><code>OOP form of mish activation.
@@ -194,7 +252,7 @@ https://arxiv.org/pdf/1908.08681v1.pdf</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="mish" class="doc_header"><code>mish</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L64" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mish</code>(<strong><code>x</code></strong>)</p>
+<h4 id="mish" class="doc_header"><code>mish</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L67" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>mish</code>(<strong><code>x</code></strong>)</p>
 </blockquote>
 
 <pre><code>Functional form of mish activation.
@@ -341,7 +399,7 @@ torch.Tensor[float]: Tensor of same shape as input x.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="ConvBlock" class="doc_header"><code>class</code> <code>ConvBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L82" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ConvBlock</code>(<strong><code>c_in</code></strong>, <strong><code>c_out</code></strong>, <strong><code>kernel_size</code></strong>=<em><code>3</code></em>, <strong><code>norm</code></strong>=<em><code>True</code></em>, <strong><code>activation</code></strong>=<em><code>GReLU(leak=0.1, max=6.0, sub=0.4)</code></em>, <strong>**<code>kwargs</code></strong>) :: <code>Module</code></p>
+<h2 id="ConvBlock" class="doc_header"><code>class</code> <code>ConvBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L85" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ConvBlock</code>(<strong><code>c_in</code></strong>, <strong><code>c_out</code></strong>, <strong><code>kernel_size</code></strong>=<em><code>3</code></em>, <strong><code>norm</code></strong>=<em><code>True</code></em>, <strong><code>activation</code></strong>=<em><code>GReLU(leak=0.1, max=6.0, sub=0.4)</code></em>, <strong>**<code>kwargs</code></strong>) :: <code>Module</code></p>
 </blockquote>
 
 <pre><code>Create a convolutional block optionally followed by a batch norm layer.</code></pre>
@@ -447,7 +505,7 @@ torch.Tensor[float]: Tensor of same shape as input x.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="ResBlock" class="doc_header"><code>class</code> <code>ResBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L128" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ResBlock</code>(<strong><code>c_in</code></strong>, <strong><code>activation</code></strong>=<em><code>GReLU(leak=0.1, max=6.0, sub=0.4)</code></em>, <strong><code>f</code></strong>=<em><code>3</code></em>, <strong><code>stride</code></strong>=<em><code>1</code></em>, <strong><code>pad</code></strong>=<em><code>1</code></em>, <strong><code>skip_size</code></strong>=<em><code>2</code></em>, <strong><code>norm</code></strong>=<em><code>True</code></em>) :: <code>Module</code></p>
+<h2 id="ResBlock" class="doc_header"><code>class</code> <code>ResBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L131" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ResBlock</code>(<strong><code>c_in</code></strong>, <strong><code>kernel_size</code></strong>=<em><code>3</code></em>, <strong><code>norm</code></strong>=<em><code>True</code></em>, <strong><code>activation</code></strong>=<em><code>GReLU(leak=0.1, max=6.0, sub=0.4)</code></em>, <strong><code>stride</code></strong>=<em><code>1</code></em>, <strong><code>padding</code></strong>=<em><code>1</code></em>, <strong><code>skip_size</code></strong>=<em><code>2</code></em>, <strong>**<code>kwargs</code></strong>) :: <code>Module</code></p>
 </blockquote>
 
 <pre><code>Base class for all neural network modules.
@@ -471,7 +529,11 @@ a tree structure. You can assign the submodules as regular attributes::
             return F.relu(self.conv2(x))
 
 Submodules assigned in this way will be registered, and will have their
-parameters converted too when you call :meth:`to`, etc.</code></pre>
+parameters converted too when you call :meth:`to`, etc.
+
+:ivar training: Boolean represents whether this module is in training or
+                evaluation mode.
+:vartype training: bool</code></pre>
 
 </div>
 
@@ -597,7 +659,7 @@ parameters converted too when you call :meth:`to`, etc.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="ReflectionPaddedConv2d" class="doc_header"><code>ReflectionPaddedConv2d</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L179" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>ReflectionPaddedConv2d</code>(<strong><code>in_channels</code></strong>, <strong><code>out_channels</code></strong>, <strong><code>padding</code></strong>=<em><code>1</code></em>, <strong><code>kernel_size</code></strong>=<em><code>3</code></em>, <strong>**<code>kwargs</code></strong>)</p>
+<h4 id="ReflectionPaddedConv2d" class="doc_header"><code>ReflectionPaddedConv2d</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L189" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>ReflectionPaddedConv2d</code>(<strong><code>in_channels</code></strong>, <strong><code>out_channels</code></strong>, <strong><code>padding</code></strong>=<em><code>1</code></em>, <strong><code>kernel_size</code></strong>=<em><code>3</code></em>, <strong>**<code>kwargs</code></strong>)</p>
 </blockquote>
 
 <pre><code>Conv2d only allows padding_mode of `zeros` or `circular`. This
@@ -620,6 +682,8 @@ Applies a 2D convolution over an input signal composed of several input
     :math:`N` is a batch size, :math:`C` denotes a number of channels,
     :math:`H` is a height of input planes in pixels, and :math:`W` is
     width in pixels.
+
+    This module supports :ref:`TensorFloat32&lt;tf32_on_ampere&gt;`.
 
     * :attr:`stride` controls the stride for the cross-correlation, a single
       number or a tuple.
@@ -650,14 +714,14 @@ Applies a 2D convolution over an input signal composed of several input
         - a ``tuple`` of two ints -- in which case, the first `int` is used for the height dimension,
           and the second `int` for the width dimension
 
-    .. note::
+    Note:
 
          Depending of the size of your kernel, several (of the last)
          columns of the input might be lost, because it is a valid `cross-correlation`_,
          and not a full `cross-correlation`_.
          It is up to the user to add proper padding.
 
-    .. note::
+    Note:
 
         When `groups == in_channels` and `out_channels == K * in_channels`,
         where `K` is a positive integer, this operation is also termed in
@@ -667,18 +731,29 @@ Applies a 2D convolution over an input signal composed of several input
         a depthwise convolution with a depthwise multiplier `K`, can be constructed by arguments
         :math:`(in\_channels=C_{in}, out\_channels=C_{in} \times K, ..., groups=C_{in})`.
 
-    .. include:: cudnn_deterministic.rst
+    Note:
+        In some circumstances when using the CUDA backend with CuDNN, this operator
+        may select a nondeterministic algorithm to increase performance. If this is
+        undesirable, you can try to make the operation deterministic (potentially at
+        a performance cost) by setting ``torch.backends.cudnn.deterministic =
+        True``.
+        Please see the notes on :doc:`/notes/randomness` for background.
+
 
     Args:
         in_channels (int): Number of channels in the input image
         out_channels (int): Number of channels produced by the convolution
         kernel_size (int or tuple): Size of the convolving kernel
         stride (int or tuple, optional): Stride of the convolution. Default: 1
-        padding (int or tuple, optional): Zero-padding added to both sides of the input. Default: 0
-        padding_mode (string, optional). Accepted values `zeros` and `circular` Default: `zeros`
+        padding (int or tuple, optional): Zero-padding added to both sides of
+            the input. Default: 0
+        padding_mode (string, optional): ``'zeros'``, ``'reflect'``,
+            ``'replicate'`` or ``'circular'``. Default: ``'zeros'``
         dilation (int or tuple, optional): Spacing between kernel elements. Default: 1
-        groups (int, optional): Number of blocked connections from input channels to output channels. Default: 1
-        bias (bool, optional): If ``True``, adds a learnable bias to the output. Default: ``True``
+        groups (int, optional): Number of blocked connections from input
+            channels to output channels. Default: 1
+        bias (bool, optional): If ``True``, adds a learnable bias to the
+            output. Default: ``True``
 
     Shape:
         - Input: :math:`(N, C_{in}, H_{in}, W_{in})`
@@ -694,17 +769,18 @@ Applies a 2D convolution over an input signal composed of several input
 
     Attributes:
         weight (Tensor): the learnable weights of the module of shape
-                         :math:`(\text{out\_channels}, \frac{\text{in\_channels}}{\text{groups}},`
-                         :math:`\text{kernel\_size[0]}, \text{kernel\_size[1]})`.
-                         The values of these weights are sampled from
-                         :math:`\mathcal{U}(-\sqrt{k}, \sqrt{k})` where
-                         :math:`k = \frac{1}{C_\text{in} * \prod_{i=0}^{1}\text{kernel\_size}[i]}`
-        bias (Tensor):   the learnable bias of the module of shape (out_channels). If :attr:`bias` is ``True``,
-                         then the values of these weights are
-                         sampled from :math:`\mathcal{U}(-\sqrt{k}, \sqrt{k})` where
-                         :math:`k = \frac{1}{C_\text{in} * \prod_{i=0}^{1}\text{kernel\_size}[i]}`
+            :math:`(\text{out\_channels}, \frac{\text{in\_channels}}{\text{groups}},`
+            :math:`\text{kernel\_size[0]}, \text{kernel\_size[1]})`.
+            The values of these weights are sampled from
+            :math:`\mathcal{U}(-\sqrt{k}, \sqrt{k})` where
+            :math:`k = \frac{groups}{C_\text{in} * \prod_{i=0}^{1}\text{kernel\_size}[i]}`
+        bias (Tensor):   the learnable bias of the module of shape
+            (out_channels). If :attr:`bias` is ``True``,
+            then the values of these weights are
+            sampled from :math:`\mathcal{U}(-\sqrt{k}, \sqrt{k})` where
+            :math:`k = \frac{groups}{C_\text{in} * \prod_{i=0}^{1}\text{kernel\_size}[i]}`
 
-    Examples::
+    Examples:
 
         &gt;&gt;&gt; # With square kernels and equal stride
         &gt;&gt;&gt; m = nn.Conv2d(16, 33, 3, stride=2)
@@ -810,7 +886,7 @@ Applies a 2D convolution over an input signal composed of several input
 
 
 <div class="output_png output_subarea ">
-<img src="data:image/png;base64,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
+<img src="data:image/png;base64,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
 "
 >
 </div>
@@ -846,7 +922,7 @@ Applies a 2D convolution over an input signal composed of several input
 
 
 <div class="output_png output_subarea ">
-<img src="data:image/png;base64,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
+<img src="data:image/png;base64,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
 "
 >
 </div>
@@ -912,7 +988,149 @@ Applies a 2D convolution over an input signal composed of several input
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Dropin" class="doc_header"><code>class</code> <code>Dropin</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L201" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Dropin</code>(<strong><code>scale</code></strong>=<em><code>0.5</code></em>) :: <code>Module</code></p>
+<h2 id="SmoothSoftmaxBase" class="doc_header"><code>class</code> <code>SmoothSoftmaxBase</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L211" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>SmoothSoftmaxBase</code>(<strong><code>log</code></strong>=<em><code>False</code></em>, <strong><code>temperature</code></strong>=<em><code>'auto'</code></em>, <strong><code>dim</code></strong>=<em><code>-1</code></em>) :: <code>Module</code></p>
+</blockquote>
+
+<pre><code>Parent class of SmoothSoftmax and SmoothLogSoftmax (softmax or log
+softmax with temperature baked in). There shouldn't be a need to
+instantiate this class directly.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="SmoothSoftmax" class="doc_header"><code>class</code> <code>SmoothSoftmax</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L265" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>SmoothSoftmax</code>(<strong><code>temperature</code></strong>=<em><code>'auto'</code></em>, <strong><code>dim</code></strong>=<em><code>-1</code></em>) :: <a href="/incendio/layers#SmoothSoftmaxBase"><code>SmoothSoftmaxBase</code></a></p>
+</blockquote>
+
+<pre><code>Parent class of SmoothSoftmax and SmoothLogSoftmax (softmax or log
+softmax with temperature baked in). There shouldn't be a need to
+instantiate this class directly.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="SmoothLogSoftmax" class="doc_header"><code>class</code> <code>SmoothLogSoftmax</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L272" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>SmoothLogSoftmax</code>(<strong><code>temperature</code></strong>=<em><code>'auto'</code></em>, <strong><code>dim</code></strong>=<em><code>-1</code></em>) :: <a href="/incendio/layers#SmoothSoftmaxBase"><code>SmoothSoftmaxBase</code></a></p>
+</blockquote>
+
+<pre><code>Parent class of SmoothSoftmax and SmoothLogSoftmax (softmax or log
+softmax with temperature baked in). There shouldn't be a need to
+instantiate this class directly.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="SpatialSoftmax" class="doc_header"><code>class</code> <code>SpatialSoftmax</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L279" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>SpatialSoftmax</code>(<strong><code>temperature</code></strong>=<em><code>'auto'</code></em>) :: <code>Module</code></p>
+</blockquote>
+
+<pre><code>Apply softmax over the height and width dimensions of a batch of image
+tensors (or image-like tensors). Concretely, inputs will usually have
+shape (batch size, channels, height, width), while outputs will have the
+same shape but values for each feature map will now sum to 1. Essentially,
+we now have a heatmap of what region in each image to focus on.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="Dropin" class="doc_header"><code>class</code> <code>Dropin</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L298" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Dropin</code>(<strong><code>scale</code></strong>=<em><code>0.5</code></em>) :: <code>Module</code></p>
 </blockquote>
 
 <pre><code>Additive dropout. This injects small amounts of noise into a model
@@ -940,7 +1158,7 @@ training since it does not bias them in any direction.</code></pre>
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Net</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">drop</span> <span class="o">=</span> <span class="n">Dropin</span><span class="p">()</span>
         
@@ -1365,7 +1583,7 @@ training since it does not bias them in any direction.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="LinearSkipBlock" class="doc_header"><code>class</code> <code>LinearSkipBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L234" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>LinearSkipBlock</code>(<strong><code>x_dim</code></strong>, <strong><code>layer_dims</code></strong>, <strong><code>op</code></strong>, <strong><code>activation</code></strong>=<em><code>'mish'</code></em>) :: <code>Module</code></p>
+<h2 id="LinearSkipBlock" class="doc_header"><code>class</code> <code>LinearSkipBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L331" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>LinearSkipBlock</code>(<strong><code>x_dim</code></strong>, <strong><code>layer_dims</code></strong>, <strong><code>op</code></strong>, <strong><code>activation</code></strong>=<em><code>'mish'</code></em>) :: <code>Module</code></p>
 </blockquote>
 
 <pre><code>This lets us easily create residual block equivalents with linear
@@ -1399,7 +1617,7 @@ layers.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="LinearResBlock" class="doc_header"><code>class</code> <code>LinearResBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L272" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>LinearResBlock</code>(<strong><code>x_dim</code></strong>, <strong><code>hidden_dims</code></strong>, <strong><code>activation</code></strong>=<em><code>'mish'</code></em>) :: <a href="/incendio/layers#LinearSkipBlock"><code>LinearSkipBlock</code></a></p>
+<h2 id="LinearResBlock" class="doc_header"><code>class</code> <code>LinearResBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L371" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>LinearResBlock</code>(<strong><code>x_dim</code></strong>, <strong><code>hidden_dims</code></strong>, <strong><code>activation</code></strong>=<em><code>'mish'</code></em>) :: <a href="/incendio/layers#LinearSkipBlock"><code>LinearSkipBlock</code></a></p>
 </blockquote>
 
 <pre><code>Equivalent of ResNet block with linear layers.</code></pre>
@@ -1432,7 +1650,7 @@ layers.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="LinearDenseBlock" class="doc_header"><code>class</code> <code>LinearDenseBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L284" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>LinearDenseBlock</code>(<strong><code>x_dim</code></strong>, <strong><code>hidden_dims</code></strong>, <strong><code>activation</code></strong>=<em><code>'mish'</code></em>) :: <a href="/incendio/layers#LinearSkipBlock"><code>LinearSkipBlock</code></a></p>
+<h2 id="LinearDenseBlock" class="doc_header"><code>class</code> <code>LinearDenseBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L383" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>LinearDenseBlock</code>(<strong><code>x_dim</code></strong>, <strong><code>hidden_dims</code></strong>, <strong><code>activation</code></strong>=<em><code>'mish'</code></em>) :: <a href="/incendio/layers#LinearSkipBlock"><code>LinearSkipBlock</code></a></p>
 </blockquote>
 
 <pre><code>Equivalent of DenseNet block with linear layers.</code></pre>
@@ -1465,12 +1683,65 @@ layers.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="WeightedLinearResBlock" class="doc_header"><code>class</code> <code>WeightedLinearResBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L292" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>WeightedLinearResBlock</code>(<strong><code>x_dim</code></strong>, <strong><code>hidden_dims</code></strong>, <strong><code>weights</code></strong>=<em><code>(0.25, 0.75)</code></em>, <strong><code>activation</code></strong>=<em><code>'mish'</code></em>) :: <a href="/incendio/layers#LinearSkipBlock"><code>LinearSkipBlock</code></a></p>
+<h2 id="WeightedLinearResBlock" class="doc_header"><code>class</code> <code>WeightedLinearResBlock</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L391" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>WeightedLinearResBlock</code>(<strong><code>x_dim</code></strong>, <strong><code>hidden_dims</code></strong>, <strong><code>weights</code></strong>=<em><code>(0.25, 0.75)</code></em>, <strong><code>activation</code></strong>=<em><code>'mish'</code></em>) :: <a href="/incendio/layers#LinearSkipBlock"><code>LinearSkipBlock</code></a></p>
 </blockquote>
 
-<pre><code>Like a LinearResBlock but takes a weighted average of the input and output
-rather than adding them. Addition gives them equal weight and we may want to
-weight the output more heavily.</code></pre>
+<pre><code>Like a LinearResBlock but takes a weighted average of the input and
+output rather than adding them. Addition gives them equal weight and we
+may want to weight the output more heavily.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="SkipConnection" class="doc_header"><code>class</code> <code>SkipConnection</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L405" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>SkipConnection</code>(<strong><code>block</code></strong>, <strong><code>op</code></strong>=<em><code>'add'</code></em>, <strong><code>input_weight</code></strong>=<em><code>None</code></em>) :: <code>Module</code></p>
+</blockquote>
+
+<pre><code>More generalized version of skip connection. Eventually maybe rewrite
+various res/dense/weighted conv blocks with this.
+
+Examples
+--------
+&gt;&gt; x = torch.randn(3, 4)
+&gt;&gt; dense = nn.Linear(4, 2)
+&gt;&gt; dense(x).shape
+
+torch.Size([3, 2])
+
+&gt;&gt; skip = SkipConnection(dense, op='cat')
+&gt;&gt; skip(x).shape
+
+torch.Size([3, 6])
+
+&gt;&gt; skip = SkipConnection(dense, op='add')
+&gt;&gt; skip(x).shape
+
+RuntimeError: The size of tensor a (4) must match the size of tensor b (2)
+at non-singleton dimension 1</code></pre>
 
 </div>
 
@@ -1506,7 +1777,7 @@ weight the output more heavily.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="trunc_normal_" class="doc_header"><code>trunc_normal_</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L304" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>trunc_normal_</code>(<strong><code>x</code></strong>, <strong><code>mean</code></strong>=<em><code>0.0</code></em>, <strong><code>std</code></strong>=<em><code>1.0</code></em>)</p>
+<h4 id="trunc_normal_" class="doc_header"><code>trunc_normal_</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L498" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>trunc_normal_</code>(<strong><code>x</code></strong>, <strong><code>mean</code></strong>=<em><code>0.0</code></em>, <strong><code>std</code></strong>=<em><code>1.0</code></em>)</p>
 </blockquote>
 
 <pre><code>Ported from fastai to remove dependency:
@@ -1542,79 +1813,11 @@ From https://discuss.pytorch.org/t/implementing-truncated-normal-initializer/477
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="PaddedEmbedding" class="doc_header"><code>PaddedEmbedding</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L314" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>PaddedEmbedding</code>(<strong><code>num_embeddings</code></strong>, <strong><code>embedding_dim</code></strong>, <strong><code>padding_idx</code></strong>=<em><code>None</code></em>, <strong>**<code>kwargs</code></strong>)</p>
+<h2 id="InitializedEmbedding" class="doc_header"><code>class</code> <code>InitializedEmbedding</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L508" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>InitializedEmbedding</code>(<strong><code>num_embeddings</code></strong>:<code>int</code>, <strong><code>embedding_dim</code></strong>:<code>int</code>, <strong><code>padding_idx</code></strong>:<code>Optional</code>[<code>int</code>]=<em><code>None</code></em>, <strong><code>max_norm</code></strong>:<code>Optional</code>[<code>float</code>]=<em><code>None</code></em>, <strong><code>norm_type</code></strong>:<code>float</code>=<em><code>2.0</code></em>, <strong><code>scale_grad_by_freq</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>sparse</code></strong>:<code>bool</code>=<em><code>False</code></em>, <strong><code>_weight</code></strong>:<code>Optional</code>[<code>Tensor</code>]=<em><code>None</code></em>) :: <code>Embedding</code></p>
 </blockquote>
 
-<pre><code>Patched version of Fastai `embedding` that allows us to specify a row of
-    zeros for a padding token.
-
-
-A simple lookup table that stores embeddings of a fixed dictionary and size.
-
-    This module is often used to store word embeddings and retrieve them using indices.
-    The input to the module is a list of indices, and the output is the corresponding
-    word embeddings.
-
-    Args:
-        num_embeddings (int): size of the dictionary of embeddings
-        embedding_dim (int): the size of each embedding vector
-        padding_idx (int, optional): If given, pads the output with the embedding vector at :attr:`padding_idx`
-                                         (initialized to zeros) whenever it encounters the index.
-        max_norm (float, optional): If given, each embedding vector with norm larger than :attr:`max_norm`
-                                    is renormalized to have norm :attr:`max_norm`.
-        norm_type (float, optional): The p of the p-norm to compute for the :attr:`max_norm` option. Default ``2``.
-        scale_grad_by_freq (boolean, optional): If given, this will scale gradients by the inverse of frequency of
-                                                the words in the mini-batch. Default ``False``.
-        sparse (bool, optional): If ``True``, gradient w.r.t. :attr:`weight` matrix will be a sparse tensor.
-                                 See Notes for more details regarding sparse gradients.
-
-    Attributes:
-        weight (Tensor): the learnable weights of the module of shape (num_embeddings, embedding_dim)
-                         initialized from :math:`\mathcal{N}(0, 1)`
-
-    Shape:
-        - Input: :math:`(*)`, LongTensor of arbitrary shape containing the indices to extract
-        - Output: :math:`(*, H)`, where `*` is the input shape and :math:`H=\text{embedding\_dim}`
-
-    .. note::
-        Keep in mind that only a limited number of optimizers support
-        sparse gradients: currently it's :class:`optim.SGD` (`CUDA` and `CPU`),
-        :class:`optim.SparseAdam` (`CUDA` and `CPU`) and :class:`optim.Adagrad` (`CPU`)
-
-    .. note::
-        With :attr:`padding_idx` set, the embedding vector at
-        :attr:`padding_idx` is initialized to all zeros. However, note that this
-        vector can be modified afterwards, e.g., using a customized
-        initialization method, and thus changing the vector used to pad the
-        output. The gradient for this vector from :class:`~torch.nn.Embedding`
-        is always zero.
-
-    Examples::
-
-        &gt;&gt;&gt; # an Embedding module containing 10 tensors of size 3
-        &gt;&gt;&gt; embedding = nn.Embedding(10, 3)
-        &gt;&gt;&gt; # a batch of 2 samples of 4 indices each
-        &gt;&gt;&gt; input = torch.LongTensor([[1,2,4,5],[4,3,2,9]])
-        &gt;&gt;&gt; embedding(input)
-        tensor([[[-0.0251, -1.6902,  0.7172],
-                 [-0.6431,  0.0748,  0.6969],
-                 [ 1.4970,  1.3448, -0.9685],
-                 [-0.3677, -2.7265, -0.1685]],
-
-                [[ 1.4970,  1.3448, -0.9685],
-                 [ 0.4362, -0.4004,  0.9400],
-                 [-0.6431,  0.0748,  0.6969],
-                 [ 0.9124, -2.3616,  1.1151]]])
-
-
-        &gt;&gt;&gt; # example with padding_idx
-        &gt;&gt;&gt; embedding = nn.Embedding(10, 3, padding_idx=0)
-        &gt;&gt;&gt; input = torch.LongTensor([[0,2,0,5]])
-        &gt;&gt;&gt; embedding(input)
-        tensor([[[ 0.0000,  0.0000,  0.0000],
-                 [ 0.1535, -2.0309,  0.9315],
-                 [ 0.0000,  0.0000,  0.0000],
-                 [-0.1655,  0.9897,  0.0635]]])</code></pre>
+<pre><code>Same as nn.Embedding but with truncated normal initialization. This
+also differs from fastai's Embedding class in that it allows padding.</code></pre>
 
 </div>
 
@@ -1633,7 +1836,7 @@ A simple lookup table that stores embeddings of a fixed dictionary and size.
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">PaddedEmbedding</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">weight</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">InitializedEmbedding</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">weight</span>
 </pre></div>
 
     </div>
@@ -1650,9 +1853,83 @@ A simple lookup table that stores embeddings of a fixed dictionary and size.
 <div class="output_text output_subarea output_execute_result">
 <pre>Parameter containing:
 tensor([[ 0.0000,  0.0000,  0.0000],
-        [ 0.0145, -0.0067, -0.0038],
-        [-0.0176, -0.0179,  0.0010],
-        [-0.0042, -0.0020,  0.0027]], requires_grad=True)</pre>
+        [ 0.0031, -0.0033, -0.0013],
+        [ 0.0076, -0.0107,  0.0008],
+        [ 0.0119, -0.0014,  0.0027]], requires_grad=True)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">InitializedEmbedding</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">weight</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Parameter containing:
+tensor([[ 0.0038, -0.0103, -0.0074],
+        [ 0.0104, -0.0036,  0.0039],
+        [-0.0007,  0.0008,  0.0191],
+        [ 0.0000,  0.0000,  0.0000]], requires_grad=True)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">InitializedEmbedding</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">weight</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Parameter containing:
+tensor([[-0.0082,  0.0058, -0.0055],
+        [-0.0104, -0.0144,  0.0036],
+        [ 0.0028, -0.0020, -0.0009],
+        [ 0.0046, -0.0088, -0.0026]], requires_grad=True)</pre>
 </div>
 
 </div>
@@ -1681,7 +1958,7 @@ tensor([[ 0.0000,  0.0000,  0.0000],
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="BloomEmbedding" class="doc_header"><code>class</code> <code>BloomEmbedding</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L328" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>BloomEmbedding</code>(<strong><code>n_emb</code></strong>=<em><code>251</code></em>, <strong><code>emb_dim</code></strong>=<em><code>100</code></em>, <strong><code>n_hashes</code></strong>=<em><code>4</code></em>, <strong><code>padding_idx</code></strong>=<em><code>0</code></em>, <strong><code>pre_hashed</code></strong>=<em><code>False</code></em>) :: <code>Module</code></p>
+<h2 id="BloomEmbedding" class="doc_header"><code>class</code> <code>BloomEmbedding</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L521" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>BloomEmbedding</code>(<strong><code>n_emb</code></strong>=<em><code>251</code></em>, <strong><code>emb_dim</code></strong>=<em><code>100</code></em>, <strong><code>n_hashes</code></strong>=<em><code>4</code></em>, <strong><code>padding_idx</code></strong>=<em><code>0</code></em>, <strong><code>pre_hashed</code></strong>=<em><code>False</code></em>) :: <code>Module</code></p>
 </blockquote>
 
 <pre><code>Bloom Embedding layer for memory-efficient word representations.
@@ -1718,17 +1995,17 @@ to allow a row for padding.</code></pre>
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Data</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sentences</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sentences</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">):</span>
         <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">w2i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_w2i</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span> <span class="o">=</span> <span class="n">seq_len</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
         
-    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
     
-    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
     
     <span class="k">def</span> <span class="nf">make_w2i</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tok_rows</span><span class="p">):</span>
@@ -1832,7 +2109,8 @@ to allow a row for padding.</code></pre>
 <div class="output_text output_subarea output_execute_result">
 <pre>(tensor([[ 2,  5,  6,  3,  7,  8,  2,  9, 10,  1],
          [13, 14,  1, 15, 16, 17,  3, 18,  1,  4],
-         [19, 20,  1, 21, 22, 23,  1,  4,  0,  0]]), tensor([0, 1, 1]))</pre>
+         [19, 20,  1, 21, 22, 23,  1,  4,  0,  0]]),
+ tensor([0, 1, 1]))</pre>
 </div>
 
 </div>
@@ -1868,7 +2146,8 @@ to allow a row for padding.</code></pre>
 <div class="output_text output_subarea output_execute_result">
 <pre>(tensor([[ 2,  5,  6,  3,  7,  8,  2,  9, 10,  1],
          [13, 14,  1, 15, 16, 17,  3, 18,  1,  4],
-         [19, 20,  1, 21, 22, 23,  1,  4,  0,  0]]), tensor([0, 1, 1]))</pre>
+         [19, 20,  1, 21, 22, 23,  1,  4,  0,  0]]),
+ tensor([0, 1, 1]))</pre>
 </div>
 
 </div>
@@ -1903,17 +2182,18 @@ to allow a row for padding.</code></pre>
 
 <div class="output_text output_subarea output_execute_result">
 <pre>Parameter containing:
-tensor([[ 0.0000,  0.0000,  0.0000,  0.0000],
-        [ 0.0054, -0.0142, -0.0027, -0.0052],
-        [ 0.0097,  0.0003, -0.0098, -0.0082],
-        [ 0.0049,  0.0084,  0.0028, -0.0158],
-        [ 0.0035,  0.0056, -0.0106, -0.0135],
-        [ 0.0088, -0.0058,  0.0105, -0.0072],
-        [-0.0003, -0.0004, -0.0012,  0.0142],
-        [ 0.0089, -0.0114, -0.0001,  0.0037],
-        [ 0.0089,  0.0007,  0.0076,  0.0034],
-        [-0.0039,  0.0119,  0.0090, -0.0077],
-        [ 0.0040, -0.0154,  0.0072, -0.0024]], requires_grad=True)</pre>
+tensor([[ 0.0000e+00,  0.0000e+00,  0.0000e+00,  0.0000e+00],
+        [-1.3866e-02,  2.7083e-03,  1.9108e-03,  2.3947e-03],
+        [ 5.0557e-03, -4.8774e-03,  1.5206e-03,  1.0080e-03],
+        [ 4.5406e-05,  2.1932e-03, -9.5886e-03,  4.7936e-03],
+        [-9.7800e-03,  1.9145e-02,  2.4422e-03,  1.2713e-02],
+        [ 1.2850e-02,  4.0345e-03, -1.9255e-02, -2.5600e-03],
+        [ 5.7765e-03,  1.4253e-02,  1.8160e-02, -1.6686e-02],
+        [ 1.2343e-02,  2.8021e-03,  9.5432e-04,  4.2866e-03],
+        [ 6.4279e-03, -3.4935e-03, -1.9902e-03, -9.9574e-03],
+        [ 9.7122e-04, -6.8190e-03, -1.2612e-02, -1.6921e-03],
+        [-1.1588e-02, -4.2316e-03, -9.5648e-03, -6.5988e-03]],
+       requires_grad=True)</pre>
 </div>
 
 </div>
@@ -2287,7 +2567,7 @@ tensor([[ 0.0000,  0.0000,  0.0000,  0.0000],
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="AxialEncoding" class="doc_header"><code>class</code> <code>AxialEncoding</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L414" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>AxialEncoding</code>(<strong><code>vocab_dim</code></strong>, <strong><code>emb_dim</code></strong>, <strong><code>pad_idx</code></strong>=<em><code>None</code></em>) :: <code>Module</code></p>
+<h2 id="AxialEncoding" class="doc_header"><code>class</code> <code>AxialEncoding</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L610" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>AxialEncoding</code>(<strong><code>vocab_dim</code></strong>, <strong><code>emb_dim</code></strong>, <strong><code>pad_idx</code></strong>=<em><code>None</code></em>) :: <code>Module</code></p>
 </blockquote>
 
 <pre><code>Axial encodings. These are intended to encode position in a sequence
@@ -2325,7 +2605,7 @@ share half of their encodings).</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="MultiAxialEncoding" class="doc_header"><code>class</code> <code>MultiAxialEncoding</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L457" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>MultiAxialEncoding</code>(<strong><code>vocab_dim</code></strong>, <strong><code>emb_dim</code></strong>, <strong><code>n_blocks</code></strong>=<em><code>2</code></em>, <strong><code>pre_hashed</code></strong>=<em><code>False</code></em>, <strong><code>pad_idx</code></strong>=<em><code>None</code></em>) :: <code>Module</code></p>
+<h2 id="MultiAxialEncoding" class="doc_header"><code>class</code> <code>MultiAxialEncoding</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L655" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>MultiAxialEncoding</code>(<strong><code>vocab_dim</code></strong>, <strong><code>emb_dim</code></strong>, <strong><code>n_blocks</code></strong>=<em><code>2</code></em>, <strong><code>pre_hashed</code></strong>=<em><code>False</code></em>, <strong><code>pad_idx</code></strong>=<em><code>None</code></em>) :: <code>Module</code></p>
 </blockquote>
 
 <pre><code>Adapted axial encodings to allow for more than 2 embedding matrices.
@@ -2337,7 +2617,14 @@ numbers in the output vectors of adjacent inputs.
 Some experimentation is still required for this use case (for
 example, words would likely need to be sorted in a thoughtful manner
 (e.g. pre-trained embeddings compressed to 1D?) since adjacent inputs will
-share half of their encodings).</code></pre>
+share half of their encodings).
+
+I made this separate from AxialEncoding (at least for now) since I made a
+few tweaks to the original design to make this possible and I wanted to
+preserve the option to use the simpler, well-tested method
+(AxialEncoding). Here, we use a probabilistic hashing scheme to map each
+input to multiple embedding rows, while the original design uses
+x%v and x//v.</code></pre>
 
 </div>
 
@@ -2415,8 +2702,8 @@ share half of their encodings).</code></pre>
 <div class="output_text output_subarea output_execute_result">
 <pre>AxialEncoding(
   (emb): ModuleList(
-    (0): Embedding(174, 50)
-    (1): Embedding(174, 50)
+    (0): InitializedEmbedding(174, 50)
+    (1): InitializedEmbedding(174, 50)
   )
 )</pre>
 </div>
@@ -2834,6 +3121,221 @@ Difference: 2999616
 Ratio: 7812.5
 </pre>
 </div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Model-Bases">Model Bases<a class="anchor-link" href="#Model-Bases"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="SiameseBase" class="doc_header"><code>class</code> <code>SiameseBase</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/layers.py#L708" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>SiameseBase</code>() :: <a href="/incendio/core#BaseModel"><code>BaseModel</code></a></p>
+</blockquote>
+
+<pre><code>Parent class to implement a Siamese network or triplet network (or any
+network that passes n inputs of the same shape through a shared encoder).
+It concatenates the items into a single batch so the encoder's forward
+method (implemented as self._forward) only needs to be called once.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">bs</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">xb</span> <span class="o">=</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">bs</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+<span class="n">smap</span><span class="p">(</span><span class="o">*</span><span class="n">xb</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[torch.Size([4, 3, 8, 8]), torch.Size([4, 3, 8, 8]), torch.Size([4, 3, 8, 8])]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">TripletNet</span><span class="p">(</span><span class="n">SiameseBase</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c_in</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">c_in</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pool</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">AdaptiveAvgPool2d</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        
+    <span class="k">def</span> <span class="nf">_forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xb</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">xb</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">xb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">(</span><span class="n">xb</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">xb</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">xb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pool</span><span class="p">(</span><span class="n">xb</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">xb</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">xb</span> <span class="o">=</span> <span class="n">xb</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">xb</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">xb</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this example, each image is encoded as a 16D vector. We have 3 images per row and 4 rows per batch so we end up with a tensor of shape (4, 3, 16). Notice we only perform 1 forward pass: while we could simply define a separate encoder and pass each image through it separately (e.g. <code>[self.encoder(x) for x in xb]</code>), this becomes rather slow if n is large or if our encoder is enormous.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tnet</span> <span class="o">=</span> <span class="n">TripletNet</span><span class="p">()</span>
+<span class="n">yh</span> <span class="o">=</span> <span class="n">tnet</span><span class="p">(</span><span class="o">*</span><span class="n">xb</span><span class="p">)</span>
+<span class="n">yh</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>torch.Size([12, 3, 8, 8])
+torch.Size([12, 16, 3, 3])
+torch.Size([12, 16, 1, 1])
+torch.Size([12, 16])
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>torch.Size([4, 3, 16])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Our name TripletNet was slightly misleading here: the network can actually handle any choice of n. For instance, here we use it as a Siamese Net.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">yh</span> <span class="o">=</span> <span class="n">tnet</span><span class="p">(</span><span class="o">*</span><span class="n">xb</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">yh</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>torch.Size([8, 3, 8, 8])
+torch.Size([8, 16, 3, 3])
+torch.Size([8, 16, 1, 1])
+torch.Size([8, 16])
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>torch.Size([4, 2, 16])</pre>
+</div>
+
 </div>
 
 </div>

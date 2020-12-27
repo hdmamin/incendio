@@ -50,6 +50,21 @@ description: "API details."
     
 <div class="cell border-box-sizing code_cell rendered">
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/hmamin/anaconda3/lib/python3.7/site-packages/ipykernel/ipkernel.py:287: DeprecationWarning: `should_run_async` will not call `transform_cell` automatically in the future. Please pass the result to `transformed_cell` argument and any exception that happen during thetransform in `preprocessing_exc_tuple` in IPython 7.17 and above.
+  and should_run_async(code)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -61,8 +76,7 @@ description: "API details."
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Only needed for testing.</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">string</span> <span class="k">import</span> <span class="n">ascii_lowercase</span>
+<span class="kn">from</span> <span class="nn">string</span> <span class="kn">import</span> <span class="n">ascii_lowercase</span>
 </pre></div>
 
     </div>
@@ -81,7 +95,7 @@ description: "API details."
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Nonsense sample text.</span>
 <span class="n">text</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">f</span><span class="s2">&quot;Row </span><span class="si">{i}</span><span class="s2">: I went, yesterday; she wasn&#39;t here after school? Today. --2&quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;Row </span><span class="si">{i}</span><span class="s2">: I went, yesterday; she wasn&#39;t here after school? Today. --2&quot;</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">25_000</span><span class="p">)</span>
 <span class="p">]</span>
 </pre></div>
@@ -180,6 +194,23 @@ description: "API details."
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">NLP</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 
 </div>
     {% endraw %}
@@ -195,7 +226,7 @@ description: "API details."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="tokenize" class="doc_header"><code>tokenize</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/nlp.py#L25" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>tokenize</code>(<strong><code>text</code></strong>, <strong><code>nlp</code></strong>=<em><code>&lt;spacy.lang.en.English object at 0x10ed70190&gt;</code></em>)</p>
+<h4 id="tokenize" class="doc_header"><code>tokenize</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/nlp.py#L36" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>tokenize</code>(<strong><code>text</code></strong>, <strong><code>nlp</code></strong>)</p>
 </blockquote>
 
 <pre><code>Word tokenize a single string.
@@ -242,7 +273,7 @@ list[str]: List of word tokens from a single input string.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="tokenize_many" class="doc_header"><code>tokenize_many</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/nlp.py#L46" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>tokenize_many</code>(<strong><code>rows</code></strong>, <strong><code>chunk</code></strong>=<em><code>1000</code></em>, <strong><code>nlp</code></strong>=<em><code>&lt;spacy.lang.en.English object at 0x10ed70190&gt;</code></em>)</p>
+<h4 id="tokenize_many" class="doc_header"><code>tokenize_many</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/nlp.py#L57" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>tokenize_many</code>(<strong><code>rows</code></strong>, <strong><code>nlp</code></strong>=<em><code>None</code></em>, <strong><code>chunk</code></strong>=<em><code>1000</code></em>)</p>
 </blockquote>
 
 <pre><code>Word tokenize a sequence of strings using multiprocessing. The max
@@ -253,17 +284,17 @@ Parameters
 rows: Iterable[str]
     A sequence of strings to tokenize. This could be a list, a column of
     a DataFrame, etc.
+nlp: spacy tokenizer, e.g. spacy.lang.en.English
+    By default, a spacy tokenizer with a small English vocabulary
+    is used. NER, parsing, and tagging are disabled. Any spacy
+    tokenzer can be passed in, but keep in mind other configurations
+    may slow down this function dramatically.
 chunk: int
     This determines how many items to send to multiprocessing at a time.
     The default of 1,000 is usually fine, but if you have extremely
     long pieces of text and memory is limited, you can always decrease it.
     Very small chunk sizes may increase processing time. Note that larger
     values will generally cause the progress bar to update more choppily.
-nlp: spacy tokenizer, e.g. spacy.lang.en.English
-    By default, a spacy tokenizer with a small English vocabulary
-    is used. NER, parsing, and tagging are disabled. Any spacy
-    tokenzer can be passed in, but keep in mind other configurations
-    may slow down this function dramatically.
 
 Returns
 -------
@@ -348,7 +379,7 @@ of the input strings.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Vocabulary" class="doc_header"><code>class</code> <code>Vocabulary</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/nlp.py#L79" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Vocabulary</code>(<strong><code>w2idx</code></strong>, <strong><code>w2vec</code></strong>=<em><code>None</code></em>, <strong><code>idx_misc</code></strong>=<em><code>None</code></em>, <strong><code>corpus_counts</code></strong>=<em><code>None</code></em>, <strong><code>all_lower</code></strong>=<em><code>True</code></em>)</p>
+<h2 id="Vocabulary" class="doc_header"><code>class</code> <code>Vocabulary</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/nlp.py#L92" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Vocabulary</code>(<strong><code>w2idx</code></strong>, <strong><code>w2vec</code></strong>=<em><code>None</code></em>, <strong><code>idx_misc</code></strong>=<em><code>None</code></em>, <strong><code>corpus_counts</code></strong>=<em><code>None</code></em>, <strong><code>all_lower</code></strong>=<em><code>True</code></em>)</p>
 </blockquote>
 
 </div>
@@ -379,7 +410,7 @@ of the input strings.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="Embeddings" class="doc_header"><code>class</code> <code>Embeddings</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/nlp.py#L458" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Embeddings</code>(<strong><code>mat</code></strong>, <strong><code>w2i</code></strong>, <strong><code>mat_2d</code></strong>=<em><code>None</code></em>)</p>
+<h2 id="Embeddings" class="doc_header"><code>class</code> <code>Embeddings</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/nlp.py#L471" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>Embeddings</code>(<strong><code>mat</code></strong>, <strong><code>w2i</code></strong>, <strong><code>mat_2d</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 <pre><code>Embeddings object. Lets us easily map word to index, index to
@@ -414,7 +445,7 @@ build analogies, or get 2D representations for cdting.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="back_translate" class="doc_header"><code>back_translate</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/nlp.py#L845" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>back_translate</code>(<strong><code>text</code></strong>, <strong><code>to</code></strong>, <strong><code>from_lang</code></strong>=<em><code>'en'</code></em>)</p>
+<h4 id="back_translate" class="doc_header"><code>back_translate</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/nlp.py#L858" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>back_translate</code>(<strong><code>text</code></strong>, <strong><code>to</code></strong>, <strong><code>from_lang</code></strong>=<em><code>'en'</code></em>)</p>
 </blockquote>
 
 <pre><code>Parameters
@@ -526,7 +557,7 @@ str: Same language and basically the same content as the original text,
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="postprocess_embeddings" class="doc_header"><code>postprocess_embeddings</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/nlp.py#L864" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>postprocess_embeddings</code>(<strong><code>emb</code></strong>, <strong><code>d</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="postprocess_embeddings" class="doc_header"><code>postprocess_embeddings</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/nlp.py#L877" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>postprocess_embeddings</code>(<strong><code>emb</code></strong>, <strong><code>d</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 <pre><code>Implements the algorithm from the paper:
@@ -577,7 +608,7 @@ d: int
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="compress_embeddings" class="doc_header"><code>compress_embeddings</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/nlp.py#L892" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>compress_embeddings</code>(<strong><code>emb</code></strong>, <strong><code>new_dim</code></strong>, <strong><code>d</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="compress_embeddings" class="doc_header"><code>compress_embeddings</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/nlp.py#L905" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>compress_embeddings</code>(<strong><code>emb</code></strong>, <strong><code>new_dim</code></strong>, <strong><code>d</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 <pre><code>Reduce embedding dimension as described in the paper:
@@ -597,6 +628,973 @@ d: int
 Returns
 -------
 np.array: Compressed embedding matrix of shape (vocab_size, new_dim).</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Data-Augmentation">Data Augmentation<a class="anchor-link" href="#Data-Augmentation"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="ParaphraseTransform" class="doc_header"><code>class</code> <code>ParaphraseTransform</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/nlp.py#L931" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ParaphraseTransform</code>(<strong><code>n</code></strong>=<em><code>1</code></em>, <strong><code>pipe</code></strong>=<em><code>None</code></em>)</p>
+</blockquote>
+
+<pre><code>Text transform that paraphrases input text as a method of data
+augmentation. This is rather slow so it's recommended to precompute
+samples and save them, but you could generate samples on the fly if
+desired. One further downside of that approach is you'll have a huge
+paraphrasing model on the GPU while (presumably) training another model.
+
+Other paraphrasing models exist on Model Hub but as of 11/14/2020, none of
+the results compared favorably to this pegasus model, at least based on
+a rough "eyeball check". While smaller and presumably faster, many of
+these appear to require processing a single example at a time which
+diminishes these gains. If you do attempt to use them, you'll likely need
+to write a new class with a preprocessing method that does something like
+the following:
+_preprocess(text) -&gt; 'paraphrase: {text}&lt;/s&gt;'
+I'm recording this here because many are missing documentation and it took
+me some time to discover this.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;It was a beautiful sunny day and birds were chirping.&#39;</span>
+<span class="n">texts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Play fun games online for free! Watch your favorite movies and tv &#39;</span>
+         <span class="s1">&#39;shows here.&#39;</span><span class="p">,</span> 
+         <span class="s1">&#39;Bill hated school, especially math. His teacher was losing &#39;</span>
+         <span class="s1">&#39;patience with him.&#39;</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">p_tfm</span> <span class="o">=</span> <span class="n">ParaphraseTransform</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/hmamin/anaconda3/lib/python3.7/socket.py:660: ResourceWarning: unclosed &lt;socket.socket fd=66, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=(&#39;192.168.1.119&#39;, 63347), raddr=(&#39;52.217.101.22&#39;, 443)&gt;
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/Users/hmamin/anaconda3/lib/python3.7/socket.py:660: ResourceWarning: unclosed &lt;socket.socket fd=66, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=(&#39;192.168.1.119&#39;, 63354), raddr=(&#39;52.217.101.22&#39;, 443)&gt;
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">p_tfm</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;Birds were singing in the sun.&#39;,
+ &#39;Birds were singing on a nice sunny day.&#39;,
+ &#39;Birds were singing on a sunny day.&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="GenerativeTransform" class="doc_header"><code>class</code> <code>GenerativeTransform</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/nlp.py#L1012" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>GenerativeTransform</code>(<strong><code>n</code></strong>=<em><code>1</code></em>, <strong><code>pipe</code></strong>=<em><code>None</code></em>)</p>
+</blockquote>
+
+<pre><code>Text transform that truncates a piece of text and completes it using
+a text generation model for the purposes of data augmentation. We
+recommend precomputing samples and saving them for later use, but you
+could generate samples on the fly if desired. Aside from speed, this
+approach also has the drawback of having a text generation model on the
+GPU while (presumably) training another model.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">g_tfm</span> <span class="o">=</span> <span class="n">GenerativeTransform</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">texts</span><span class="p">)</span>
+<span class="n">g_tfm</span><span class="o">.</span><span class="n">_preprocess</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">drop_pct</span><span class="o">=.</span><span class="mi">75</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;Play fun games online for free! Watch your favorite movies and tv shows here.&#39;, &#39;Bill hated school, especially math. His teacher was losing patience with him.&#39;]
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;Play fun games online&#39;, &#39;Bill hated school,&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">g_tfm</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">drop_pct</span><span class="o">=.</span><span class="mi">75</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Setting `pad_token_id` to 50256 (first `eos_token_id`) to generate sequence
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;It was a disaster. It was a disaster in&#39;,
+ &#39;It was a really rough thing to say,&#34; the&#39;,
+ &#39;It was a different kind of world. The city&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">g_tfm</span><span class="p">(</span><span class="n">texts</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Setting `pad_token_id` to 50256 (first `eos_token_id`) to generate sequence
+Setting `pad_token_id` to 50256 (first `eos_token_id`) to generate sequence
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;Play fun games online for free! Watch your favorite movies and tv series from Disney in this game&#39;,
+ &#39;Play fun games online for free! Watch your favorite movies and TV shows on Netflix, Amazon Video&#39;,
+ &#39;Play fun games online for free! Watch your favorite movies and TV shows online at your mobile device&#39;,
+ &#39;Bill hated school, especially math. His teacher was losing her eyesight due to a small&#39;,
+ &#39;Bill hated school, especially math. His teacher was losing sight of the fact that his work&#39;,
+ &#39;Bill hated school, especially math. His teacher was losing touch with him. Even though she&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">g_tfm</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">res</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Setting `pad_token_id` to 50256 (first `eos_token_id`) to generate sequence
+Setting `pad_token_id` to 50256 (first `eos_token_id`) to generate sequence
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[[&#39;Play fun games online for free! Watch your favorite movies and streams live for free! Read,&#39;,
+  &#39;Play fun games online for free! Watch your favorite movies and TV shows play out! Explore The&#39;,
+  &#39;Play fun games online for free! Watch your favorite movies and play them yourself.\n\nFree&#39;],
+ [&#34;Bill hated school, especially math. His teacher was losing sleep over his student&#39;s grades,&#34;,
+  &#39;Bill hated school, especially math. His teacher was losing her job at the time.\n&#39;,
+  &#39;Bill hated school, especially math. His teacher was losing control of his mind. He wouldn&#39;]]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">g_tfm</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">min_length</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Setting `pad_token_id` to 50256 (first `eos_token_id`) to generate sequence
+Setting `pad_token_id` to 50256 (first `eos_token_id`) to generate sequence
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#34;Play fun games online for free! Watch your favorite movies and sports videos and you&#39;ll&#34;,
+ &#39;Play fun games online for free! Watch your favorite movies and television shows in real time&#39;,
+ &#39;Bill hated school, especially math. His teacher was losing her temper, so he&#39;,
+ &#39;Bill hated school, especially math. His teacher was losing her job and he just&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">g_tfm</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">drop_pct</span><span class="o">=.</span><span class="mi">5</span><span class="p">,</span> <span class="n">min_keep</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Setting `pad_token_id` to 50256 (first `eos_token_id`) to generate sequence
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#34;It was a beautiful sunny day. I&#39;m thankful. My&#34;,
+ &#39;It was a beautiful sunny day in August but we had to&#39;,
+ &#39;It was a beautiful sunny day, and I went down to&#39;,
+ &#39;It was a beautiful sunny spot in our neighbourhood. We had&#39;,
+ &#39;It was a beautiful sunny Friday evening.\n\n&#34;It&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="FillMaskTransform" class="doc_header"><code>class</code> <code>FillMaskTransform</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/nlp.py#L1169" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>FillMaskTransform</code>(<strong><code>n</code></strong>=<em><code>1</code></em>, <strong><code>max_n</code></strong>=<em><code>None</code></em>, <strong><code>pipe</code></strong>=<em><code>None</code></em>)</p>
+</blockquote>
+
+<pre><code>Text transform that masks one or more words in a piece of text and
+fills them using RoBERTa for the purposes of data augmentation. We
+recommend precomputing samples and saving them for later use, but you
+could generate samples on the fly if desired. In addition to being slow,
+that approach also entails having a mask filling model on the GPU while
+(presumably) training another model.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fm_tfm</span> <span class="o">=</span> <span class="n">FillMaskTransform</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">max_n</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fm_tfm</span><span class="p">(</span><span class="n">texts</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;Play fun games online for free! Watch your favorite movies and tv shows here.&#39;,
+ &#39;Play fun videos online for free! Watch your favorite movies and tv shows here.&#39;,
+ &#39;Play fun music online for free! Watch your favorite movies and tv shows here.&#39;,
+ &#39;Play fun shows online for free! Watch your favorite movies and tv shows here.&#39;,
+ &#39;Bill hated school, especially math. His teacher was losing patience with him.&#39;,
+ &#39;Bill hated school, especially math. His teacher was losing touch with him.&#39;,
+ &#39;Bill hated school, especially math. His teacher was losing faith with him.&#39;,
+ &#39;Bill hated school, especially math. His teacher was losing friends with him.&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fm_tfm</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[[&#39;Play fun games online for free! Watch your favorite movies and tv shows here.&#39;,
+  &#39;Play fun games online for free! Watch your favourite movies and tv shows here.&#39;,
+  &#39;Play fun games online for free! Watch your own movies and tv shows here.&#39;,
+  &#39;Play fun games online for free! Watch your favorites movies and tv shows here.&#39;],
+ [&#39;Bill hated school, especially math. His teacher was losing patience with him.&#39;,
+  &#39;Bill hated school, especially math. His teacher was having patience with him.&#39;,
+  &#39;Bill hated school, especially math. His teacher was no patience with him.&#39;,
+  &#39;Bill hated school, especially math. His teacher was lacking patience with him.&#39;]]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fm_tfm</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;It was a beautiful sunny day and birds were chirping.&#39;,
+ &#39;It was a beautiful sunny day and birds kept chirping.&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fm_tfm</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;random&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;It was a beautiful sunny day and they were chirping.&#39;,
+ &#39;It was a beautiful sunny day and monkeys were chirping.&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fm_tfm</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">n_mask</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">return_all</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[[&#39;It was a beautiful sunny day and birds were chirping.&#39;],
+ [&#39;It was a beautiful sunny day and birds were chirping.&#39;,
+  &#34;It&#39;s a beautiful sunny day and birds were chirping.&#34;,
+  &#39;It is a beautiful sunny day and birds were chirping.&#39;,
+  &#39;It seemed a beautiful sunny day and birds were chirping.&#39;],
+ [&#39;It was a beautiful sunny day and birds were chirping.&#39;,
+  &#39;It was a beautiful sunny day and birds kept chirping.&#39;,
+  &#39;It was a beautiful sunny day and birds started chirping.&#39;,
+  &#39;It was a beautiful sunny day and birds are chirping.&#39;]]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Notice how quickly samples pile up when using n=-1, n_mask&gt;1, and return_all=True.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fm_tfm</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">n</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_mask</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">return_all</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;It was a beautiful sunny day and birds were chirping.&#39;,
+ &#39;It was a beautiful sunny day and birds were chirping.&#39;,
+ &#39;This was a beautiful sunny day and birds were chirping.&#39;,
+ &#39;Today was a beautiful sunny day and birds were chirping.&#39;,
+ &#39;Yesterday was a beautiful sunny day and birds were chirping.&#39;,
+ &#39;Sunday was a beautiful sunny day and birds were chirping.&#39;,
+ &#39; It was a beautiful sunny day and birds were chirping.&#39;,
+ &#39; it was a beautiful sunny day and birds were chirping.&#39;,
+ &#39;Saturday was a beautiful sunny day and birds were chirping.&#39;,
+ &#39;It was a beautiful sunny day and birds were chirping.&#39;,
+ &#39;It was a beautiful sunny day and we were chirping.&#39;,
+ &#39;It was a beautiful sunny day and kids were chirping.&#39;,
+ &#39;It was a beautiful sunny day and frogs were chirping.&#39;,
+ &#39;It was a beautiful sunny day and chickens were chirping.&#39;,
+ &#39;It was a beautiful sunny day and they were chirping.&#39;,
+ &#39;It was a beautiful sunny day and children were chirping.&#39;,
+ &#39;It was a beautiful sunny day and monkeys were chirping.&#39;,
+ &#39;This was a beautiful sunny day and birds were chirping.&#39;,
+ &#39;This was a beautiful sunny day and birds kept chirping.&#39;,
+ &#39;This was a beautiful sunny day and birds are chirping.&#39;,
+ &#39;This was a beautiful sunny day and birds started chirping.&#39;,
+ &#39;This was a beautiful sunny day and birds began chirping.&#39;,
+ &#39;This was a beautiful sunny day and birds happily chirping.&#39;,
+ &#39;This was a beautiful sunny day and birds everywhere chirping.&#39;,
+ &#39;This was a beautiful sunny day and birds stopped chirping.&#39;,
+ &#39;Today was a beautiful sunny day and birds were chirping.&#39;,
+ &#39;Today was a beautiful sunny afternoon and birds were chirping.&#39;,
+ &#39;Today was a beautiful sunny morning and birds were chirping.&#39;,
+ &#39;Today was a beautiful sunny spring and birds were chirping.&#39;,
+ &#39;Today was a beautiful sunny summer and birds were chirping.&#39;,
+ &#39;Today was a beautiful sunny weather and birds were chirping.&#39;,
+ &#39;Today was a beautiful sunny sky and birds were chirping.&#39;,
+ &#39;Today was a beautiful sunny evening and birds were chirping.&#39;,
+ &#39;Yesterday was a beautiful sunny day and birds were chirping.&#39;,
+ &#39;Yesterday was a beautiful sunny day where birds were chirping.&#39;,
+ &#39;Yesterday was a beautiful sunny day when birds were chirping.&#39;,
+ &#39;Yesterday was a beautiful sunny day as birds were chirping.&#39;,
+ &#39;Yesterday was a beautiful sunny day; birds were chirping.&#39;,
+ &#39;Yesterday was a beautiful sunny day while birds were chirping.&#39;,
+ &#39;Yesterday was a beautiful sunny day, birds were chirping.&#39;,
+ &#39;Yesterday was a beautiful sunny day - birds were chirping.&#39;,
+ &#39;Sunday was a beautiful sunny day and birds were singing&#39;,
+ &#39;Sunday was a beautiful sunny day and birds were flying&#39;,
+ &#39;Sunday was a beautiful sunny day and birds were plentiful&#39;,
+ &#39;Sunday was a beautiful sunny day and birds were nesting&#39;,
+ &#39;Sunday was a beautiful sunny day and birds were soaring&#39;,
+ &#39;Sunday was a beautiful sunny day and birds were abundant&#39;,
+ &#39;Sunday was a beautiful sunny day and birds were buzzing&#39;,
+ &#39;Sunday was a beautiful sunny day and birds were watching&#39;,
+ &#39;It was a beautiful sunny day and birds were chirping.&#39;,
+ &#39;It was a beautiful sunny day and we were chirping.&#39;,
+ &#39;It was a beautiful sunny day and kids were chirping.&#39;,
+ &#39;It was a beautiful sunny day and frogs were chirping.&#39;,
+ &#39;It was a beautiful sunny day and chickens were chirping.&#39;,
+ &#39;It was a beautiful sunny day and they were chirping.&#39;,
+ &#39;It was a beautiful sunny day and children were chirping.&#39;,
+ &#39;It was a beautiful sunny day and monkeys were chirping.&#39;,
+ &#39;it was a beautiful sunny day and birds were chirping.&#39;,
+ &#39;it was another beautiful sunny day and birds were chirping.&#39;,
+ &#39;it was this beautiful sunny day and birds were chirping.&#39;,
+ &#39;it was the beautiful sunny day and birds were chirping.&#39;,
+ &#39;it was one beautiful sunny day and birds were chirping.&#39;,
+ &#39;it was that beautiful sunny day and birds were chirping.&#39;,
+ &#39;it was an beautiful sunny day and birds were chirping.&#39;,
+ &#39;it was very beautiful sunny day and birds were chirping.&#39;,
+ &#39;It was a beautiful sunny day and birds were chirping.&#39;,
+ &#39;This was a beautiful sunny day and birds were chirping.&#39;,
+ &#39;Today was a beautiful sunny day and birds were chirping.&#39;,
+ &#39;Yesterday was a beautiful sunny day and birds were chirping.&#39;,
+ &#39;Sunday was a beautiful sunny day and birds were chirping.&#39;,
+ &#39; It was a beautiful sunny day and birds were chirping.&#39;,
+ &#39; it was a beautiful sunny day and birds were chirping.&#39;,
+ &#39;Saturday was a beautiful sunny day and birds were chirping.&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fm_tfm</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_mask</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">return_all</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[[[&#39;Play fun games online for free! Watch your favorite movies and tv shows here.&#39;],
+  [&#39;Play fun games online for free! Watch your favorite movies and tv shows here.&#39;,
+   &#39;Play fun games online for free! Watch your favourite movies and tv shows here.&#39;],
+  [&#39;Play fun games online for free! Watch your favorite movies and TV shows here.&#39;,
+   &#39;Play fun games online for free! Watch your favorite movies and tv shows here.&#39;]],
+ [[&#39;Bill hated school, especially math. His teacher was losing patience with him.&#39;],
+  [&#39;Bill hated school, especially math. His teacher was losing patience with him.&#39;,
+   &#39;Bill hated school, especially math. His teacher was losing patience for him.&#39;],
+  [&#39;Bill hated school, especially math. His teacher was losing patience with him.&#39;,
+   &#39;Bill hated school, especially math. His teacher was having patience with him.&#39;]]]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We also provide a convenience function that allows us to easily generate new samples from a source dataframe or csv while preserving any desired metadata so we can map each generated row to the correct label, ID, raw text, etc.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="augment_text_df" class="doc_header"><code>augment_text_df</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/nlp.py#L1370" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>augment_text_df</code>(<strong><code>source</code></strong>, <strong><code>transform</code></strong>=<em><code>'fillmask'</code></em>, <strong><code>dest</code></strong>=<em><code>None</code></em>, <strong><code>n</code></strong>=<em><code>5</code></em>, <strong><code>text_col</code></strong>=<em><code>'text'</code></em>, <strong><code>id_cols</code></strong>=<em><code>()</code></em>, <strong><code>nrows</code></strong>=<em><code>None</code></em>, <strong><code>tfm_kwargs</code></strong>=<em><code>{}</code></em>, <strong><code>call_kwargs</code></strong>=<em><code>{}</code></em>)</p>
+</blockquote>
+
+<pre><code>Create augmented versions of a dataframe of text, optionally preserving
+other columns for identification purposes. We recommend precomputing and
+saving variations of your data rather than doing this on the fly in a
+torch dataset since they can be rather space- and time-intensive.
+Augmented versions of an input row should generally be kept in the same
+training split: in order to keep the label the same, we usually want to
+make relatively limited changes to the raw text (just enough to provide a
+regularizing effect).
+
+Parameters
+----------
+source: str, Path, or pd.DataFrame
+    If str or Path, this is a csv containing our text data. Alternatively,
+    you can pass in a dataframe itself.
+transform: str or callable
+    If str, this must be one of the keys in `NLP_TRANSFORMS` from this
+    same module - this will be used to create a new transform object.
+    Alternatively, you can pass in a previously created object (NOT the
+    class). The default is the mask filling transform as it's relatively
+    quick and effective. 'paraphrase' may give better (but slower)
+    results. Anecdotally, 'generative' seems to provide lower quality
+    results, but perhaps by experimenting with hyperparameters it could
+    be more useful.
+dest: str, Path, or None
+    If str or Path, this is where the output file will be saved to
+    (directories will be created as needed). If None, nothing will be
+    saved and the function will merely return the output DF for you to do
+    with as you wish.
+n: int
+    Number of samples to generate for each raw row.
+text_col: str
+    Name of column in DF containing the text to augment.
+id_cols: Iterable[str]
+    Columns containing identifying information such as labels, row_ids,
+    etc. These also help us map the augmented text rows to their
+    corresponding raw rows.
+nrows: int or None
+    Max number of rows from the source DF to generate text for. Useful for
+    testing (equivalently, you could pass in df.head(nrows) and leave this
+    as None).
+tfm_kwargs: dict
+    Arguments to pass to `transform`'s constructor. These are ignored when
+    passing in a transform object rather than a string.
+call_kwargs: dict
+    Arguments to pass to the __call__ method of `transform` to affect
+    the augmentation process.
+
+Returns
+-------
+pd.DataFrame: DF of generated text with columns `text_col` and `id_cols`.
+By default, this will have 5x the rows as your source DF, but this can
+easily be adjusted through the `nrows` parameter.</code></pre>
 
 </div>
 

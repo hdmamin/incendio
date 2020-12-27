@@ -24,6 +24,21 @@ description: "Custom loss functions."
     
 <div class="cell border-box-sizing code_cell rendered">
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/hmamin/incendio/incendio/callbacks.py:26: UserWarning: Accio not available.
+  warnings.warn(&#39;Accio not available.&#39;)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -43,12 +58,42 @@ description: "Custom loss functions."
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The autoreload extension is already loaded. To reload it, use:
+  %reload_ext autoreload
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/hmamin/anaconda3/lib/python3.7/site-packages/ipykernel/ipkernel.py:287: DeprecationWarning: `should_run_async` will not call `transform_cell` automatically in the future. Please pass the result to `transformed_cell` argument and any exception that happen during thetransform in `preprocessing_exc_tuple` in IPython 7.17 and above.
+  and should_run_async(code)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
 
 </div>
     {% endraw %}
@@ -61,15 +106,32 @@ description: "Custom loss functions."
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Used for testing only.</span>
-<span class="kn">from</span> <span class="nn">fastai.metrics</span> <span class="k">import</span> <span class="n">LabelSmoothingCrossEntropy</span>
+<span class="kn">from</span> <span class="nn">fastai2.metrics</span> <span class="kn">import</span> <span class="n">LabelSmoothingCrossEntropy</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
 
-<span class="kn">from</span> <span class="nn">htools</span> <span class="k">import</span> <span class="n">assert_raises</span><span class="p">,</span> <span class="n">InvalidArgumentError</span>
+<span class="kn">from</span> <span class="nn">htools</span> <span class="kn">import</span> <span class="n">assert_raises</span><span class="p">,</span> <span class="n">InvalidArgumentError</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/hmamin/anaconda3/lib/python3.7/importlib/_bootstrap.py:219: RuntimeWarning: numpy.ufunc size changed, may indicate binary incompatibility. Expected 192 from C header, got 216 from PyObject
+  return f(*args, **kwds)
+/Users/hmamin/anaconda3/lib/python3.7/importlib/_bootstrap.py:219: RuntimeWarning: numpy.ufunc size changed, may indicate binary incompatibility. Expected 192 from C header, got 216 from PyObject
+  return f(*args, **kwds)
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -94,7 +156,7 @@ description: "Custom loss functions."
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="smooth_soft_labels" class="doc_header"><code>smooth_soft_labels</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/losses.py#L14" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>smooth_soft_labels</code>(<strong><code>labels</code></strong>, <strong><code>alpha</code></strong>=<em><code>0.1</code></em>)</p>
+<h4 id="smooth_soft_labels" class="doc_header"><code>smooth_soft_labels</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/losses.py#L18" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>smooth_soft_labels</code>(<strong><code>labels</code></strong>, <strong><code>alpha</code></strong>=<em><code>0.1</code></em>)</p>
 </blockquote>
 
 <pre><code>Add uniform probability to a tensor of soft labels or
@@ -145,7 +207,7 @@ alpha: float
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="soft_label_cross_entropy_with_logits" class="doc_header"><code>soft_label_cross_entropy_with_logits</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/losses.py#L47" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>soft_label_cross_entropy_with_logits</code>(<strong><code>y_pred</code></strong>, <strong><code>y_true</code></strong>, <strong><code>alpha</code></strong>=<em><code>0.0</code></em>, <strong><code>reduction</code></strong>=<em><code>'mean'</code></em>)</p>
+<h4 id="soft_label_cross_entropy_with_logits" class="doc_header"><code>soft_label_cross_entropy_with_logits</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/losses.py#L51" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>soft_label_cross_entropy_with_logits</code>(<strong><code>y_pred</code></strong>, <strong><code>y_true</code></strong>, <strong><code>alpha</code></strong>=<em><code>0.0</code></em>, <strong><code>reduction</code></strong>=<em><code>'mean'</code></em>)</p>
 </blockquote>
 
 <pre><code>Compute cross entropy with soft labels. PyTorch's built in
@@ -208,7 +270,7 @@ torch.FloatTensor: If reduction is 'none', this will have shape
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="soft_label_cross_entropy" class="doc_header"><code>soft_label_cross_entropy</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/losses.py#L88" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>soft_label_cross_entropy</code>(<strong><code>y_pred</code></strong>, <strong><code>y_true</code></strong>, <strong><code>alpha</code></strong>=<em><code>0.0</code></em>, <strong><code>reduction</code></strong>=<em><code>'mean'</code></em>)</p>
+<h4 id="soft_label_cross_entropy" class="doc_header"><code>soft_label_cross_entropy</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/losses.py#L92" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>soft_label_cross_entropy</code>(<strong><code>y_pred</code></strong>, <strong><code>y_true</code></strong>, <strong><code>alpha</code></strong>=<em><code>0.0</code></em>, <strong><code>reduction</code></strong>=<em><code>'mean'</code></em>)</p>
 </blockquote>
 
 <pre><code>Same as `soft_label_cross_entropy_with_logits` but operates on
@@ -373,7 +435,7 @@ Compute cross entropy with soft labels. PyTorch's built in
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">modes</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">mode</span> <span class="ow">in</span> <span class="n">modes</span><span class="p">:</span>
     <span class="n">j</span> <span class="o">=</span> <span class="n">soft_label_cross_entropy_with_logits</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">y_ohe</span><span class="p">,</span> <span class="n">reduction</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;reduction=</span><span class="si">{mode}</span><span class="s1">:&#39;</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;reduction=</span><span class="si">{mode}</span><span class="s1">:&#39;</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -409,12 +471,12 @@ reduction=mean: tensor(0.8610)
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;soft_label_cross_entropy_with_logits:</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">37</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">mode</span> <span class="ow">in</span> <span class="n">modes</span><span class="p">:</span>
     <span class="n">j</span> <span class="o">=</span> <span class="n">soft_label_cross_entropy_with_logits</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">y_smooth</span><span class="p">,</span> <span class="n">reduction</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;reduction=</span><span class="si">{mode}</span><span class="s1">:&#39;</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;reduction=</span><span class="si">{mode}</span><span class="s1">:&#39;</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">soft_label_cross_entropy:</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">25</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">mode</span> <span class="ow">in</span> <span class="n">modes</span><span class="p">:</span>
     <span class="n">j</span> <span class="o">=</span> <span class="n">soft_label_cross_entropy</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y_smooth</span><span class="p">,</span> <span class="n">reduction</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;reduction=</span><span class="si">{mode}</span><span class="s1">:&#39;</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;reduction=</span><span class="si">{mode}</span><span class="s1">:&#39;</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -458,7 +520,7 @@ reduction=mean: tensor(1.2110)
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">mode</span> <span class="ow">in</span> <span class="n">modes</span><span class="p">:</span>
     <span class="n">j</span> <span class="o">=</span> <span class="n">soft_label_cross_entropy_with_logits</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">y_smooth</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=.</span><span class="mi">2</span><span class="p">,</span> 
                                              <span class="n">reduction</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;reduction=</span><span class="si">{mode}</span><span class="s1">:&#39;</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;reduction=</span><span class="si">{mode}</span><span class="s1">:&#39;</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -695,10 +757,10 @@ reduction=mean: tensor(1.5443)
 <span class="sd">        the loss over a mini batch. One of (&#39;mean&#39;, &#39;sum&#39;, &#39;none&#39;).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Built-in reduction will aggregate over every value in the tensor because</span>
-    <span class="c1"># it expects that we&#39;re predicting a single value per sample. Because we&#39;re</span>
-    <span class="c1"># predicting a vector for each sample, we compute row-wise sums regardless</span>
-    <span class="c1"># of our choice of reduction, then aggregate over the batch dimension if</span>
-    <span class="c1"># specified.</span>
+    <span class="c1"># it expects that we&#39;re predicting a single value per sample. Because </span>
+    <span class="c1"># we&#39;re predicting a vector for each sample, we compute row-wise sums </span>
+    <span class="c1"># regardless of our choice of reduction, then aggregate over the batch </span>
+    <span class="c1"># dimension if specified.</span>
     <span class="n">rowwise_j</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">l1_loss</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span>
                           <span class="n">y_true</span><span class="p">,</span> <span class="n">reduction</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">reduction</span> <span class="o">==</span> <span class="s1">&#39;none&#39;</span><span class="p">:</span> <span class="k">return</span> <span class="n">rowwise_j</span>
@@ -844,6 +906,688 @@ sum tensor(2.0812)
 mean tensor(0.6937)
 </pre>
 </div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="PairwiseLossReduction" class="doc_header"><code>class</code> <code>PairwiseLossReduction</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/losses.py#L108" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>PairwiseLossReduction</code>(<strong><code>reduce</code></strong>:<code>('sum', 'mean', 'none')</code>=<em><code>'mean'</code></em>, <strong>**<code>kwargs</code></strong>) :: <code>Module</code></p>
+</blockquote>
+
+<pre><code>Basically lets us use L2 or L1 distance as a loss function with the
+standard reductions. If we don't want to reduce, we could use the built-in
+torch function, but that will usually output a tensor rather than a
+scalar.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="reduce" class="doc_header"><code>reduce</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/losses.py#L126" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>reduce</code>(<strong><code>x</code></strong>, <strong><code>reduction</code></strong>=<em><code>'mean'</code></em>)</p>
+</blockquote>
+
+<pre><code>This is a very common line in my custom loss functions so I'm providing
+a convenience function for it. I think this function call is also more
+intuitive than the code behind it.
+
+Parameters
+----------
+x: torch.Tensor
+    The object to reduce.
+reduction: str
+    Should be one of ('mean', 'sum', 'none'), though technically some
+    other operations (e.g. 'std') are supported.
+
+Returns
+-------
+torch.Tensor: Scalar if using 'mean' or 'sum', otherwise the same as
+input `x`.
+
+Examples
+--------
+def squared_error(x, reduction='mean'):
+    return reduce(x.pow(2), reduction)</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="contrastive_loss" class="doc_header"><code>contrastive_loss</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/losses.py#L153" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>contrastive_loss</code>(<strong><code>x1</code></strong>, <strong><code>x2</code></strong>, <strong><code>y</code></strong>, <strong><code>m</code></strong>=<em><code>1.25</code></em>, <strong><code>p</code></strong>=<em><code>2</code></em>, <strong><code>reduction</code></strong>=<em><code>'mean'</code></em>)</p>
+</blockquote>
+
+<pre><code>Functional form of the contrastive loss as described by Hadsell,
+Chopra, and LeCun in
+"Dimensionality Reduction by Learning an Invariant Mapping":
+http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf
+
+Similar examples always contribute to the loss while negatives only do
+if they are sufficiently similar.
+
+A couple words of caution: this uses the convention that y=1 represents a
+positive label (similar examples) despite the paper doing the opposite.
+Also, the value of m (margin) might benefit from some tuning as I'm not
+very confident in the default value.
+
+Parameters
+----------
+x1: torch.Tensor
+    Shape (bs, n_features).
+x2: torch.Tensor
+    Shape (bs, n_features).
+y: torch.Tensor
+    Labels. Unlike the paper, we use the convention that a label of 1
+    means images are similar. This is consistent with all our existing
+    datasets and just feels more intuitive.
+m: float
+    Margin that prevents dissimilar pairs from affecting the loss unless
+    they are sufficiently far apart. I believe the reasonable range of
+    values depends on the size of the feature dimension. The default is
+    based on a figure in the paper linked above but I'm not sure how
+    much stock to put in that.
+p: int
+    The p that determines the p-norm used to calculate the initial
+    distance measure between x1 and x2. The default of 2 therefore uses
+    euclidean distance.
+reduction: str
+    One of ('sum', 'mean', 'none'). Standard pytorch loss reduction. Keep
+    in mind 'none' will probably not allow backpropagation since it
+    returns a rank 2 tensor.
+
+Returns
+-------
+torch.Tensor: Scalar measuring the contrastive loss. If no reduction is
+applied, this will instead be a tensor of shape (bs,).</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="ContrastiveLoss1d" class="doc_header"><code>class</code> <code>ContrastiveLoss1d</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/losses.py#L204" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ContrastiveLoss1d</code>(<strong><code>m</code></strong>=<em><code>1.25</code></em>, <strong><code>p</code></strong>=<em><code>2</code></em>, <strong><code>reduction</code></strong>=<em><code>'mean'</code></em>) :: <code>Module</code></p>
+</blockquote>
+
+<pre><code>Base class for all neural network modules.
+
+Your models should also subclass this class.
+
+Modules can also contain other Modules, allowing to nest them in
+a tree structure. You can assign the submodules as regular attributes::
+
+    import torch.nn as nn
+    import torch.nn.functional as F
+
+    class Model(nn.Module):
+        def __init__(self):
+            super(Model, self).__init__()
+            self.conv1 = nn.Conv2d(1, 20, 5)
+            self.conv2 = nn.Conv2d(20, 20, 5)
+
+        def forward(self, x):
+            x = F.relu(self.conv1(x))
+            return F.relu(self.conv2(x))
+
+Submodules assigned in this way will be registered, and will have their
+parameters converted too when you call :meth:`to`, etc.
+
+:ivar training: Boolean represents whether this module is in training or
+                evaluation mode.
+:vartype training: bool</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">bs</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">bs</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">bs</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Make pair 1 similar, pair 2 dissimilar.</span>
+<span class="n">x1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">x1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">50</span>
+<span class="n">x2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">x2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">25</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>tensor([[ -1.1935,  19.9629,  39.9642,  60.6310,  79.9442],
+        [-48.8698, -49.4237, -48.8313, -49.1232, -49.0722]])
+tensor([[-0.8069, 18.7798, 38.6250, 59.6368, 80.2849],
+        [24.5225, 25.7855, 25.0192, 25.8827, 23.5852]])
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">loss</span> <span class="o">=</span> <span class="n">ContrastiveLoss1d</span><span class="p">(</span><span class="n">reduction</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+<span class="n">loss</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor(1.1118)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">loss</span> <span class="o">=</span> <span class="n">ContrastiveLoss1d</span><span class="p">(</span><span class="n">reduction</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span><span class="p">)</span>
+<span class="n">loss</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor(2.2235)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">loss</span> <span class="o">=</span> <span class="n">ContrastiveLoss1d</span><span class="p">(</span><span class="n">reduction</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">loss</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[2.2235],
+        [0.0000]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="ContrastiveLoss2d" class="doc_header"><code>class</code> <code>ContrastiveLoss2d</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/losses.py#L239" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>ContrastiveLoss2d</code>(<strong><code>m</code></strong>=<em><code>1.25</code></em>, <strong><code>p</code></strong>=<em><code>2</code></em>, <strong><code>reduction</code></strong>=<em><code>'mean'</code></em>) :: <code>Module</code></p>
+</blockquote>
+
+<pre><code>Base class for all neural network modules.
+
+Your models should also subclass this class.
+
+Modules can also contain other Modules, allowing to nest them in
+a tree structure. You can assign the submodules as regular attributes::
+
+    import torch.nn as nn
+    import torch.nn.functional as F
+
+    class Model(nn.Module):
+        def __init__(self):
+            super(Model, self).__init__()
+            self.conv1 = nn.Conv2d(1, 20, 5)
+            self.conv2 = nn.Conv2d(20, 20, 5)
+
+        def forward(self, x):
+            x = F.relu(self.conv1(x))
+            return F.relu(self.conv2(x))
+
+Submodules assigned in this way will be registered, and will have their
+parameters converted too when you call :meth:`to`, etc.
+
+:ivar training: Boolean represents whether this module is in training or
+                evaluation mode.
+:vartype training: bool</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x2</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[-0.8069, 18.7798, 38.6250, 59.6368, 80.2849],
+        [24.5225, 25.7855, 25.0192, 25.8827, 23.5852]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># x3 provides 3 examples for each source image in x2. Some are different</span>
+<span class="c1"># and some are similar (notice where noise is amplified vs. dampened).</span>
+<span class="n">noise</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">bs</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span>
+<span class="n">noise</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">/=</span> <span class="mi">100</span>
+<span class="n">noise</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*=</span> <span class="mi">5</span>
+<span class="n">noise</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">500</span>
+<span class="n">x3</span> <span class="o">=</span> <span class="n">x2</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">+</span> <span class="n">noise</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">x3</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>torch.Size([2, 3, 5])
+tensor([[[ -0.7902,  18.7978,  38.6418,  59.6638,  80.3098],
+         [ 15.2447,  60.8061,  63.5002,  85.1861,  91.9863],
+         [ -0.7529,  18.8695,  38.6729,  59.6541,  80.3533]],
+
+        [[ 31.0942,  31.8574,  28.2461,  35.2123,  28.0060],
+         [ 34.3140,  32.5423,  26.9292,  32.1664,  33.0371],
+         [531.4734, 534.1118, 531.1953, 532.5379, 529.6300]]])
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">y2d</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<span class="n">y2d</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[1, 0, 1],
+        [1, 1, 0]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">loss</span> <span class="o">=</span> <span class="n">ContrastiveLoss2d</span><span class="p">()</span>
+<span class="n">loss</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">,</span> <span class="n">y2d</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor(39.2557)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">loss</span> <span class="o">=</span> <span class="n">ContrastiveLoss2d</span><span class="p">(</span><span class="n">reduction</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span><span class="p">)</span>
+<span class="n">loss</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">,</span> <span class="n">y2d</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor(235.5344)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">loss</span> <span class="o">=</span> <span class="n">ContrastiveLoss2d</span><span class="p">(</span><span class="n">reduction</span><span class="o">=</span><span class="s1">&#39;row&#39;</span><span class="p">)</span>
+<span class="n">loss</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">,</span> <span class="n">y2d</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([1.0237e-02, 2.3552e+02])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">loss</span> <span class="o">=</span> <span class="n">ContrastiveLoss2d</span><span class="p">(</span><span class="n">reduction</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">loss</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">,</span> <span class="n">y2d</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[1.1175e-03, 0.0000e+00, 9.1191e-03],
+        [9.8526e+01, 1.3700e+02, 0.0000e+00]])</pre>
+</div>
+
 </div>
 
 </div>

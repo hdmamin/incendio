@@ -116,9 +116,80 @@ description: "Basic utilities with few dependencies."
 
 <div class="output_area">
 
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/hmamin/anaconda3/lib/python3.7/site-packages/ipykernel/ipkernel.py:287: DeprecationWarning: `should_run_async` will not call `transform_cell` automatically in the future. Please pass the result to `transformed_cell` argument and any exception that happen during thetransform in `preprocessing_exc_tuple` in IPython 7.17 and above.
+  and should_run_async(code)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="hasarg" class="doc_header"><code>hasarg</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L16" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>hasarg</code>(<strong><code>func</code></strong>, <strong><code>arg</code></strong>)</p>
+<h4 id="reproducible" class="doc_header"><code>reproducible</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L25" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>reproducible</code>(<strong><code>seed</code></strong>=<em><code>1</code></em>, <strong><code>verbose</code></strong>=<em><code>True</code></em>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="gpu_setup" class="doc_header"><code>gpu_setup</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L36" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>gpu_setup</code>(<strong><code>make_reproducible</code></strong>=<em><code>True</code></em>, <strong><code>seed</code></strong>=<em><code>1</code></em>, <strong><code>verbose</code></strong>=<em><code>1</code></em>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="hasarg" class="doc_header"><code>hasarg</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L45" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>hasarg</code>(<strong><code>func</code></strong>, <strong><code>arg</code></strong>)</p>
 </blockquote>
 
 <pre><code>Checks if a function has a given argument.
@@ -177,7 +248,7 @@ False</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="quick_stats" class="doc_header"><code>quick_stats</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L49" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>quick_stats</code>(<strong><code>x</code></strong>, <strong><code>digits</code></strong>=<em><code>3</code></em>)</p>
+<h4 id="quick_stats" class="doc_header"><code>quick_stats</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L78" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>quick_stats</code>(<strong><code>x</code></strong>, <strong><code>digits</code></strong>=<em><code>3</code></em>)</p>
 </blockquote>
 
 <pre><code>Quick wrapper to get mean and standard deviation of a tensor.
@@ -220,7 +291,7 @@ tuple[float]</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="concat" class="doc_header"><code>concat</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L66" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>concat</code>(<strong>*<code>args</code></strong>, <strong><code>dim</code></strong>=<em><code>-1</code></em>)</p>
+<h4 id="concat" class="doc_header"><code>concat</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L95" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>concat</code>(<strong>*<code>args</code></strong>, <strong><code>dim</code></strong>=<em><code>-1</code></em>)</p>
 </blockquote>
 
 <pre><code>Wrapper to torch.cat which accepts tensors as non-keyword
@@ -267,7 +338,7 @@ torch.tensor</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="weighted_avg" class="doc_header"><code>weighted_avg</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L87" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>weighted_avg</code>(<strong>*<code>args</code></strong>, <strong><code>weights</code></strong>)</p>
+<h4 id="weighted_avg" class="doc_header"><code>weighted_avg</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L116" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>weighted_avg</code>(<strong>*<code>args</code></strong>, <strong><code>weights</code></strong>)</p>
 </blockquote>
 
 <pre><code>Compute a weighted average of multiple tensors.
@@ -275,12 +346,14 @@ torch.tensor</code></pre>
 Parameters
 ----------
 args: torch.tensor
-    Multiple tensors with the same dtype and shape that you want to average.
+    Multiple tensors with the same dtype and shape that you want to
+    average.
 weights: list
-    Ints or floats to weight each input tensor. The length of this list must
-    match the number of tensors passed in: the first weight will be multiplied
-    by the first tensor, the second weight by the second tensor, etc. If your
-    weights don't sum to 1, they will be normalized automatically.
+    Ints or floats to weight each input tensor. The length of this list
+    must match the number of tensors passed in: the first weight will be
+    multiplied by the first tensor, the second weight by the second
+    tensor, etc. If your weights don't sum to 1, they will be normalized
+    automatically.
 
 Returns
 -------
@@ -300,6 +373,21 @@ torch.tensor: Same dtype and shape as each of the input tensors.</code></pre>
     
 <div class="cell border-box-sizing code_cell rendered">
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/hmamin/anaconda3/lib/python3.7/site-packages/ipykernel/ipkernel.py:287: DeprecationWarning: `should_run_async` will not call `transform_cell` automatically in the future. Please pass the result to `transformed_cell` argument and any exception that happen during thetransform in `preprocessing_exc_tuple` in IPython 7.17 and above.
+  and should_run_async(code)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -314,7 +402,7 @@ torch.tensor: Same dtype and shape as each of the input tensors.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="identity" class="doc_header"><code>identity</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L113" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>identity</code>(<strong><code>x</code></strong>)</p>
+<h4 id="identity" class="doc_header"><code>identity</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L144" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>identity</code>(<strong><code>x</code></strong>)</p>
 </blockquote>
 
 <pre><code>Temporarily copied from htools.
@@ -361,7 +449,7 @@ x: Unchanged input.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="tensor_dict_diffs" class="doc_header"><code>tensor_dict_diffs</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L134" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>tensor_dict_diffs</code>(<strong><code>d1</code></strong>, <strong><code>d2</code></strong>)</p>
+<h4 id="tensor_dict_diffs" class="doc_header"><code>tensor_dict_diffs</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L165" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>tensor_dict_diffs</code>(<strong><code>d1</code></strong>, <strong><code>d2</code></strong>)</p>
 </blockquote>
 
 <pre><code>Compare two dictionaries of tensors. The two dicts must have the
@@ -404,7 +492,7 @@ list: Returns the keys where tensors differ for d1 and d2.</code></pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="find_tensors" class="doc_header"><code>find_tensors</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L156" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>find_tensors</code>(<strong><code>gpu_only</code></strong>=<em><code>True</code></em>)</p>
+<h4 id="find_tensors" class="doc_header"><code>find_tensors</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L187" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>find_tensors</code>(<strong><code>gpu_only</code></strong>=<em><code>True</code></em>)</p>
 </blockquote>
 
 <pre><code>Prints a list of the Tensors being tracked by the garbage collector.
@@ -420,6 +508,208 @@ gpu_only: bool
 Returns
 -------
 None: Output is printed to stdout.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="inverse_sigmoid" class="doc_header"><code>inverse_sigmoid</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L232" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>inverse_sigmoid</code>(<strong><code>y</code></strong>)</p>
+</blockquote>
+
+<pre><code>Use to determine the bias initializer for the final linear layer of
+model.
+
+Parameters
+----------
+x: float
+    Value between 0 and 1 (e.g. the proportion of the training data that
+    are postives).
+
+Returns
+-------
+float: Inverse sigmoid of input.
+    I.E. if y=sigmoid(x), inverse_sigmoid(y)=x.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="init_bias_constant_" class="doc_header"><code>init_bias_constant_</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L251" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>init_bias_constant_</code>(<strong><code>layer</code></strong>, <strong><code>value</code></strong>=<em><code>None</code></em>, <strong><code>target_pct</code></strong>=<em><code>None</code></em>)</p>
+</blockquote>
+
+<pre><code>Helper to initialize a layer's bias term to a constant. This is
+particularly useful for the final layer of a binary classifier where it's
+often helpful to intialize it to the value that, when passed through a
+sigmoid activation, is equal to the percent of your dataset belonging to
+the majority class. This reduces the chance that the first epoch or so
+will be spent simply learning a bias term, and has two benefits:
+
+1. May reduce training time slightly.
+2. The beginning of training can be deceptively important - a messy first
+couple epochs can have long-lasting repercussions. This is often hard to
+identify without in-depth digging into model weights so it often goes
+unnoticed.
+
+Parameters
+----------
+layer: nn.Module
+    The layer to initialize a bias for. This will often be the last layer
+    of our network - we rarely need to initialize a constant bias
+    otherwise.
+value: float or None
+    If provided, the bias will be initialized to this value.
+target_pct: float or None
+    If provided, must be a float between 0 and 1.
+
+Returns
+-------
+None: The layer is updated in place.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="is_builtin" class="doc_header"><code>is_builtin</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L292" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>is_builtin</code>(<strong><code>x</code></strong>, <strong><code>drop_callables</code></strong>=<em><code>True</code></em>)</p>
+</blockquote>
+
+<pre><code>Check if an object belongs to the Python standard library.
+
+Parameters
+----------
+drop_callables: bool
+    If True, we won't consider callables (classes/functions) to be builtin.
+    Classes have class `type` and functions have class
+    `builtin_function_or_method`, both of which are builtins - however,
+    this is often not what we mean when we want to know if something is
+    built in. Note: knowing the class alone is not enough to determine if
+    the objects it creates are built-in; this may depend on the kwargs
+    passed to its constructor. This will NOT check if a class was defined
+    in the standard library.
+
+Returns
+-------
+bool: True if the object is built-in. If the object is list-like, each
+item will be checked as well the container. If the object is dict-like,
+each key AND value will be checked (you can always pass in d.keys() or
+d.values() for more limited checking). Again, the container itself will
+be checked as well.</code></pre>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="out_features" class="doc_header"><code>out_features</code><a href="https://github.com/hdmamin/incendio/tree/master/incendio/utils.py#L330" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>out_features</code>(<strong><code>model</code></strong>)</p>
+</blockquote>
+
+<pre><code>Try to extract number of output features from the last layer of a
+model. This is often useful when building encoder-decoder models or
+stacking encoders and classification heads. Not sure how airtight the
+logic is here so use with caution.
+
+Parameters
+----------
+model: nn.Module
+    Model to examine.
+
+Returns
+-------
+int: Number of output features.</code></pre>
 
 </div>
 
