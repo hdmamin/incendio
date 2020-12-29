@@ -407,8 +407,15 @@ Plans: Updated trainer.predict and basemodel.predict to account for new _forward
 
 12/28/20
 --------
+Progress: Added classmethod to view names and params of overwritable training steps. Added _to_device helper function to put list of tensors on gpu (if available) and refactored _unpack_batch to use this. Updated trainer.predict to reflect new _forward_pass and work around _unpack_batch (see comments in method for reasoning). Experimented with allowing basemodel and trainer forward pass to accept kwargs but decided it's simpler for now to keep it to kwargs and do any additional unpacking inside forward method. Think dataloader basically has to return list of tensors anyway so even if we use something like attention maps, we still will ultimately end up with a batch being a list/tuple of tensors.
+
+Plans: Look through old spatial attention, annotated gpt3, and attentivepooling notebooks and start finalizing/porting things. Alternatively, if it looks like this will be a huge undertaking, write postmortem and leave that for 2021.
+
+12/29/20
+--------
 Progress:
 
 Plans:
+
 
 

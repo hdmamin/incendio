@@ -7,6 +7,7 @@ __all__ = ['BaseModel', 'adam', 'handle_interrupt', 'Trainer', 'PredictionExamin
 from collections import defaultdict
 from collections.abc import Iterable
 from functools import partial, wraps
+from inspect import signature
 import matplotlib.pyplot as plt
 import numpy as np
 import os
@@ -471,14 +472,14 @@ class Trainer(LoggerMixin):
             for i, batch in enumerate(self.pbar):
                 _ = self.decide_stop('on_batch_begin', i, sum_i)
                 sum_i += 1
-                *xb, yb = map(lambda x: x.to(self.device), batch)
+                xb, yb = self._unpack_batch(batch)
                 self.optim.zero_grad()
                 _ = self.decide_stop('after_zero_grad', i, sum_i, xb, yb)
 
                 # Forward and backward passes.
-                y_score = self.net(*xb)
+                y_score = self._forward_pass(xb, yb)
                 if self.decide_stop('after_forward', i, sum_i): break
-                loss = self.criterion(y_score, yb)
+                loss = self._compute_loss(y_score, yb, xb, e=e, sum_i=sum_i)
                 if self.decide_stop('after_loss', i, sum_i): break
                 loss.backward()
                 if self.decide_stop('after_backward', i, sum_i): break
@@ -537,9 +538,9 @@ class Trainer(LoggerMixin):
         if return_preds: self.net.to(self.device)
         with torch.no_grad():
             for batch in tqdm(dl_val, leave=False):
-                *xb, yb = map(lambda x: x.to(self.device), batch)
-                y_score = self.net(*xb)
-                loss = self.criterion(y_score, yb)
+                xb, yb = self._unpack_batch(batch)
+                y_score = self._forward_pass(xb, yb)
+                loss = self._compute_loss(y_score, yb, xb, is_train=False)
                 self._update_stats(val_stats, loss, yb, y_score)
                 if return_preds: preds.append(y_score)
                 if return_labels: labels.append(yb)
@@ -554,7 +555,80 @@ class Trainer(LoggerMixin):
             res.append(labels)
         return res
 
-    def predict(self, *xb, logits=True):
+    def _to_device(self, tensors, to_list=False):
+        """Put a list/tuple of tensors on the GPU if one is available.
+
+        Parameters
+        ----------
+        tensors: Iterable[torch.Tensor]
+        to_list: bool
+            If True, return results as a list. Otherwise return a map object.
+
+        Returns
+        -------
+        map object (default) or list
+        """
+        res = map(lambda x: x.to(self.device), tensors)
+        return list(res) if to_list else res
+
+    def _unpack_batch(self, batch):
+        """Unpack batch into x and y and place tensors on the GPU (don't do
+        this in callback because we want it to happen during validation too).
+        User can override this in non-standard use cases: for instance, if the
+        targets are also one of your inputs, you could rewrite this so your
+        dataloader doesn't have to provide two identical tensors, which wastes
+        memory.
+
+        Parameters
+        ----------
+        batch: tuple[torch.Tensor]
+            One batch of data, i.e. next(iter(my_dataloader)). This is not yet
+            on the GPU.
+
+        Returns
+        -------
+        tuple: First item is x, second item is y. Default implementation
+        returns xb as a tuple or tensors and yb as a tensor.
+        """
+        *xb, yb = self._to_device(batch)
+        return xb, yb
+
+    def _forward_pass(self, xb, yb):
+        """Usually we just want to pass in all inputs, but we provide this
+        method so the user can override the default behavior. For example,
+        on some tasks it may be convenient to pass yb in as well or to pass
+        in parts of xb as keyword args.
+        """
+        return self.net(*xb)
+
+    def _compute_loss(self, y_score, yb, xb=None, is_train=True, **kwargs):
+        """Compute loss for a single batch. We provide this method to allow
+        the user to override the default behavior. This makes it easier to
+        use things like contrastive loss or teacher forcing.
+        """
+        return self.criterion(y_score, yb)
+
+    @classmethod
+    def training_step_signatures(cls):
+        """Help remind user what steps of the training loop can be
+        overwritten and what their signatures are. We strongly encourage using
+        this only as a form of documentation and not trying to do anything
+        programmatic with them. This is a classmethod so we can view them
+        without instantiating a Trainer, since the intended use case is
+        to help with writing a Trainer subclass. I realized the method str,
+        repr, and signature all excluded the arguments and decided it was
+        simplest to just return the methods themselves rather than performing
+        python surgery for such a simple use case.
+
+        Returns
+        -------
+        list[method]: All the methods called in `fit` that you can easily
+        override.
+        """
+        return [getattr(cls, meth) for meth in
+                ('_unpack_batch', '_forward_pass', '_compute_loss')]
+
+    def predict(self, xb, yb=None, logits=True):
         """Make predictions on a batch of data. This automatically does things
         like putting the data and model on the same device, putting the model
         in eval mode, and ensuring that gradients are not computed (reduces
@@ -562,9 +636,10 @@ class Trainer(LoggerMixin):
 
         Parameters
         ----------
-        xb: torch.tensors
+        xb: torch.Tensor(s)
             Inputs to the model. This will often just be one x tensor, but
-            sometimes other inputs are required as well (e.g. attention masks).
+            sometimes other inputs are required as well
+            (e.g. attention masks).
         logits: bool
             If True, output logits. If False, the last activation function is
             applied.
@@ -574,8 +649,14 @@ class Trainer(LoggerMixin):
         torch.tensor: Model predictions.
         """
         self.net.to(self.device)
-        xb = map(lambda x: x.to(self.device), xb)
-        res = self.net.predict(*xb)
+        # Don't want to require passing in yb since we won't have labels at
+        # inference time, so we avoid using `self._unpack_batch`. It's easy
+        # for the user to do this manually, however, since this is not buried
+        # within the training loop.
+        xb = xb.to(self.device) if isinstance(xb, torch.Tensor) \
+            else self._to_device(xb, to_list=True)
+        if yb is not None: yb = yb.to(self.device)
+        res = self._forward_pass(xb, yb)
         if not logits: res = self.last_act(res)
         return res
 
