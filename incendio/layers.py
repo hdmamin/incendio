@@ -284,9 +284,10 @@ class SpatialSoftmax(nn.Module):
     we now have a heatmap of what region in each image to focus on.
     """
 
-    def __init__(self, temperature='auto'):
+    def __init__(self, temperature='auto', log=False):
         super().__init__()
-        self.act = SmoothSoftmax(temperature)
+        cls = SmoothLogSoftmax if log else SmoothSoftmax
+        self.act = cls(temperature)
 
     def forward(self, x):
         # Should work on any tensor with shape (bs, ..., h, w).
