@@ -413,9 +413,30 @@ Plans: Look through old spatial attention, annotated gpt3, and attentivepooling 
 
 12/29/20
 --------
+Progress: Started exploring SpatialAttention nb and updated SpatialSoftmax to allow log. Reviewed attentive concat pool notebook. Started reviewing annotated gpt2 nb (realized projector ignores spatial dimension). Ported and updated get_einops_img and plot_img_batch funcs to help debug projector options (added options to load image as black and white, updated colormap when plotting bw image, and removed axis ticks). Made some notes on what is left to port in first 2 notebooks to help stay organized.
+
+Plans: Experiment with linear vs. conv projector, then continue working way through annotated gpt2 notebook if want more. Given that this looks like a driving day, I'm thinking another option may be to make this the beginning of my complete break. If I want to do something, I could brainstorm ideas for future projects, toy around with past ideas I've put on hold (scraping revisions dataset from git/wiki, look for pretrained soft summarizer models for my "elaborator" model idea, return to Liza.ai, etc.). Another option is to consider this the end of a "project" and write a postmortem - looks like porting stuff from other 3 notebooks could be quite involved and justify its own mini-project.
+
+12/30/20
+--------
 Progress:
 
 Plans:
+
+
+
+Possibly port:
+
+spatial attention nb
+    - conv projector class (needs work)
+    - spatial attention 2d class (needs work)
+
+attentive concat pool
+    - attentive concat pool 2d class (for images; needs work)
+
+annotated-gpt2 nb
+    # TODO: lots that I could potentially port though unsure how useful it would be. Needs work first.
+
 
 
 
