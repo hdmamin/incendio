@@ -419,6 +419,12 @@ Plans: Experiment with linear vs. conv projector, then continue working way thro
 
 12/30/20
 --------
+Progress: Continued investigating Projector and decided it's behavior must be intended (no need to mix info from different time steps now because attention is next step). Replaced split_heads and merge_heads methods in Attention with einops layers (after testing with blog post version, looks like my split_heads had been implemented wrong previously). Renamed some params and changed Attention's weights to be returned post-dropout (realized at inference time model will be in eval mode anyway). Briefly started building out TransformerDecoder.
+
+Plans: Finalize TransformerDecoder and start porting everything from gpt2 nb. If too wiped out from driving, could write a slightly premature postmortem or just start documenting gpt2 nb stuff.
+
+12/31/20
+--------
 Progress:
 
 Plans:
