@@ -425,9 +425,9 @@ Plans: Finalize TransformerDecoder and start porting everything from gpt2 nb. If
 
 12/31/20
 --------
-Progress:
+Progress: Documented gpt2 layers and renamed some things. Wrote postmortem.
 
-Plans:
+Plans: NOTHING. If you really want to do something you could brainstorm next project ideas or play around with an unrelated project, but this is 100% optional. The next 3 days should be mostly for resting and recharging.
 
 
 
@@ -444,5 +444,110 @@ annotated-gpt2 nb
     # TODO: lots that I could potentially port though unsure how useful it would be. Needs work first.
 
 
+12/31/20 - POSTMORTEM
+---------------------
+Deadline: 12/31/20 (depending on what I decide to include here, this could end up being as short as a few days or as long as a few months. I think it's important to set some sort of soft timebox so this is it. Extending past this would be fine if I want to and wrapping up far earlier would also be fine.)
+[UPDATE: Today is 12/31/20. I finished the requirements (and quite a bit more) a while ago. There's some more I want to do but it's arguably out of scope of this project (gpt2 layers, attention pooling, spatial attention, etc.) so I think it's fair to write a postmortem now.
 
+Final Product: 
+    -addition of transformers-based data augmentation capabilitites to incendio. I expect this to include 3 methods though I'm open to change:
+		-mask filling: swap 1 or more words in the source
+		-text generation: truncate source and fill in the end with seq2seq
+		-paraphrase: pretty simple, just use pretrained model
+[UPDATE: finished all of these. Also tried to add backtranslation but Huggingface didn't have pretrained models to translate back to English.]
+
+	Each method should have 3 possible interfaces:
+		-base function: the core functionality. Pass in a string and return an augmented string.
+		-composable random transform: It's possible this won't require anything different than the base function, but basically I want it to be super easy to plug these into a torch dataset. This would let us augment data on the fly. In reality, I suspect this would be way too slow and we'd want to pre-compute these, but it would be nice to have the option.
+		-CLI: provide the option for a user to run something like "incendio augment data/searches.csv --out_path data/searches-augmented.csv --mode mask --mask_n 2" to create a new file with augmented text. Maybe should support other common file structures, e.g. 1 file for each item.
+[UPDATE: ended up creating 1 callable class for each transform and 1 helper function to augment a csv or df. Experimented with different options but this interface is what I concluded was reasonable.]
+
+	-Optionally, this could include tasks such as:
+		-CLI: class to make it easier to construct a train.py script given a Trainer. Basically, I've found it still ends up being annoyingly slow to construct very similar training scripts for each project, even with all the boilerplate incendio.Trainer provides. There's a wide range in possible complexity here: on the high end, I have some fuzzy vision of something that identifies all the possible args/kwargs used in a script and jams them all into one train func so we get them as command line options. But maybe that's overcomplicating things and I just need to enforce a stricter approach to what is called in the train script and then call them in order (get_data, get_callbacks, get_metrics, etc.).
+[UPDATE: sort of achieved this with @share_kwargs decorator.]
+		-finalize work from annotated gpt2 notebooks: port some attention-related layers/helpers to incendio. Some of this stuff might already be available in huggingface or pytorch but it wouldn't hurt to implement them myself anyway to better understand them.
+[UPDATE: in progress, nearly done.]
+		-finalize and port work from spatial attention notebooks: probably too computationally intensive to be actually useful at this point, and it sounds like similar concepts may already be common. But it would be cool.
+[UPDATE: on hold, maybe do this after gpt2 layers.]
+		-layers/building blocks of lambda networks: would be cool and a good way to make me take the time to really understand what they're doing.
+[UPDATE: on hold, probably skip]
+		-various einops-based layers
+[UPDATE: maybe another time, cool but I'm ready to start thinking of new projects.]
+		-tensor debugger: inspired by image from einops tutorial, see if I can come up with something to make it easier to validate that a layer/model does what I think it does to a tensor. There are often cases where I think something's working but I want to 100% confirm that it's not jumbling up batches/axes in an unintended way. Could use a similar concept (perhaps an input image where every batch/row/column has a different "color" (rgb value)?) or see if I can do something similar to one of my img_wang strategies (attaching attributes to tensors to keep track of specific items in a batch; however, I've found it's hard to make these things stick. Many tensor operations seem to delete these, perhaps because they're copying or creating new tensors under the hood and base tensors don't have my added attributes. Might be solvable through monkeypatching.)
+[UPDATE: skipped for now.]
+		-massive overhaul to trainer: make it possible to access everything during training (set self.xb, self.yb every batch)? Or maybe a wiser approach is to mimic lightning and make it easier for user to overwrite certain steps (e.g. instead of loss = self.criterion(y, y_hat) call loss = self.compute_loss() (unsure of args at the moment, maybe none?) where "compute_loss" is a method of trainer, as opposed to self.criterion which is an attribute containing a torch loss function. Idea is we want it to be easier to do custom stuff like passing x to a loss function for contrastive loss or training a seq2seq model without unnecessarily duplicating tensors.
+[UPDATE: actually did this, though I haven't really tested it yet.]
+		-Building + hosting docs - did I ever do this? I can't remember.
+[UPDATE: yes I did, and I've updated both htools and incendio docs (although they're still a bit of a moving target).]
+		-better readmes - in the spirit of fleshing out the library.
+[UPDATE: not much, but added links to docs and in htools case, added instructions to self to build docs.]
+		-semi cheating since it's not incendio, but htools docs and readme - would be nice to update those too.
+[UPDATE: see above.]
+
+Concepts: 
+    -interface design: practice writing useful, user-friendly components. I don't know that these need to be particularly customizable (i.e. user (me) will be using the finished product, not building custom variants), but they should be flexible enough that if useful new pipelines types emerge, I can easily add them.
+[UPDATE: mostly mimicked hugginface interface here, but I think that was the responsible decision. Various htools updates were mostly functions so subclassing isn't a concern.]
+	-features of python packaging: strengthen knowledge of CLIs, optional dependencies, etc. I like the idea of letting users install incendio (with no deps) or incendio[all] (all deps). 
+[UPDATE: skipped.]
+	-optional: if implementing things like lambda layers or finishing off attention-related layers, this will involve some solid ML comprehension.
+[UPDATE: skipped, but gpt2 layers etc. had some of this.]
+
+Tech: 
+	-Can't think of anything new I'd need to use or that would be particularly useful here. Perhaps focusing on getting github actions working since I'm pretty sure Incendio's still failing whatever gets run on git pushes.
+[UPDATE: skipped.]
+	
+Requirements:
+
+	-Complete the transformers augmentation bullet points outlined in Final Product.
+	-Update docs and readme.
+	-Other items are optional, though I think it would be a good idea to close out some of these items and this is a good opportunity. But I don't want to require it since this was initially mean to be a quick project to re-energize me prior to a larger, more ambitious project.
+[UPDATE: done]
+
+Pre-Mortem:
+    What could go wrong?
+
+	-I get bored and tempted by other project distractions, e.g. Liza.ai. 
+		[SOLUTION] I made the requirements flexible enough that this project should be pretty quick to wrap up if I want to. If I find myself getting distracted, toss the optional ideas for now and just churn out the mandatory items. This should let me move on to other stuff pretty quickly. Also, this system has been highly effective so even if I get distracted it won't be enough to overpower my discipline. If img_wang didn't break me, I can't imagine a scenario where this does. Famous last words, etc., but I really don't see that happening.
+		[UPDATE] This didn't happen.
+
+	-I spend most of my time struggling with nbdev to get docs and workflows working, and this frustration ends up overpowering the intended refreshing benefits.
+		[SOLUTION] Even if this is true, it would still be a worthwhile project - building docs, at least, seems pretty important. And so far the project's been pretty fun. And I can think of this as part of the reality of library building.
+		[UPDATE] I didn't use workflows/actions. Doc building was easy.
+
+	-Code burnout due to work coding, incendio coding, and DS/Algos coding.
+		[SOLUTION] Can back off the DS/Algos coding a little if truly necessary (e.g. weekends only? It would be nice to get the daily accumulation benefit but I do think that might be pushing things cognitively), or fit that in as post-5 pm work.
+		[UPDATE] Maybe this happened a little. I did stop the DS/Algos coding after a while, which is fine.
+	
+	-More and more ideas pile up and this turns into a never-ending project at the cost of other cool stuff (liza.ai, eleuther.ai, openmined research, fastai/lightning/spacy/allennlp/torch contributions).
+		[SOLUTION] Would this be so bad? It would likely mean incendio turns into something pretty damn cool. There is the downside that putting off contributing to larger open source projects allows me to retain certain weaknesses (e.g. a little fuzziness about certain aspects of git that don't matter when you're the only contributor). This also hides the reality of working on open source: maybe if I contributed to big projects, I'd find that the reality is mostly fixing documention typos, writing unit tests, and occasionally tracking down obscure bugs in other people's code (in fact, I think this is pretty likely). If that's true, maybe I should confirm it soon so I don't spend too long in pursuit of a long-term goal I wouldn't enjoy. But I want to do a fun project now so I don't like the idea of picking something that has a significant chance of being unrewarding. This is a bit of a conundrum but it's maybe less of an issue to worry about in a pre-mortem and more of a tradeoff to be aware that I'm making.
+		[UPDATE] This did happen a little (as evidenced by the fact that there are still a few things I want to wrap up as I write this postmortem). Perhaps the key is to enforce time blocks, so I can work on htools/incendio for 1-2 months before turning to another project. Still have to figure out how to handle the last few outstanding notebooks I want to port, then.
+
+	-Not knowing when to end. I wrote down so many optional items that this could last anywhere from days to years.
+		[SOLUTION] I think I can play this by ear initially, but to provide some guidance, how about this: I'll say the project should last between 1 and 8 weeks, inclusive. If I want to end earlier or start later, I have to return here and write 100+ words justifying it.In other words, I can do what I want but I need to treat the decision with respect and put serious thought into it if I want to break from these rather flexible constraints.
+		[UPDATE] There's a little bit of this (it's pretty related to the above point). Again, maybe time is a better marker.
+
+Most of these problems don't sound like real problems. This project can be pretty short and low stakes if I want it to be so that seems reasonable. Img_wang had some unforeseen problems so I shouldn't be too confident in this. Perhaps this is a good section to add: what were the gaps between expectations and outcomes last time and why should I be confident they won't reoccur this time?
+
+-not enjoying what I thought I'd enjoy: I'm less worried about that here because I've already spent quite a bit of time on library development and generally found it extremely enjoyable. I've always have found model training a bit exhausting in a way that library dev never has been.
+[UPDATE: this was reasonably fun, though perhaps slightly less so at times than I'd hoped. This may have been due to piling up too much other stuff: books, coursera courses, DS/Algos coding. I think this feeling subsided a bit once I backed off.]
+-unclear finishing constraints: if anything this is even fuzzier with so many optional items, but I think the timeboxing helps.
+[UPDATE: sort of an issue but I think I have it under control.]
+-fulfilling the letter of the requirements but not the spirit: I'm not sure what that would even mean in this context. I suppose I could encounter a situation where I get docs working in something other than nbdev, or I run into a limit of how many github pages I can deploy (don't think that exists though). Not too worried about this.
+[UPDATE: still not sure exactly what this would have meant in this context. Don't think it happened.]
+
+What went well
+--------------
+-Finally knocked out a few htools decorators I'd had in mind for many months and failed at building before. Progress!
+-Working with huggingface is a bit less intimidating now that I've dug into it a fair amount, both at the very high level (loading various pretrained models from ModelHub and trying to deduce their user interface in the absence of documentation) and the very low level (building transformer layers from scratch).
+-NLP transforms look plausibly useful.
+
+What went poorly
+----------------
+- Loaded myself up with too many other tasks (books, coursera, ds/algos coding). The whole point of these projects is to REALLOCATE some of that passive/less-useful learning time to hands on projects. Be careful of trying to do all of the above. I think this, along with limiting project duration, should address the only other concern (related) which was the slight drop in enjoyment.
+
+Thing to do differently next time
+---------------------------------
+-Ease up on non-project educational activities.
+-Maybe set timebox earlier (this one kind of snuck up on me).
+-Consider allowing 1 off day and/or 1 flex day (where exploring another idea I've been neglecting counts) per week
 
