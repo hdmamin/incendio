@@ -3,11 +3,12 @@
 __all__ = ['GRelu', 'JRelu', 'Mish', 'mish', 'ConvBlock', 'ResBlock', 'ReflectionPaddedConv2d', 'SmoothSoftmaxBase',
            'SmoothSoftmax', 'SmoothLogSoftmax', 'SpatialSoftmax', 'Dropin', 'LinearSkipBlock', 'LinearResBlock',
            'LinearDenseBlock', 'WeightedLinearResBlock', 'SkipConnection', 'trunc_normal_', 'InitializedEmbedding',
-           'BloomEmbedding', 'AxialEncoding', 'MultiAxialEncoding', 'SiameseBase']
+           'BloomEmbedding', 'AxialEncoding', 'MultiAxialEncoding', 'Projector', 'DotProductAttention', 'SiameseBase']
 
 
 # Cell
 from abc import abstractmethod, ABC
+from einops.layers.torch import Rearrange
 from functools import partial
 import numpy as np
 from operator import add, truediv, sub
@@ -703,6 +704,140 @@ class MultiAxialEncoding(nn.Module):
         res_blocks = [e(hashed.squeeze()) for e, hashed in
                       zip(self.emb, torch.chunk(xhash, xhash.shape[0], -1))]
         return torch.cat(res_blocks, dim=-1)
+
+
+# Cell
+class Projector(nn.Module):
+    """Project input into multiple spaces. Used in DotProductAttention to
+    generate queries/keys/values.
+    """
+
+    def __init__(self, n_in, n_out_single=None, spaces=3):
+        """
+        Parameters
+        ----------
+        n_in: int
+            Size of input feature dimension, where input is (bs, n_in) or
+            (bs, seq_len, n_in). If the latter, this ONLY transforms the last
+            dimension. If you want to take multiple dimensions of information
+            into account simultaneously, you can flatten the input prior to
+            passing it in.
+        n_out_single: int or None
+            This determines the size of the feature dimension in each new
+            space. By default, this will be the same as n_in.
+        spaces: int
+            Number of spaces to project the input into. Default is 3 because
+            we commonly use this to generate queries, keys, and values for
+            attention computations.
+        """
+        super().__init__()
+        self.spaces = spaces
+        self.n_in = n_in
+        self.n_out_single = n_out_single or n_in
+        self.spaces = spaces
+        self.n_out = self.n_out_single * self.spaces
+        self.fc = nn.Linear(self.n_in, self.n_out)
+
+    def forward(self, x):
+        """
+        Parameters
+        ----------
+        x: torch.Tensor
+            Shape (bs, n_in) or (bs, seq_len, n_in).
+
+        Returns
+        -------
+        tuple[torch.Tensor]: Tuple of `spaces` tensors where each tensor has
+        shape (bs, n_out_single) or (bs, seq_len, n_out_single), depending on
+        the input shape.
+        """
+        return self.fc(x).chunk(self.spaces, dim=-1)
+
+
+# Cell
+class DotProductAttention(nn.Module):
+    """GPT2-style attention block. This was mostly an intuition-building
+    exercise - in practice, Huggingface provides layers that should probably
+    be used instead.
+    """
+
+    def __init__(self, n_in, n_out=None, nf=None, n_heads=12,
+                 temperature='auto', p1=0.1, p2=0.1, return_attn=False):
+        """
+        Parameters
+        ----------
+        n_in: int
+            Last dimension of input, usually embedding dimension.
+        n_out: int or None
+            Size of output vectors. By default, this will be the same as the
+            input.
+        nf: int or None
+            Size ("nf = number of features") of queries/keys/values.
+            By default, this will be the same as n_in. Must be divisible by
+            n_heads.
+        n_heads: int
+            Number of attention heads to use. nf must be divisible
+            by this as each projected vector will be divided evenly among
+            each head.
+        temperature: str or float
+            If str, must be "auto", meaning softmax inputs will be scaled by
+            sqrt(n_proj_single). You can also specify a float, where values
+            <1 sharpen the distribution (usually not what we want here) and
+            values greater than one soften it (allowing attention head to
+            route more information from multiple neurons rather than almost
+            all from one).
+        p1: float
+            Value in (0.0, 1.0) setting the dropout probability on the
+            attention weights.
+        p2: float
+            Value in (0.0, 1.0) setting dropout probability following the
+            output layer.
+        return_attn: bool
+            If True, the `forward` method will return a tuple of
+            (output, attention_weights) tensors. If False (the default), just
+            return the output tensor.
+        """
+        super().__init__()
+        nf = nf or n_in
+        n_out = n_out or n_in
+        assert nf % n_heads == 0, \
+            'n_proj_single must be divisible by n_heads'
+
+        self.proj_in = Projector(n_in, nf, spaces=3)
+        # Reshape so hidden dimension is split equally between each head.
+        self.head_splitter = Rearrange('bs seq (heads f) -> bs heads seq f',
+                                       heads=n_heads)
+        self.soft = SmoothSoftmax(temperature)
+        self.drop_attn = nn.Dropout(p1)
+        # Concatenate output of each head.
+        self.head_merger = Rearrange('bs heads seq f -> bs seq (heads f)')
+        self.fc_out = nn.Linear(nf, n_out)
+        self.drop_out = nn.Dropout(p2)
+
+        # Non-layer attributes.
+        self.n_heads = n_heads
+        self.temperature = temperature
+        self.p1 = p1
+        self.p2 = p2
+        self.return_attn = return_attn
+
+    def forward(self, x):
+        """
+        Parameters
+        ----------
+        x: torch.Tensor
+            Shape (bs, seq_len, n_in). n_in will usually be the sum of
+            embedding dimensions (word and positional). For other problems
+            (e.g. web browsing sequence classificaiton), this might include
+            other features about the page at time step T.
+        """
+        q, k, v = map(self.head_splitter, self.proj_in(x))
+        scores = q @ k.transpose(-2, -1)
+        weights = self.drop_attn(self.soft(scores))
+        x = weights @ v
+        x = self.head_merger(x)
+        x = self.drop_out(self.fc_out(x))
+        return (x, weights) if self.return_attn else x
 
 
 # Cell

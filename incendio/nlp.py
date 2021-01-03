@@ -21,6 +21,7 @@ from tqdm.auto import tqdm
 from transformers import PegasusForConditionalGeneration, PegasusTokenizer, \
     PegasusTokenizerFast, pipeline, Text2TextGenerationPipeline
 from transformers.modeling_utils import PreTrainedModel
+import warnings
 
 from htools import save, load, add_docstring, tolist, auto_repr, listlike, \
     flatten, immutify_defaults

@@ -429,20 +429,8 @@ Progress: Documented gpt2 layers and renamed some things. Wrote postmortem.
 
 Plans: NOTHING. If you really want to do something you could brainstorm next project ideas or play around with an unrelated project, but this is 100% optional. The next 3 days should be mostly for resting and recharging.
 
-
-
-Possibly port:
-
-spatial attention nb
-    - conv projector class (needs work)
-    - spatial attention 2d class (needs work)
-
-attentive concat pool
-    - attentive concat pool 2d class (for images; needs work)
-
-annotated-gpt2 nb
-    # TODO: lots that I could potentially port though unsure how useful it would be. Needs work first.
-
+[NOTE: I was so close to wrapping up the annotated gpt2 stuff that I ended up porting Projector, FanForward, and Attention modules after this. Finished up TransformerDecoder but decided not to port it or make a whole GPT2 module - this was more about the low level components. If we just want a working gpt2, just use huggingface.]
+-------------------------------------------------------------------------------
 
 12/31/20 - POSTMORTEM
 ---------------------
@@ -550,4 +538,14 @@ Thing to do differently next time
 -Ease up on non-project educational activities.
 -Maybe set timebox earlier (this one kind of snuck up on me).
 -Consider allowing 1 off day and/or 1 flex day (where exploring another idea I've been neglecting counts) per week
+
+-------------------------------------------------------------------------------
+Notes re what could potentially be ported from scratch notebooks in the future:
+
+spatial attention nb
+- conv projector class (needs work)
+- spatial attention 2d class (needs work)
+
+attentive concat pool
+- attentive concat pool 2d class (for images; needs work)
 
