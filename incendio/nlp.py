@@ -678,6 +678,7 @@ class Embeddings:
         treat A and B as valid candidates to fill in the blank. C is
         only considered as a candidate in the trivial case where A=B, in which
         case C should be the first choice.
+
         Parameters
         ----------
         a: str
@@ -693,12 +694,13 @@ class Embeddings:
             the word c as a candidate if it is returned.
         kwargs: distance (str), digits (int)
             See _nearest_neighbors for details.
+
         Returns
         -------
         list[str]: Best candidates to complete the analogy in descending order
             of likelihood.
         """
-        # If any words missing from vocab, arithmetic w/ None will throw error.
+        # If any words missing from vocab, arithmetic w/ None throws error.
         try:
             vec = self.vec(b) - self.vec(a) + self.vec(c)
         except TypeError:
@@ -752,12 +754,12 @@ class Embeddings:
         """
         return np.mean(args, axis=0)
 
-    def cbow_neighbors(self, *args, n=5, **kwargs):
+    def cbow_neighbors(self, *args, n=5, exclude_args=True, **kwargs):
         """Wrapper to cbow(). This lets us pass in words, compute their
         average embedding, then return the words nearest this embedding. The
         input words are not considered to be candidates for neighbors (e.g. if
-        you input the words 'happy' and 'cheerful', the neighbors returned will
-        not include those words even if they are the closest to the mean
+        you input the words 'happy' and 'cheerful', the neighbors returned
+        will not include those words even if they are the closest to the mean
         embedding). The idea here is to find additional words that may be
         similar to the group you've passed in.
 
@@ -778,13 +780,13 @@ class Embeddings:
         vec_avg = self.cbow(*args)
         if vec_avg is None:
             return
-        neighbors = self._nearest_neighbors(vec_avg, n=len(args)+n,
-                                            skip_first=False, **kwargs)
+        w2dist = self._nearest_neighbors(vec_avg, n=len(args)+n,
+                                         skip_first=False, **kwargs)
 
         # Lowercase to help remove duplicates.
         args = set(arg.lower() for arg in args)
-        return {word: neighbors[word] for word in
-                [n for n in neighbors if n not in args][:n]}
+        return {word: nearest[word] for word in
+                [w for w in w2dist if not exclude_args or w not in args][:n]}
 
     @staticmethod
     def norm(vec):
@@ -839,7 +841,12 @@ class Embeddings:
                     (self.norm(vec1) * self.norm(vec2)))
 
     def __getitem__(self, word):
-        return self.w2i.get(word.lower())
+        """Returns None if word is not present. Think of this like dict.get.
+        """
+        try:
+            return self.w2i[word.lower()]
+        except KeyError:
+            warnings.warn(f'{word} not in Embeddings.')
 
     def __len__(self):
         return self.n_embeddings
@@ -848,7 +855,9 @@ class Embeddings:
         return word.lower() in self.w2i
 
     def __iter__(self):
-        """Yields words in vocabulary."""
+        """Yields words in vocabulary in insertion order (may differ from
+        index order).
+        """
         yield from self.w2i.keys()
 
     def __repr__(self):
