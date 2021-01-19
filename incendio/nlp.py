@@ -24,7 +24,7 @@ from transformers.modeling_utils import PreTrainedModel
 import warnings
 
 from htools import save, load, add_docstring, tolist, auto_repr, listlike, \
-    flatten, immutify_defaults
+    flatten, immutify_defaults, ifnone
 from .utils import DEVICE
 
 
@@ -472,7 +472,9 @@ class Vocabulary:
 class Embeddings:
     """Embeddings object. Lets us easily map word to index, index to
     word, and word to vector. We can use this to find similar words,
-    build analogies, or get 2D representations for cdting.
+    build analogies, or get 2D representations for plotting. Generally,
+    user-facing methods let us pass in strings, while internal versions (same
+    name except prefixed with an underscore) allow us to pass in vectors.
     """
 
     def __init__(self, mat, w2i, mat_2d=None):
@@ -490,8 +492,10 @@ class Embeddings:
         """
         self.mat = mat
         self.w2i = w2i
-        self.i2w = [w for w, i in sorted(self.w2i.items(), key=lambda x: x[1])]
-        self.mat_2d = mat_2d or PCA(n_components=2).fit_transform(self.mat)
+        self.i2w = [w for w, i in
+                    sorted(self.w2i.items(), key=lambda x: x[1])]
+        self.mat_2d = ifnone(mat_2d,
+                             PCA(n_components=2).fit_transform(self.mat))
         self.n_embeddings, self.dim = self.mat.shape
 
     @classmethod
@@ -507,6 +511,7 @@ class Embeddings:
         max_words: int, float
             Set maximum number of words to read in from file. This can be used
             during development to reduce wait times when loading data.
+
         Returns
         -------
         Embeddings: Newly instantiated object.
@@ -535,8 +540,8 @@ class Embeddings:
 
         Returns
         -------
-        Embeddings: Newly instantiated object using the data that was stored in
-            the pickle file.
+        Embeddings: Newly instantiated object using the data that was stored
+        in the pickle file.
         """
         return cls(**load(path))
 
@@ -594,6 +599,23 @@ class Embeddings:
         if idx is not None:
             return self.mat_2d[idx]
 
+    @staticmethod
+    def distance(vec1, vec2, distance='cosine'):
+        """Find distance between two vectors.
+
+        Parameters
+        ----------
+        distance: str
+            One of ('cosine', 'euclidean', 'manhattan').
+        """
+        if distance == 'euclidean':
+            dists = Embeddings.norm(vec1 - vec2)
+        elif distance == 'cosine':
+            dists = Embeddings.cosine_distance(vec1, vec2)
+        elif distance == 'manhattan':
+            dists = Embeddings.manhattan_distance(vec1, vec2)
+        return dists
+
     def _distances(self, vec, distance='cosine'):
         """Find distance from an input vector to every other vector in the
         embedding matrix.
@@ -612,18 +634,12 @@ class Embeddings:
         np.array: The i'th value corresponds to the distance to word i in the
             vocabulary.
         """
-        if distance == 'euclidean':
-            dists = self.norm(self.mat - vec)
-        elif distance == 'cosine':
-            dists = self.cosine_distance(vec, self.mat)
-        elif distance == 'manhattan':
-            dists = self.manhattan_distance(vec, self.mat)
-        return dists
+        return self.distance(self.mat, vec, distance=distance)
 
     def nearest_neighbors(self, word, n=5, distance='cosine', digits=3):
-        """Find the most similar words to a given word. This wrapper to
+        """Find the most similar words to a given word. This wrapper
         allows the user to pass in a word. To pass in a vector, use
-        _nearest_neighbors().
+        `_nearest_neighbors`.
 
         Parameters
         ----------
@@ -648,15 +664,16 @@ class Embeddings:
 
     def _nearest_neighbors(self, vec, n=5, distance='cosine', digits=3,
                            skip_first=True):
-        """Internal function behind nearest_neighbors(). This can be used if
-        we want to pass in a vector instead of a word. For more details, see
-        the wrapper method.
+        """Find the most similar words to a given word's vector.
+        This is the internal function behind `nearest_neighbors`, so you pass
+        in a vector instead of a word.
 
         Parameters
         ----------
         vec: np.array
         n: int
         distance: str
+            One of ('cosine', 'euclidean', 'manhattan').
         digits: int
         skip_first: bool
             If True, the nearest result will be sliced off (this is desirable
@@ -690,7 +707,7 @@ class Embeddings:
         n: int
             Number of candidates to return. Note that we specify this
             separately fro kwargs since we need to alter its value before
-            passing it to _nearest_neighbors(). This will allow us to remove
+            passing it to `_nearest_neighbors`. This will allow us to remove
             the word c as a candidate if it is returned.
         kwargs: distance (str), digits (int)
             See _nearest_neighbors for details.
@@ -710,10 +727,8 @@ class Embeddings:
         # includes c, which will be removed in these situations.
         a, b, c = a.lower(), b.lower(), c.lower()
         trivial = (a == b)
-        neighbors = self._nearest_neighbors(vec,
-                                            n=n+1-trivial,
-                                            skip_first=False,
-                                            **kwargs)
+        neighbors = self._nearest_neighbors(vec, n=n+1-trivial,
+                                            skip_first=False, **kwargs)
         if not trivial and c in neighbors:
             neighbors.pop(c)
 
@@ -721,8 +736,9 @@ class Embeddings:
         return list(neighbors)[:n]
 
     def cbow(self, *args):
-        """Wrapper to _cbow() that allows us to pass in strings instead of
-        vectors.
+        """Wrapper to `_cbow` that allows us to pass in strings instead of
+        vectors. Computes bag of words vector by averaging vectors for all
+        input words.
 
         Parameters
         ----------
@@ -739,8 +755,8 @@ class Embeddings:
             return self._cbow(*vecs)
 
     def _cbow(self, *args):
-        """Internal helper for cbow(). Can also use this directly if you want
-        to pass in vectors instead of words.
+        """Internal helper for `cbow` method that lets us pass in vectors
+        instead of words.
 
         Parameters
         ----------
@@ -755,13 +771,14 @@ class Embeddings:
         return np.mean(args, axis=0)
 
     def cbow_neighbors(self, *args, n=5, exclude_args=True, **kwargs):
-        """Wrapper to cbow(). This lets us pass in words, compute their
+        """Wrapper to `cbow` method. This lets us pass in words, compute their
         average embedding, then return the words nearest this embedding. The
         input words are not considered to be candidates for neighbors (e.g. if
         you input the words 'happy' and 'cheerful', the neighbors returned
         will not include those words even if they are the closest to the mean
-        embedding). The idea here is to find additional words that may be
-        similar to the group you've passed in.
+        embedding) unless you set exclude_kwargs=False. The idea here is to
+        find additional words that may be similar to the group you've passed
+        in.
 
         Parameters
         ----------
@@ -785,7 +802,7 @@ class Embeddings:
 
         # Lowercase to help remove duplicates.
         args = set(arg.lower() for arg in args)
-        return {word: nearest[word] for word in
+        return {word: w2dist[word] for word in
                 [w for w in w2dist if not exclude_args or w not in args][:n]}
 
     @staticmethod
@@ -822,7 +839,8 @@ class Embeddings:
         """
         return np.sum(abs(vec1 - vec2), axis=-1)
 
-    def cosine_distance(self, vec1, vec2):
+    @staticmethod
+    def cosine_distance(vec1, vec2):
         """Compute cosine distance between two vectors.
 
         Parameters
@@ -838,7 +856,7 @@ class Embeddings:
             will be a vector (np.array).
         """
         return 1 - (np.sum(vec1 * vec2, axis=-1) /
-                    (self.norm(vec1) * self.norm(vec2)))
+                    (Embeddings.norm(vec1) * Embeddings.norm(vec2)))
 
     def __getitem__(self, word):
         """Returns None if word is not present. Think of this like dict.get.
@@ -866,9 +884,18 @@ class Embeddings:
 
 # Cell
 def back_translate(text, to, from_lang='en'):
-    """
+    """Translate a piece of text into another language, then back to English
+    for data augmentation purposes. This is rate limited but I have plans for
+    an improved ML-based version.
+
     Parameters
     ----------
+    text: str
+        Text to back translate.
+    to: str
+        Language to translate to before translating back to English.
+    from_lang: str
+        Language of input text (usually 'en' for English).
 
     Returns
     -------
