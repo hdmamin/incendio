@@ -14,6 +14,7 @@ import os
 import pandas as pd
 from pathlib import Path
 from sklearn.decomposition import PCA
+from sklearn.utils.validation import check_is_fitted
 import spacy
 from textblob import TextBlob
 import torch
@@ -477,7 +478,7 @@ class Embeddings:
     name except prefixed with an underscore) allow us to pass in vectors.
     """
 
-    def __init__(self, mat, w2i, mat_2d=None):
+    def __init__(self, mat, w2i, pca=None):
         """
         Parameters
         ----------
@@ -486,16 +487,22 @@ class Embeddings:
             in w2i.
         w2i: dict[str, int]
             Dictionary mapping word to its index in the vocabulary.
-        mat_2d: np.array
-            Matrix output of PCA after compressing mat to vectors of length 2.
-            If None, it will be computed from mat and cached.
+        pca: sklearn.decomposition.PCA or None
+            If provided, this should be a PCA object with 2 components that
+            was previously fit on `mat`. If None, a new object will be created
+            and fit. This will let us plot embeddings in a way humans can
+            visually parse.
         """
         self.mat = mat
         self.w2i = w2i
         self.i2w = [w for w, i in
                     sorted(self.w2i.items(), key=lambda x: x[1])]
-        self.mat_2d = ifnone(mat_2d,
-                             PCA(n_components=2).fit_transform(self.mat))
+        if pca is not None:
+            check_is_fitted(pca)
+            self.pca = pca
+        else:
+            self.pca = PCA(n_components=2).fit(self.mat)
+        self.mat_2d = pca.transform(mat_2d)
         self.n_embeddings, self.dim = self.mat.shape
 
     @classmethod
@@ -560,9 +567,10 @@ class Embeddings:
         -------
         None
         """
+        # No need to save mat_2d since pca can quickly transform `mat`.
         data = dict(mat=self.mat,
                     w2i=self.w2i,
-                    mat_2d=self.mat_2d)
+                    pca=self.pca)
         save(data, path, verbose=verbose)
 
     def vec(self, word):
