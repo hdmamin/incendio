@@ -502,7 +502,7 @@ class Embeddings:
             self.pca = pca
         else:
             self.pca = PCA(n_components=2).fit(self.mat)
-        self.mat_2d = pca.transform(mat_2d)
+        self.mat_2d = pca.transform(self.mat)
         self.n_embeddings, self.dim = self.mat.shape
 
     @classmethod
