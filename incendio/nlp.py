@@ -499,10 +499,10 @@ class Embeddings:
                     sorted(self.w2i.items(), key=lambda x: x[1])]
         if pca is not None:
             check_is_fitted(pca)
-            self.pca = pca
         else:
-            self.pca = PCA(n_components=2).fit(self.mat)
-        self.mat_2d = pca.transform(self.mat)
+            pca = PCA(n_components=2).fit(self.mat)
+        self.pca = pca
+        self.mat_2d = self.pca.transform(self.mat)
         self.n_embeddings, self.dim = self.mat.shape
 
     @classmethod
