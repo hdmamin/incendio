@@ -25,7 +25,7 @@ from transformers.modeling_utils import PreTrainedModel
 import warnings
 
 from htools import save, load, add_docstring, tolist, auto_repr, listlike, \
-    flatten, immutify_defaults, ifnone
+    flatten, immutify_defaults, ifnone, item
 from .utils import DEVICE
 
 
@@ -494,6 +494,10 @@ class Embeddings:
             visually parse.
         """
         self.mat = mat
+        if item(w2i, random=False) != 0:
+            warnings.warn('First value in w2i is not 0. We recommend sorting '
+                          'your dict by index, though it shouldn\'t be '
+                          'strictly required.')
         self.w2i = w2i
         self.i2w = [w for w, i in
                     sorted(self.w2i.items(), key=lambda x: x[1])]
