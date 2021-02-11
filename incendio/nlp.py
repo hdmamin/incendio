@@ -2,7 +2,7 @@
 
 __all__ = ['tokenizer', 'tokenize', 'tokenize_many', 'Vocabulary', 'Embeddings', 'back_translate',
            'postprocess_embeddings', 'compress_embeddings', 'ParaphraseTransform', 'GenerativeTransform',
-           'FillMaskTransform', 'NLP_TRANSFORMS', 'augment_text_df']
+           'FillMaskTransform', 'NLP_TRANSFORMS', 'BacktranslateTransform', 'augment_text_df']
 
 
 # Cell
@@ -20,12 +20,13 @@ from textblob import TextBlob
 import torch
 from tqdm.auto import tqdm
 from transformers import PegasusForConditionalGeneration, PegasusTokenizer, \
-    PegasusTokenizerFast, pipeline, Text2TextGenerationPipeline
+    PegasusTokenizerFast, Text2TextGenerationPipeline, \
+    AutoModelForSeq2SeqLM, AutoTokenizer, TranslationPipeline, pipeline
 from transformers.modeling_utils import PreTrainedModel
 import warnings
 
 from htools import save, load, add_docstring, tolist, auto_repr, listlike, \
-    flatten, immutify_defaults, ifnone, item
+    flatten, immutify_defaults, ifnone, item, lmap, func_name
 from .utils import DEVICE
 
 
@@ -1413,6 +1414,151 @@ NLP_TRANSFORMS = {
     'paraphrase': ParaphraseTransform,
     'generative': GenerativeTransform
 }
+
+
+# Cell
+class BacktranslateTransform:
+    """Augment/perturb text inputs by translating them to a different language
+    and then back to English (this process can be repeated as many times as
+    you want by specifying multiple target languages). As of 2/10/21, this is
+    excluded from incendio's NLP_TRANSFORMS variable since its interface is a
+    little different from the other transforms: it has 2 pipelines, not 1, so
+    has variables `names` and `pipes` (both lists) instead of `name` and
+    `pipe`. It also has no `_preprocess` method.
+    """
+
+    names = ['Helsinki-NLP/opus-mt-en-ROMANCE',
+             'Helsinki-NLP/opus-mt-ROMANCE-en']
+
+    language_codes = {
+        'es': 'spanish',
+        'fr': 'french',
+        'it': 'italian',
+        'pt': 'portuguese',
+        'pt_br': 'portuguese (brazil)',
+        'ro': 'romanian',
+        'ca': 'catalan',
+        'gl': 'galician',
+        'pt_BR': 'portuguese (brazil?)',
+        'la': 'latin',
+        'wa': 'walloon',
+        'fur': 'friulian (?)',
+        'oc': 'occitan',
+        'fr_CA': 'french (canada)',
+        'sc': 'sardianian',
+        'es_ES': 'spanish',
+        'es_MX': 'spanish (mexico)',
+        'es_AR': 'spanish (argentina)',
+        'es_PR': 'spanish (puerto rico)',
+        'es_UY': 'spanish (uruguay)',
+        'es_CL': 'spanish (chile)',
+        'es_CO': 'spanish (colombia)',
+        'es_CR': 'spanish (croatia)',
+        'es_GT': 'spanish (guatemala)',
+        'es_HN': 'spanish (honduras)',
+        'es_NI': 'spanish (nicaragua)',
+        'es_PA': 'spanish (panama)',
+        'es_PE': 'spanish (peru)',
+        'es_VE': 'spanish (venezuela)',
+        'es_DO': 'spanish (dominican republic)',
+        'es_EC': 'spanish (ecuador)',
+        'es_SV': 'spanish (el salvador)',
+        'an': 'aragonese',
+        'pt_PT': 'portuguese (portugal)',
+        'frp': 'franco provencal',
+        'lad': 'ladino',
+        'vec': 'venetian',
+        'fr_FR': 'france (france)',
+        'co': 'corsican',
+        'it_IT': 'italian (italy)',
+        'lld': 'ladin',
+        'lij': 'ligurian',
+        'lmo': 'lombard',
+        'nap': 'neapolitan',
+        'rm': 'rhaetian (?)',
+        'scn': 'sicilian',
+        'mwl': 'mirandese'
+    }
+
+    def __init__(self, to_langs, pipes=()):
+        """
+        Parameters
+        ----------
+        to_langs: Iterable[str]
+            One or more language codes to use for backtranslation (see
+            self.language_codes for all options). They will be applied in
+            order: for instance, passing in ['es', 'fr'] will translate input
+            from
+            english -> spanish -> english -> french -> english. You can
+            override these later in specific calls but the value(s) you
+            provide here will be defaults.
+        pipes: Iterable[Pipeline]
+            Huggingface pipelines, the first of which translates English to
+            Romance languages and the second of which does the reverse. It's
+            usually easiest to let the Transform create these for you, but if
+            you already have them passing them in will be faster.
+        """
+        if not pipes:
+            pipes = [TranslationPipeline(
+                        model=AutoModelForSeq2SeqLM.from_pretrained(name),
+                        tokenizer=AutoTokenizer.from_pretrained(name),
+                        device=1 - torch.cuda.is_available()
+                     ) for name in names]
+        self.pipes = pipes
+        self.to_langs = tolist(to_langs)
+
+    def __call__(self, text, intermediate=False, flat=True, to_langs=(),
+                 **kwargs):
+        """
+        Parameters
+        ----------
+        text: str or Iterable[str]
+            The input pieces of text to translate.
+        intermediate: bool
+            If True, return all intermediate backtranslations if more than one
+            target language is provided. Otherwise, only return the final
+            backtranslation.
+        flat: bool
+            If True, return a flat list of strings. If False, return a list of
+            lists where item i contains all the intermediate backtranslations
+            (n languages in `to_langs` will generate n backtranslations). Note
+            that if intermediate=False, results will always be flat.
+        to_langs: Iterable[str]
+            One or more language codes to use for backtranslation. They will
+            be applied in order: for instance, passing in ['es', 'fr'] will
+            translate input from
+            english -> spanish -> english -> french -> english. If not
+            specified, this defaults to self.to_langs.
+        kwargs: any
+            Ignored. Just provided for consistency with other transforms.
+
+        Returns
+        -------
+        list[str] or list[list[str]]: Default is list of strings where item
+        i of output corresponds to item i of input. If intermediate=True and
+        flat=False, we get a list of lists where each nested list contains
+        n backtranslations of input i.
+        """
+        text = tolist(text)
+        to_langs = tolist(to_langs) or self.to_langs
+        assert not set(to_langs) - set(self.language_codes), \
+            'to_langs codes should all be present in self.language_codes.'
+
+        steps = []
+        for lang in to_langs:
+            text = [f'>>{lang}<< {t}' for t in text]
+            text = [row['translation_text'] for row in self.pipes[0](text)]
+            text = [row['translation_text'] for row in self.pipes[1](text)]
+            steps.append(text)
+        if intermediate:
+            steps = zip(*steps)
+            return flatten(steps) if flat else lmap(list, *steps)
+        else:
+            return text
+
+    def __repr__(self):
+        lang_str = ", ".join(repr(lang) for lang in self.to_langs)
+        return f'{func_name(self)}(to_langs=[{lang_str}])'
 
 
 # Cell
