@@ -486,8 +486,8 @@ class Vocabulary:
 
 
 # Cell
-def domain(url, strip_www=True):
-    domain_ = extract(url).fqdn
+def domain(url, strip_www=True, mode='registered_domain'):
+    domain_ = getattr(extract(url), mode)
     return domain_.replace('www.', '') if strip_www else domain_
 
 
