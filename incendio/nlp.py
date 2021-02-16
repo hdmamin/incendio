@@ -904,7 +904,7 @@ class Embeddings:
         input words are not considered to be candidates for neighbors (e.g. if
         you input the words 'happy' and 'cheerful', the neighbors returned
         will not include those words even if they are the closest to the mean
-        embedding) unless you set exclude_kwargs=False. The idea here is to
+        embedding) unless you set exclude_args=False. The idea here is to
         find additional words that may be similar to the group you've passed
         in.
 
@@ -1047,9 +1047,12 @@ class Embeddings:
             if sort_df: d2dist = d2dist.sort_values('score', ascending=True)
         return d2dist
 
-    def create_theme_vector(self, *queries, n=25, exclude_args=False,
-                            force_add_queries=True, mode='standard',
-                            google_missing=False):
+    @valuecheck
+    def create_theme_vector(
+            self, *queries, n=25,
+            include_queries:('always', 'never', 'auto')='always',
+            mode='standard', google_missing=False
+    ):
         """Mostly for domains rather than words: create a vector matching the
         "theme" of 1 or more input queries (usually several).
         For example, to create a "movie" theme, you could pass in 'imdb.com',
@@ -1070,19 +1073,15 @@ class Embeddings:
         n: int
             Number of neighbors to find in `cbow_neighbors` method. Note that
             this won't necessarily be the final number of keys returned -
-            `exclude_args` and `force_add_queries` will affect that.
-        exclude_args: bool
-            If True, the nearest neighbors search will exclude the "seed"
-            domains found via string matching from being returned in our list
-            of results. Note that setting `force_add_queries` to True will
-            override exclude_args=True.
-        force_add_queries: bool
-            If True, the initial "seed" domains found via string matching
-            will be included in the list of returned results (placed at the
-            start of the list - we can think of them as being the "nearest"
-            embeddings to themselves). If False, they won't necessarily be
-            actively excluded (that depends on `exclude_args`) but they won't
-            be forcibly included either.
+            `include_queries` will affect that too.
+        include_queries: str
+            Determines whether URLs retrieved from the initial step of query
+            string matching should be included in results. 'never' is useful
+            if you specifically want URLs that DON'T contain the queries
+            (e.g. music-related sites without "music" in the URL), but
+            I suspect 'always' may give better quality results. 'auto' will
+            allow these matches to be retained but won't force them to if they
+            aren't close to the final theme vector.
         mode: str
             Determines type of string matching used to find initial "seed"
             domains (see `self.matching_keys`). Options are
@@ -1123,10 +1122,10 @@ class Embeddings:
 
         # Keep as dict for now for O(1) lookup time in case we use huge n.
         matches = self.cbow_neighbors(*all_queries, n=n,
-                                      exclude_args=exclude_args)
+                                      exclude_args=include_queries=='never')
 
-        if force_add_queries:
-            # Use dict as ordered set: remove duplicates but maintain rankings.
+        if include_queries == 'always':
+            # Use dict as ordered set: remove duplicates but maintain order.
             matches = dict.fromkeys(
                 list(matches) + [q for q in all_queries if q not in matches]
             )
