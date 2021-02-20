@@ -1048,13 +1048,13 @@ class Embeddings:
         return d2dist
 
     @valuecheck
-    def create_theme_vector(
+    def semantic_vector(
             self, *queries, n=25,
             include_queries:('always', 'never', 'auto')='always',
             mode='standard', google_missing=False
     ):
         """Mostly for domains rather than words: create a vector matching the
-        "theme" of 1 or more input queries (usually several).
+        "semantic theme" of 1 or more input queries (usually several).
         For example, to create a "movie" theme, you could pass in 'imdb.com',
         'rottentomatoes.com', and 'letterboxd.com'.
 
