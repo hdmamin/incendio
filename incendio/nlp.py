@@ -1118,7 +1118,8 @@ class Embeddings:
             all_queries.extend(matches)
         if not all_queries:
             warnings.warn('Queries yielded zero matches.')
-            return np.empty(0), []
+            # Return None (not vector) for consistency with other methods.
+            return None, []
 
         # Keep as dict for now for O(1) lookup time in case we use huge n.
         matches = self.cbow_neighbors(*all_queries, n=n,
