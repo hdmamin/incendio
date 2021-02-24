@@ -8,6 +8,7 @@ __all__ = ['tokenizer', 'tokenize', 'tokenize_many', 'Vocabulary', 'domain', 'do
 # Cell
 from bs4 import BeautifulSoup
 from collections import Counter
+from collections.abc import Iterable
 from functools import partial
 import multiprocessing
 import numpy as np
@@ -742,7 +743,8 @@ class Embeddings:
             dists = Embeddings.cosine_distance(vec1, vec2)
         elif distance == 'manhattan':
             dists = Embeddings.manhattan_distance(vec1, vec2)
-        return dists
+        # Let arrays have numpy dtypes, but scalars will just be floats.
+        return dists if isinstance(dists, Iterable) else float(dists)
 
     def _distances(self, vec, distance='cosine'):
         """Find distance from an input vector to every other vector in the
@@ -816,7 +818,9 @@ class Embeddings:
         """
         dists = self._distances(vec, distance)
         idx = np.argsort(dists)[slice(skip_first, skip_first+n)]
-        return {self.i2w[i]: round(dists[i], digits) for i in idx}
+        # First convert to float, otherwise we get np.float32 or np.float64
+        # scalars which can cause annoying bugs in APIs or dash apps.
+        return {self.i2w[i]: round(float(dists[i]), digits) for i in idx}
 
     def analogy(self, a, b, c, n=5, **kwargs):
         """Fill in the analogy: A is to B as C is to ___. Note that we always
@@ -834,7 +838,7 @@ class Embeddings:
             Third word in analogy.
         n: int
             Number of candidates to return. Note that we specify this
-            separately fro kwargs since we need to alter its value before
+            separately from kwargs since we need to alter its value before
             passing it to `_nearest_neighbors`. This will allow us to remove
             the word c as a candidate if it is returned.
         kwargs: distance (str), digits (int)
