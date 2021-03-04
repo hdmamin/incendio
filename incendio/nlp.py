@@ -707,7 +707,7 @@ class Embeddings:
         np.array: Embedding corresponding to the input word. If word not in
             vocab, return None.
         """
-        idx = self[word]
+        idx = self.get(word)
         if idx is not None:
             return self.mat[idx]
 
@@ -724,7 +724,7 @@ class Embeddings:
         -------
         np.array: Compressed embedding of length 2. None if not found.
         """
-        idx = self[word]
+        idx = self.get(word)
         if idx is not None:
             return self.mat_2d[idx]
 
@@ -1193,6 +1193,9 @@ class Embeddings:
     def __getitem__(self, word):
         """Returns None if word is not present. Think of this like dict.get.
         """
+        return self.w2i[word.lower()]
+
+    def get(self, key, default=None):
         try:
             return self.w2i[word.lower()]
         except KeyError:
