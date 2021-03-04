@@ -1200,6 +1200,7 @@ class Embeddings:
             return self.w2i[key.lower()]
         except KeyError:
             warnings.warn(f'{key} not in Embeddings.')
+            return default
 
     def __len__(self):
         return self.n_embeddings
