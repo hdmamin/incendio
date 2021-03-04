@@ -1197,9 +1197,9 @@ class Embeddings:
 
     def get(self, key, default=None):
         try:
-            return self.w2i[word.lower()]
+            return self.w2i[key.lower()]
         except KeyError:
-            warnings.warn(f'{word} not in Embeddings.')
+            warnings.warn(f'{key} not in Embeddings.')
 
     def __len__(self):
         return self.n_embeddings
