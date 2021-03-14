@@ -1253,7 +1253,7 @@ class Embeddings:
         >>> emb[1]
         'the'
         """
-        return self.iw2[i]
+        return self.i2w[i]
 
     @dispatch(list)
     def __getitem__(self, keys):
