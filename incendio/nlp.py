@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 from collections import Counter
 from collections.abc import Iterable
 from functools import partial
+from multipledispatch import dispatch
 import multiprocessing
 import numpy as np
 import os
@@ -694,6 +695,7 @@ class Embeddings:
             pca=None if recompute_2d else self.pca
         )
 
+    @dispatch(str)
     def vec(self, word):
         """Look up the embedding for a given word. Return None if not found.
 
@@ -711,6 +713,27 @@ class Embeddings:
         if idx is not None:
             return self.mat[idx]
 
+    @dispatch(list)
+    def vec(self, words):
+        """Get embedding vectors for a list of words and return them as a
+        single numpy array. Note that all words must be present here: we want
+        to guarantee the output has the same number of rows as the input.
+
+        Parameters
+        ----------
+        words: list[str]
+            Input words to look up embeddings for.
+
+        Returns
+        -------
+        np.array: Embeddings corresponding to the input words.
+        Shape (len(words), emb.dim).
+        """
+        # Don't just delegate to the other `vec` method because we want to
+        # ensure all words are present.
+        return np.vstack([self.mat[self[word]] for word in words])
+
+    @dispatch(str)
     def vec_2d(self, word):
         """Look up the compressed embedding for a word (PCA was used to shrink
         dimensionality to 2). Return None if the word is not present in vocab.
@@ -727,6 +750,26 @@ class Embeddings:
         idx = self.get(word)
         if idx is not None:
             return self.mat_2d[idx]
+
+    @dispatch(list)
+    def vec_2d(self, words):
+        """Look up the compressed embeddings for multiple words
+        (PCA was used to shrink dimensionality to 2). Note that all words must
+        be present here: we want to guarantee the output has the same number
+        of rows as the input.
+
+        Parameters
+        ----------
+        words: list[str]
+            Input words to look up embeddings for.
+
+        Returns
+        -------
+        np.array: Shape (len(words), emb.dim). Row i corresponds to words[i].
+        """
+        # Don't just delegate to the other `vec` method because we want to
+        # ensure all words are present.
+        return np.vstack([self.mat_2d[self[word]] for word in words])
 
     @staticmethod
     def distance(vec1, vec2, distance='cosine'):
@@ -1190,12 +1233,46 @@ class Embeddings:
         return 1 - (np.sum(vec1 * vec2, axis=-1) /
                     (Embeddings.norm(vec1) * Embeddings.norm(vec2)))
 
-    def __getitem__(self, word):
-        """Returns None if word is not present. Think of this like dict.get.
+    @dispatch(str)
+    def __getitem__(self, key):
+        """When indexing with a string, this acts as a word->index method.
+
+        Examples
+        --------
+        >>> emb['the']
+        1
         """
-        return self.w2i[word.lower()]
+        return self.w2i[key.lower()]
+
+    @dispatch(int)
+    def __getitem__(self, i):
+        """When indexing with an integer, this acts as an index->word method.
+
+        Examples
+        --------
+        >>> emb[1]
+        'the'
+        """
+        return self.iw2[i]
+
+    @dispatch(list)
+    def __getitem__(self, keys):
+        """Allows indexing in with a list of keys/indices. You can pass in a
+        mix of strings and integers though I can't imagine why that would be
+        necessary.
+
+        Examples
+        --------
+        >>> emb[[1, 100, 7]]
+        ['the', 'frog', 'dog']
+
+        >>> emb[['the', 'dog', 'frog']]
+        [1, 7, 100]
+        """
+        return [self[key] for key in keys]
 
     def get(self, key, default=None):
+        """Returns None if word is not present just like dict.get."""
         try:
             return self.w2i[key.lower()]
         except KeyError:
