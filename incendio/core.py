@@ -128,7 +128,7 @@ class BaseModel(nn.Module):
         if 'model' in state: state = state['model']
         self.load_state_dict(state)
 
-    def load_encoder(self, path):
+    def load_encoder(self, path, map_location=None):
         """Load encoder weights from a pre-trained model. This requires us the
         model encoder to be stored as self.enc.
         """

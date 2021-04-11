@@ -861,4 +861,3 @@ class SiameseBase(BaseModel, ABC):
         can go arbitrarily high).
         """
         raise NotImplementedError
-
