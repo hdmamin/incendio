@@ -15,6 +15,7 @@ import pandas as pd
 import shutil
 import torch
 import torch.nn as nn
+from torch.utils.data import DataLoader
 from torch.optim import Adam
 from tqdm.auto import tqdm
 import warnings
@@ -290,7 +291,7 @@ class Trainer(LoggerMixin):
         self.eps = eps
         self.criterion = criterion
         self.mode = mode
-        self.device = DEVICE
+        self.device = deviced
         self.last_act = last_act or identity
         self.thresh = threshold
         self._stop_training = False
