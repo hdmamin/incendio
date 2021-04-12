@@ -347,7 +347,7 @@ def out_features(model):
     -------
     int: Number of output features.
     """
-    return [c.out_features for c in head.children()
+    return [c.out_features for c in model.children()
             if hasattr(c, 'out_features')][-1]
 
 

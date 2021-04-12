@@ -3,11 +3,13 @@
 __all__ = ['GRelu', 'JRelu', 'Mish', 'mish', 'ConvBlock', 'ResBlock', 'ReflectionPaddedConv2d', 'SmoothSoftmaxBase',
            'SmoothSoftmax', 'SmoothLogSoftmax', 'SpatialSoftmax', 'Dropin', 'LinearSkipBlock', 'LinearResBlock',
            'LinearDenseBlock', 'WeightedLinearResBlock', 'SkipConnection', 'trunc_normal_', 'InitializedEmbedding',
-           'BloomEmbedding', 'AxialEncoding', 'MultiAxialEncoding', 'Projector', 'DotProductAttention', 'SiameseBase']
+           'BloomEmbedding', 'AxialEncoding', 'MultiAxialEncoding', 'Projector', 'DotProductAttention', 'SiameseBase',
+           'SequentialWithActivations']
 
 
 # Cell
 from abc import abstractmethod, ABC
+import copy
 from einops.layers.torch import Rearrange
 from functools import partial
 import numpy as np
@@ -861,3 +863,59 @@ class SiameseBase(BaseModel, ABC):
         can go arbitrarily high).
         """
         raise NotImplementedError
+
+
+# Cell
+class SequentialWithActivations(nn.Sequential):
+
+    def __init__(self, *args, return_idx=()):
+        """Create a sequential model that also returns activations from one or
+        more intermediate layers.
+
+        Parameters
+        ----------
+        args: nn.Modules
+            Just like a Sequential model: pass in 1 or more layers in the
+            order you want them to process inputs.
+        return_idx: Iterable[int]
+            Indices of which layer outputs to return. Do not include the final
+            layer since that is always returned automatically. Activations
+            will be returned in increasing order by index - if you create a 4
+            layer network and pass in return_idx=[2, 0], your output will
+            still be [layer_0_acts, layer_2_acts, final_layer_acts].
+            We recommend passing in indices in the expected return order to
+            avoid confusion.
+        """
+        super().__init__(*args)
+        assert all(i < len(args) - 1 for i in return_idx), 'All ids in ' \
+            'return_idx must correspond to layers before the final layer, ' \
+            'which is always returned.'
+        self.return_idx = set(return_idx)
+
+    def forward(self, x):
+        """
+        Returns
+        -------
+        Tuple[torch.Tensor]: N tensors where the first N-1 correspond to
+        self.return_idx (sorted in ascending order) and the last item is the
+        output of the final layer.
+        """
+        res = []
+        for i, module in enumerate(self):
+            x = module(x)
+            if i in self.return_idx: res.append(x)
+        return (*res, x)
+
+    @classmethod
+    def from_sequential(cls, model, return_idx=()):
+        """Convert a standard Sequential model to a MultiOutputSequential.
+
+        Parameters
+        ----------
+        model: nn.Sequential
+        return_idx: Iterable[int]
+            Indices of which layer outputs to return. Do not include the final
+            layer since that is always returned automatically.
+        """
+        model = copy.deepcopy(model)
+        return cls(*list(model), return_idx=return_idx)
