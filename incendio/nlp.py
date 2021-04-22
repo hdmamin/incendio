@@ -1255,7 +1255,7 @@ class Embeddings:
         """
         return self.i2w[i]
 
-    @dispatch(list)
+    @dispatch(Iterable)
     def __getitem__(self, keys):
         """Allows indexing in with a list of keys/indices. You can pass in a
         mix of strings and integers though I can't imagine why that would be
