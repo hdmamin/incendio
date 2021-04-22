@@ -550,13 +550,48 @@ class Embeddings:
             visually parse.
         """
         self.mat = mat
-        if item(w2i, random=False) != 0:
-            warnings.warn('First value in w2i is not 0. We recommend sorting '
-                          'your dict by index, though it shouldn\'t be '
-                          'strictly required.')
-        self.w2i = w2i
+        max_id = max(w2i.values())
+        expected_ids = list(range(max_id + 1))
+        if list(w2i.values()) != expected_ids:
+            if sorted(w2i.values()) == expected_ids:
+                warnings.warn(
+                    'Your w2i dict is out of order (where ordered would mean '
+                    'the first key has id 0, the second has id 1, etc.). '
+                    'This should technically be fine but we recommend fixing '
+                    'it to be safe.'
+                )
+            else:
+                raise ValueError('Your w2i dict has missing indices. '
+                                 'We do not currently support gaps.')
+
+        self.w2i = {k.lower(): v for k, v in w2i.items()}
+        if self.w2i != w2i:
+            if len(self.w2i) == len(w2i):
+                warnings.warn(
+                    'Your w2i dict contains 1 or more uppercase characters. '
+                    'Our current implementation force-lowercases everything. '
+                    'You don\'t have any collisions (e.g. "Dog" and "dog") so '
+                    'this should be okay, just keep this behavior in mind.'
+                )
+            else:
+                raise ValueError(
+                    'Our current implementation force-lowercases your w2i '
+                    'dict and yours appears to contain a collision (e.g. '
+                    '"Dog" and "dog"). We tentatively plan to allow cased '
+                    'keys in the future.'
+                )
+
         self.i2w = [w for w, i in
                     sorted(self.w2i.items(), key=lambda x: x[1])]
+        if len(self.w2i) != len(self.i2w):
+            warnings.warn(
+                'Some keys in your w2i share an index. Mapping keys to IDs '
+                'should still work (if this is your intent) but reversing the '
+                'operation may produce unexpected results (e.g. if "dog" and '
+                '"bulldog" both map to index 0, it\'s unclear whether index 0 '
+                'should be decoded as "dog" or "bulldog").'
+            )
+
         self.n_embeddings, self.dim = self.mat.shape
         # Sets "pca" and "mat_2d" attributes.
         self._validate_or_fit_pca(pca)
