@@ -713,7 +713,7 @@ class Embeddings:
         if idx is not None:
             return self.mat[idx]
 
-    @dispatch(list)
+    @dispatch(Iterable)
     def vec(self, words):
         """Get embedding vectors for a list of words and return them as a
         single numpy array. Note that all words must be present here: we want
@@ -751,7 +751,7 @@ class Embeddings:
         if idx is not None:
             return self.mat_2d[idx]
 
-    @dispatch(list)
+    @dispatch(Iterable)
     def vec_2d(self, words):
         """Look up the compressed embeddings for multiple words
         (PCA was used to shrink dimensionality to 2). Note that all words must
