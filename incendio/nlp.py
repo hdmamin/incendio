@@ -1326,6 +1326,19 @@ class Embeddings:
         """
         yield from self.w2i.keys()
 
+    def __eq__(self, obj):
+        if not isinstance(obj, Embeddings):
+            return False
+
+        ignore = {'pca'}
+        for k, v in vars(obj).items():
+            if k in ignore: continue
+            v_self = getattr(self, k)
+            if isinstance(v, np.ndarray):
+                if not np.allclose(v, v_self): return False
+            elif v != v_self: return False
+        return True
+
     def __repr__(self):
         return f'Embeddings(len={len(self)}, dim={self.dim})'
 
