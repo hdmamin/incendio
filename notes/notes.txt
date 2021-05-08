@@ -80,3 +80,7 @@ Summary of some interesting math-y huggingface models I played around with in co
 
     https://huggingface.co/mrm8488/t5-base-finetuned-qasc (combine 2 facts into a question)
     https://twitter.com/mrm8488/status/1295680004039344135 (twitter vid showing how to use one of the math models)
+
+5/6/21
+------
+# TODO: embeddings from_w2vec() factory, embeddings __getitem__ multipledispatch for slice input (allow emb[:5])
