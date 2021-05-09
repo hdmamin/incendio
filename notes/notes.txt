@@ -83,4 +83,4 @@ Summary of some interesting math-y huggingface models I played around with in co
 
 5/6/21
 ------
-# TODO: embeddings from_w2vec() factory, embeddings __getitem__ multipledispatch for slice input (allow emb[:5])
+X -ideas: embeddings from_w2vec() factory, embeddings __getitem__ multipledispatch for slice input (allow emb[:5])

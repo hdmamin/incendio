@@ -646,6 +646,16 @@ class Embeddings:
         return cls(np.array(mat), w2i)
 
     @classmethod
+    def from_word2vec(cls, w2vec, w2i=None):
+        if w2i is None:
+            mat = np.vstack(list(w2vec.values()))
+            w2i = {k: i for i, k in enumerate(w2vec)}
+        else:
+            mat = np.vstack([w2vec[word] for word, i
+                             in sorted(w2i.items(), key=lambda x: x[1])])
+        return cls(mat=mat, w2i=w2i)
+
+    @classmethod
     def from_pickle(cls, path):
         """If an Embeddings object previously saved its data in a pickle file,
         loading it that way can avoid repeated computation.
@@ -1279,7 +1289,7 @@ class Embeddings:
         """
         return self.w2i[key.lower()]
 
-    @dispatch(int)
+    @dispatch((int, slice))
     def __getitem__(self, i):
         """When indexing with an integer, this acts as an index->word method.
 
@@ -1287,6 +1297,9 @@ class Embeddings:
         --------
         >>> emb[1]
         'the'
+
+        >>> emb[:3]
+        ['a', the', 'is']
         """
         return self.i2w[i]
 
