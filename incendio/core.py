@@ -291,7 +291,7 @@ class Trainer(LoggerMixin):
         self.eps = eps
         self.criterion = criterion
         self.mode = mode
-        self.device = deviced
+        self.device = device
         self.last_act = last_act or identity
         self.thresh = threshold
         self._stop_training = False
