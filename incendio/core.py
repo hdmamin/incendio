@@ -21,7 +21,8 @@ from tqdm.auto import tqdm
 import warnings
 
 from htools import load, save, LoggerMixin, valuecheck, hasarg, func_name
-from .callbacks import BasicConfig, StatsHandler, MetricPrinter
+from .callbacks import BasicConfig, StatsHandler, MetricPrinter, \
+    SubsetHandler
 from .data import plot_images
 from .metrics import batch_size
 from .optimizers import variable_lr_optimizer, update_optimizer
@@ -298,14 +299,21 @@ class Trainer(LoggerMixin):
         # For now, only print logs. During training, a file will be created.
         self.logger = self.get_logger()
 
+        # These will make it easier to support training debugging runs where we
+        # try to overfit on 1 or n batches.
+        self._dl_train_curr = self.dl_train
+        self._dl_val_curr = self.dl_val
+
         # Storage options.
         self.out_dir = out_dir
         os.makedirs(out_dir, exist_ok=True)
 
         # Dict makes it easier to adjust callbacks after creating model.
         self.callbacks = {}
-        self.add_callbacks(*[BasicConfig(), StatsHandler(), MetricPrinter()]
-                           + (callbacks or []))
+        self.add_callbacks(
+            *[BasicConfig(), SubsetHandler(), StatsHandler(), MetricPrinter()]
+             + (callbacks or [])
+        )
         self.metrics = [batch_size] + (metrics or [])
 
     def save(self, fname):
@@ -463,7 +471,11 @@ class Trainer(LoggerMixin):
             Multiplier used to compute additional learning rates if needed.
             See `update_optimizer()` for details.
         kwargs: any
-            Pass in clean=True to remove existing files in out_dir.
+            Pass in clean=True to remove existing files in out_dir. Pass in
+            overfit_batches=1 (or some int n) to train on a subset of n
+            batches (the validation set will also be limited to n batches for
+            this run. Useful for debugging purposes). All kwargs
+            are passed to callbacks during the `on_train_begin` step.
         """
         self.stats = defaultdict(list)
         sum_i = 0
@@ -523,7 +535,7 @@ class Trainer(LoggerMixin):
         of predictions is appended as a second item if `return_preds`,
         followed by a tensor of labels if `return_labels`.
         """
-        dl_val = dl_val or self.dl_val
+        dl_val = dl_val or self._dl_val_curr
         val_stats = defaultdict(list)
         self.net.eval()
         preds = []

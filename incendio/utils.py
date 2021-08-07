@@ -413,8 +413,8 @@ def plot_img_batch(x, channels_first=True):
     Parameters
     ----------
     x: torch.Tensor or np.array
-        Shape (bs, h, w), (bs, c, h, w), or (bs, h, w, c). Often it's nice to
-        use the tensor loaded by `get_einops_image` here.
+        Shape (bs, h, w), (bs, c, h, w), or (bs, h, w, c).
+        Example: the tensor loaded by `get_einops_image`.
     channels_first: bool
         Specify if your input x has channels before the spatial dimensions,
         e.g. True if x has shape (bs, c, h, w) and False if it has shape
@@ -425,14 +425,15 @@ def plot_img_batch(x, channels_first=True):
     assert ndim in {3, 4}, \
         'x ndim must be 3 or 4: (bs, h, w), (bs, c, h, w) or (bs, h, w, c)'
 
-    if getattr(x, 'requires_grad', False): x = x.detach().numpy()
+    if isinstance(x, np.ndarray): x = torch.tensor(x)
+    if getattr(x, 'requires_grad', False): x = x.detach()
     fig, ax = plt.subplots(len(x), 1, figsize=(4, len(x)*2))
     cmap = 'gray' if ndim == 3 else None
     for i, (xi, axi) in enumerate(zip(x, ax.flatten())):
         if ndim == 4 and channels_first: xi = xi.permute(1, 2, 0)
         axi.imshow(xi, cmap=cmap)
         axi.set_title(f'Batch {i}')
-        axi.set_xticks([], [])
-        axi.set_yticks([], [])
+        axi.set_xticks([])
+        axi.set_yticks([])
     plt.tight_layout()
     plt.show()
