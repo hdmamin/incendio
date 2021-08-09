@@ -22,6 +22,13 @@ def std_soft_prediction(y_true, y_score):
     """Compute the standard deviation of the predicted
     probabilities. This helps us identify if the model is
     always predicting roughly the same probability.
+
+    Note: our standard aggregation method won't be strictly correct here
+    (aggregating standard deviations from multiple groups is more complex than
+    aggregating means) but it's usually not super important for this metric to
+    be precise: we typically just use it to debug a model that's been
+    outputting a particularly narrow range of values. incendio.lightning_utils
+    provides a torchmetric variant with the strictly correct computation.
     """
     return y_score.std()
 

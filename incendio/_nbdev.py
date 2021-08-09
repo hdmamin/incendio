@@ -12,6 +12,7 @@ index = {"BaseModel": "00_core.ipynb",
          "gpu_setup": "01_utils.ipynb",
          "hasarg": "01_utils.ipynb",
          "quick_stats": "01_utils.ipynb",
+         "pool_stds": "01_utils.ipynb",
          "concat": "01_utils.ipynb",
          "weighted_avg": "01_utils.ipynb",
          "identity": "01_utils.ipynb",
@@ -111,7 +112,8 @@ index = {"BaseModel": "00_core.ipynb",
          "complete_sentence": "09_fast_utils.ipynb",
          "LRPicker": "09_fast_utils.ipynb",
          "ULMFineTuner": "09_fast_utils.ipynb",
-         "FastLabelEncoder": "09_fast_utils.ipynb"}
+         "FastLabelEncoder": "09_fast_utils.ipynb",
+         "PredictionStd": "10_lightning_utils.ipynb"}
 
 modules = ["core.py",
            "utils.py",
@@ -122,7 +124,8 @@ modules = ["core.py",
            "optimizers.py",
            "data.py",
            "losses.py",
-           "fast_utils.py"]
+           "fast_utils.py",
+           "lightning_utils.py"]
 
 doc_url = "https://hdmamin.github.io/incendio/"
 
