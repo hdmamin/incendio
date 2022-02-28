@@ -297,9 +297,8 @@ class BotoUploader:
         self.s3.meta.client.upload_file(path, self.bucket, s3_path)
 
     def upload_files(self, paths, s3_dir='', retain_tree=True):
-        """Upload multiple files. Currently does not support parallelized
-        uploads: need to figure out a workaround because self.s3 cannot be
-        pickled.
+        """Upload multiple files. Only a ~2x speedup over brute force, but I
+        tried threads and that provided no speedup 🤷‍♂️.
 
         Parameters
         ----------
@@ -313,8 +312,10 @@ class BotoUploader:
             only the base name is kept. All four combinations of retain_tree
             (True/False) and s3_dir (empty/non-empty) are supported.
         """
-        for p in paths:
-            self.upload_file(p, s3_dir=s3_dir, retain_tree=retain_tree)
+        func = partial(self.upload_file, s3_dir=s3_dir,
+                       retain_tree=retain_tree)
+        with Pool() as p:
+            p.map(func, paths)
 
     def upload_folder(self, dirname, s3_dir, retain_tree=True, recurse=True,
                       keep_fn=None):
@@ -357,6 +358,21 @@ class BotoUploader:
         """
         path = path if retain_tree else os.path.basename(path)
         return os.path.join(s3_dir, path)
+
+    def __getstate__(self):
+        return {'bucket': self.bucket,
+                'verbose': self.verbose}
+
+    def __setstate__(self, data):
+        self.bucket = data['bucket']
+        self.verbose = data['verbose']
+        self.s3 = boto3.resource('s3')
+
+    def __eq__(self, other):
+        return type(other) == type(self) \
+            and self.bucket == other.bucket \
+            and self.s3 == other.s3 \
+            and self.verbose == other.verbose
 
 
 # Cell
