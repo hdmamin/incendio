@@ -84,3 +84,7 @@ Summary of some interesting math-y huggingface models I played around with in co
 5/6/21
 ------
 X -ideas: embeddings from_w2vec() factory, embeddings __getitem__ multipledispatch for slice input (allow emb[:5])
+
+2/28/22
+-------
+-got botouploader upload_files multiproc working, but upload to pypi fails. Seems caused by pyopenssl issue "module 'lib' hs no attribute 'ERR_load_RAND_strings". First thought pip was issue (can't pip install anything) but looks like it might be conda - can't tell.
